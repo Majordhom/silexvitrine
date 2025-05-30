@@ -19,7 +19,7 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String   @db.VarChar(255)
-  content   String?
+  content   String
   comments  Comment[]
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
@@ -43,7 +43,7 @@ model User {
 
 model Comment {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String   @default("Anonym")
   content   String
 
   // Relation to Post
