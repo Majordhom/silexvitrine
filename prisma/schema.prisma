@@ -19,6 +19,7 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   title     String   @db.VarChar(255)
+  slug      String   @unique
   content   String
   comments  Comment[]
   published Boolean  @default(false)
