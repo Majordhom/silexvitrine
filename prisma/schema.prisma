@@ -14,44 +14,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(255)
-  slug      String   @unique
-  content   String
-  comments  Comment[]
-  published Boolean  @default(false)
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  Int
-}
 
-model Profile {
-  id     Int     @id @default(autoincrement())
-  bio    String?
-  user   User    @relation(fields: [userId], references: [id])
-  userId Int     @unique
-}
-
-model User {
-  id      Int      @id @default(autoincrement())
-  email   String   @unique
-  name    String?
-  posts   Post[]
-  profile Profile?
-}
-
-model Comment {
-  id        Int      @id @default(autoincrement())
-  name      String   @default("Anonym")
-  content   String
-
-  // Relation to Post
-  postId    Int
-  post      Post     @relation(fields: [postId], references: [id])
-
-  // Relation to User
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Mandat {
+  id                Int      @id @default(autoincrement())
+  reference         String
+  typeOffreCode     String
+  typeOffre         String
+  corps             String
+  prix              Int
+  charges           Int?
+  foncier           Int?
+  typeMandat        String
+  typeBien          String
+  typeBienCode      String
+  surfaceHabitable  Int?
+  nbPieces          Int?
+  chambres          Int?
+  nbEtages          Int?
+  etage             Int?
+  sdb               Int?
+  wc                Int?
+  cuisine           Int?
+  energieChauffage  String?
+  formatChauffage   String?
+  parking           Boolean?
+  piscine           Boolean?
+  terrasse          Boolean?
+  exposition        String?
+  anneeConstruction Int?
+  ascenseur         Boolean?
+  balcon            Int?
+  ville             String
+  cp                String
+  departement       String
+  isNotAvailable    Boolean?
+  statut            String?
+  meuble            Boolean?
+  dateEnr           DateTime?
+  dateMaj           DateTime?
+  latitude          Float?
+  longitude         Float?
+  videoLink         String?
+  urlBien           String?
+  publishedInWebSite Boolean?
+  publishedInApp     Boolean?
+  visiteImmediat     Boolean?
+  bienCategory       String?
+  chauffages         String?
 }
