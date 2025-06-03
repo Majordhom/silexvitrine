@@ -61,4 +61,27 @@ model Mandat {
   visiteImmediat     Boolean?
   bienCategory       String?
   chauffages         String?
+  photos            MandatPhoto[]
+}
+
+model MandatPhoto {
+  id        Int     @id @default(autoincrement())
+  mandatId  Int?
+  filename  String  @db.VarChar(255)
+  src       String  @default("") @db.VarChar(255)
+  position  Int?
+  mandat    Mandat? @relation(fields: [mandatId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+
+  @@index([mandatId])
+}
+
+model User {
+  id                Int      @id @default(autoincrement())
+  email             String   @unique @db.VarChar(255)
+  authToken         String?  @db.VarChar(255)
+  tokenCreatedAt    DateTime?
+  isSubscribed      Boolean  @default(true)
+  createdAt         DateTime @default(now())
+
+  @@index([email])
 }
