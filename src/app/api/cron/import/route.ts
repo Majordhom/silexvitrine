@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'; // Importation de NextResponse pour gérer les réponses HTTP
-
+import { insertMandats } from '@/app/_lib/services/mandat';
 export async function GET() { // Fonction asynchrone pour gérer la requête GET
     try {
         const externalApiUrl = 'https://crm.majordhom.fr/api/export/majordhom.json'; //
@@ -19,7 +19,11 @@ export async function GET() { // Fonction asynchrone pour gérer la requête GET
         console.log("Données récupérées côté serveur :");
         console.log(JSON.stringify(jsonData, null, 2)); // Affichage formaté des données
 
-        return NextResponse.json(jsonData); // Retourne les données JSON en réponse à la requête GET
+        // Insérer les données dans la base de données
+        await insertMandats(jsonData);
+
+        return NextResponse.json({ message: "Importation réussie et données insérées." });
+        // return NextResponse.json(jsonData); // Retourne les données JSON en réponse à la requête GET
 
     } catch (error) {
         console.error("Erreur lors de la récupération :", error);

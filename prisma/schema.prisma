@@ -22,7 +22,7 @@ model Mandat {
   typeOffre         String
   corps             String
   prix              Int
-  charges           Int?
+  charges           String?
   foncier           Int?
   typeMandat        String
   typeBien          String
@@ -37,15 +37,15 @@ model Mandat {
   cuisine           Int?
   energieChauffage  String?
   formatChauffage   String?
-  parking           Boolean?
+  parking           Int?
   piscine           Boolean?
-  terrasse          Boolean?
+  terrasse          Int?
   exposition        String?
   anneeConstruction Int?
   ascenseur         Boolean?
   balcon            Int?
   ville             String
-  cp                String
+  cp                Int?
   departement       String
   isNotAvailable    Boolean?
   statut            String?
