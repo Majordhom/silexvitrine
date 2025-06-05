@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'; // Importation de NextResponse pour gérer les réponses HTTP
 import { insertMandats } from '@/app/_lib/services/mandat';
+import {insertMandatPhoto} from "@/app/_lib/services/mandatPhoto";
 export async function GET() { // Fonction asynchrone pour gérer la requête GET
     try {
         const externalApiUrl = 'https://crm.majordhom.fr/api/export/majordhom.json'; //

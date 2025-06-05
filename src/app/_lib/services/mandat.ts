@@ -1,6 +1,6 @@
 import { prisma } from '@/app/_lib/prisma';
 import { z } from "zod";
-
+import { insertMandatPhoto } from './mandatPhoto';
 export async function insertMandats(data: any[]) {
     let currentItem;
     try {
@@ -54,9 +54,19 @@ export async function insertMandats(data: any[]) {
                 chauffages: z.string().nullable(),
             }).parse(item);
 
-            await prisma.mandat.create({
+            const mandat = await prisma.mandat.create({
                 data: mandatData,
             });
+        // check si images présentes : les insérer dans MandatPhoto
+        if (Array.isArray(item.images.image)) {
+            const photosData = item.images.image.map((img: any, idx: number) => ({
+                mandatId: mandat.id.toString(),
+                filename: img.filename || img.url || '',
+                src: img.url || '',
+                position: idx,
+            }));
+            await insertMandatPhoto(photosData);
+        }
 
     }} catch (error) {
         console.log(currentItem)
