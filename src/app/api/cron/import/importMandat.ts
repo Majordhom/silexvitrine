@@ -1,6 +1,6 @@
 import { prisma } from '@/app/_lib/prisma';
 import { z } from "zod";
-import { insertMandatPhoto } from './mandatPhoto';
+import { insertMandatPhoto } from './importMandatPhoto';
 export async function insertMandats(data: any[]) {
     let currentItem;
     try {
