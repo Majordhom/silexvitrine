@@ -6,14 +6,10 @@ export async function insertMandatPhoto(data: any[]) {
     try {
         for (const item of data) {
             currentItem = item;
-            if (!item.mandatId || typeof item.mandatId !== 'string') {
-                mandatId: item.mandatId ? item.mandatId.toString() : null;
-                continue;
-            }
 
             // Valider les données
             const mandatPhotoData = z.object({
-                mandatId: z.string().transform((val) => val.replace(/\D/g, '')).pipe(z.coerce.number()),
+                mandatId: z.coerce.number(),
                 filename: z.coerce.string(),
                 src: z.string().optional().default('photo'),
                 position: z.coerce.number().optional().default(0),
@@ -21,7 +17,6 @@ export async function insertMandatPhoto(data: any[]) {
 
             // Extraire mandatId et insérer les données
             const { mandatId, ...rest } = mandatPhotoData;
-
             await prisma.mandatPhoto.create({
                 data: mandatPhotoData,
             });

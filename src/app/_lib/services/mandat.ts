@@ -59,15 +59,17 @@ export async function insertMandats(data: any[]) {
             });
         // check si images présentes : les insérer dans MandatPhoto
         if (Array.isArray(item.images.image)) {
-            const photosData = item.images.image.map((img: any, idx: number) => ({
-                mandatId: mandat.id.toString(),
-                filename: img.filename || img.url || '',
-                src: img.url || '',
-                position: idx,
-            }));
+            const photosData = item.images.image.map((url: string, idx: number) => {
+                console.log('Contenu de img :', url);
+                return {
+                    mandatId: mandat.id,
+                    filename: url.substring(url.lastIndexOf('/') + 1),
+                    src: url,
+                    position: idx,
+                };
+            });
             await insertMandatPhoto(photosData);
         }
-
     }} catch (error) {
         console.log(currentItem)
         console.error("Erreur lors de l'insertion :", error);
