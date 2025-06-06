@@ -23,10 +23,10 @@ export async function getExistingMandatPhotos() {
     return grouped;
 }
 
-// Compare deux objets mandat (hors id, dates, etc.)
+// Compare deux objets mandat
 function isMandatDifferent(dbMandat: any, importMandat: any) {
     const fields = [
-        "typeOffreCode", "typeOffre", "corps", "prix", "charges", "foncier", "typeMandat",
+        "reference", "typeOffreCode", "typeOffre", "corps", "prix", "charges", "foncier", "typeMandat",
         "typeBien", "typeBienCode", "surfaceHabitable", "nbPieces", "chambres", "nbEtages",
         "etage", "sdb", "wc", "cuisine", "energieChauffage", "formatChauffage", "parking",
         "piscine", "terrasse", "exposition", "anneeConstruction", "ascenseur", "balcon",
@@ -37,7 +37,7 @@ function isMandatDifferent(dbMandat: any, importMandat: any) {
     return fields.some(field => dbMandat[field] !== importMandat[field]);
 }
 
-// Synchronise les photos d’un mandat : ajout, suppression, update
+// Synchronise les photos d’un mandat : ajout, suppression, update
 async function syncMandatPhotos(mandatId: number, importPhotos: any[]) {
     const dbPhotos = await prisma.mandatPhoto.findMany({
         where: { mandatId }
