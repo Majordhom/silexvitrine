@@ -17,7 +17,7 @@ datasource db {
 
 model Mandat {
   id                Int      @id @default(autoincrement())
-  reference         String
+  reference         String   @unique
   typeOffreCode     String
   typeOffre         String
   corps             String
@@ -66,7 +66,7 @@ model Mandat {
 
 model MandatPhoto {
   id        Int     @id @default(autoincrement())
-  mandatId  Int?
+  mandatId  Int
   filename  String  @db.VarChar(255)
   src       String  @default("") @db.VarChar(255)
   position  Int?
