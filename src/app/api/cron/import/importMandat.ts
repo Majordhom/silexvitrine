@@ -25,7 +25,6 @@ export async function getExistingMandatPhotos() {
 
 // Compare deux objets mandat (hors id, dates, etc.)
 function isMandatDifferent(dbMandat: any, importMandat: any) {
-    // À adapter selon les champs à comparer
     const fields = [
         "typeOffreCode", "typeOffre", "corps", "prix", "charges", "foncier", "typeMandat",
         "typeBien", "typeBienCode", "surfaceHabitable", "nbPieces", "chambres", "nbEtages",
@@ -44,16 +43,14 @@ async function syncMandatPhotos(mandatId: number, importPhotos: any[]) {
         where: { mandatId }
     });
 
-    // Indexation pour comparaison rapide
     const dbPhotosByFilename = Object.fromEntries(dbPhotos.map(p => [p.filename, p]));
     const importPhotosByFilename = Object.fromEntries(importPhotos.map(p => [p.filename, p]));
 
-    // Ajout des nouvelles photos
+    // Ajout ou mise à jour
     for (const photo of importPhotos) {
         if (!dbPhotosByFilename[photo.filename]) {
             await prisma.mandatPhoto.create({ data: { ...photo, mandatId } });
         } else {
-            // Mise à jour si métadonnées différentes
             const dbPhoto = dbPhotosByFilename[photo.filename];
             if (dbPhoto.src !== photo.src || dbPhoto.position !== photo.position) {
                 await prisma.mandatPhoto.update({
@@ -75,58 +72,57 @@ async function syncMandatPhotos(mandatId: number, importPhotos: any[]) {
 export async function insertMandats(data: any[]) {
     let currentItem;
     try {
-        // Récupération des mandats et photos existants
+        // Récupération des mandats existants AVANT import
         const existingMandatRefs = await getExistingMandatReferences();
-        const existingPhotosByMandat = await getExistingMandatPhotos();
 
         for (const item of data) {
-            currentItem = item
-                const mandatData = z.object({
-                    reference: z.string(),
-                    typeOffreCode: z.string().optional().default('vente'),
-                    typeOffre: z.string().optional().default('vente'),
-                    corps: z.string(),
-                    prix: z.coerce.number().min(0),
-                    charges: z.coerce.string().nullable(),
-                    foncier: z.coerce.number().nullable(),
-                    typeMandat: z.string().optional().default('basique'),
-                    typeBien: z.string().optional().default(''),
-                    typeBienCode: z.string().optional().default(''),
-                    surfaceHabitable: z.coerce.number().nullable().optional(),
-                    nbPieces: z.coerce.number().nullable().optional(),
-                    chambres: z.coerce.number().nullable(),
-                    nbEtages: z.coerce.number().nullable().optional(),
-                    etage: z.coerce.number().nullable(),
-                    sdb: z.coerce.number().nullable(),
-                    wc: z.coerce.number().nullable(),
-                    cuisine: z.number().nullable().optional(),
-                    energieChauffage: z.string().nullable().optional(),
-                    formatChauffage: z.string().nullable().optional(),
-                    parking: z.coerce.number().optional(),
-                    piscine: z.coerce.boolean().optional(),
-                    terrasse: z.coerce.number().optional(),
-                    exposition: z.string().nullable(),
-                    anneeConstruction: z.coerce.number().nullable().optional(),
-                    ascenseur: z.boolean().nullable(),
-                    balcon: z.number().nullable().optional(),
-                    ville: z.coerce.string(),
-                    cp: z.coerce.number().optional(),
-                    departement: z.string(),
-                    isNotAvailable: z.coerce.boolean().optional(),
-                    statut: z.string().nullable(),
-                    meuble: z.boolean().nullable(),
-                    dateEnr: z.coerce.date().optional(),
-                    dateMaj: z.coerce.date().optional(),
-                    latitude: z.coerce.number().nullable(),
-                    longitude: z.coerce.number().nullable(),
-                    videoLink: z.string().nullable().optional(),
-                    urlBien: z.string().nullable(),
-                    publishedInWebSite: z.coerce.boolean().optional(),
-                    publishedInApp: z.coerce.boolean().optional(),
-                    visiteImmediat: z.boolean().optional(),
-                    bienCategory: z.string().nullable().optional(),
-                    chauffages: z.string().nullable(),
-                }).parse(item);
+            currentItem = item;
+            const mandatData = z.object({
+                reference: z.string(),
+                typeOffreCode: z.string().optional().default('vente'),
+                typeOffre: z.string().optional().default('vente'),
+                corps: z.string(),
+                prix: z.coerce.number().min(0),
+                charges: z.coerce.string().nullable(),
+                foncier: z.coerce.number().nullable(),
+                typeMandat: z.string().optional().default('basique'),
+                typeBien: z.string().optional().default(''),
+                typeBienCode: z.string().optional().default(''),
+                surfaceHabitable: z.coerce.number().nullable().optional(),
+                nbPieces: z.coerce.number().nullable().optional(),
+                chambres: z.coerce.number().nullable(),
+                nbEtages: z.coerce.number().nullable().optional(),
+                etage: z.coerce.number().nullable(),
+                sdb: z.coerce.number().nullable(),
+                wc: z.coerce.number().nullable(),
+                cuisine: z.number().nullable().optional(),
+                energieChauffage: z.string().nullable().optional(),
+                formatChauffage: z.string().nullable().optional(),
+                parking: z.coerce.number().optional(),
+                piscine: z.coerce.boolean().optional(),
+                terrasse: z.coerce.number().optional(),
+                exposition: z.string().nullable(),
+                anneeConstruction: z.coerce.number().nullable().optional(),
+                ascenseur: z.boolean().nullable(),
+                balcon: z.number().nullable().optional(),
+                ville: z.coerce.string(),
+                cp: z.coerce.number().optional(),
+                departement: z.string(),
+                isNotAvailable: z.coerce.boolean().optional(),
+                statut: z.string().nullable(),
+                meuble: z.boolean().nullable(),
+                dateEnr: z.coerce.date().optional(),
+                dateMaj: z.coerce.date().optional(),
+                latitude: z.coerce.number().nullable(),
+                longitude: z.coerce.number().nullable(),
+                videoLink: z.string().nullable().optional(),
+                urlBien: z.string().nullable(),
+                publishedInWebSite: z.coerce.boolean().optional(),
+                publishedInApp: z.coerce.boolean().optional(),
+                visiteImmediat: z.boolean().optional(),
+                bienCategory: z.string().nullable().optional(),
+                chauffages: z.string().nullable(),
+            }).parse(item);
 
             // Vérifie si le mandat existe déjà
             const dbMandat = await prisma.mandat.findUnique({
@@ -165,9 +161,25 @@ export async function insertMandats(data: any[]) {
                     await syncMandatPhotos(dbMandat.id, photosData);
                 }
             }
-        }} catch (error) {
-            console.log(currentItem)
-            console.error("Erreur lors de l'insertion :", error);
         }
-        console.log("Insertion réussie !");
+
+        // Suppression des mandats obsolètes
+        const importedRefs = data.map(item => item.reference); // Récupérer les réf de mandats importés
+
+        const refsToDelete = existingMandatRefs.filter(ref => !importedRefs.includes(ref)); // Réf des mandats à supprimer
+
+        // Supprimer les mandats et photos associées
+        for (const ref of refsToDelete) {
+            const mandat = await prisma.mandat.findUnique({ where: { reference: ref } });
+            if (mandat) {
+                await prisma.mandatPhoto.deleteMany({ where: { mandatId: mandat.id } }); // Supprimer les photos associées
+                await prisma.mandat.delete({ where: { id: mandat.id } }); // Supprimer le mandat
+            }
+        }
+
+    } catch (error) {
+        console.log(currentItem);
+        console.error("Erreur lors de l'insertion :", error);
+    }
+    console.log("Insertion et synchronisation terminées !");
 }
