@@ -14,74 +14,86 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Mandat {
-  id                Int      @id @default(autoincrement())
-  reference         String
-  typeOffreCode     String
-  typeOffre         String
-  corps             String
-  prix              Int
-  charges           String?
-  foncier           Int?
-  typeMandat        String
-  typeBien          String
-  typeBienCode      String
-  surfaceHabitable  Int?
-  nbPieces          Int?
-  chambres          Int?
-  nbEtages          Int?
-  etage             Int?
-  sdb               Int?
-  wc                Int?
-  cuisine           Int?
-  energieChauffage  String?
-  formatChauffage   String?
-  parking           Int?
-  piscine           Boolean?
-  terrasse          Int?
-  exposition        String?
-  anneeConstruction Int?
-  ascenseur         Boolean?
-  balcon            Int?
-  ville             String
-  cp                Int?
-  departement       String
-  isNotAvailable    Boolean?
-  statut            String?
-  meuble            Boolean?
-  dateEnr           DateTime?
-  dateMaj           DateTime?
-  latitude          Float?
-  longitude         Float?
-  videoLink         String?
-  urlBien           String?
+  id                 Int           @id @default(autoincrement())
+  reference          String
+  typeOffreCode      String
+  typeOffre          String
+  corps              String
+  prix               Int
+  charges            String?
+  foncier            Int?
+  typeMandat         String
+  typeBien           String
+  typeBienCode       String
+  surfaceHabitable   Int?
+  nbPieces           Int?
+  chambres           Int?
+  nbEtages           Int?
+  etage              Int?
+  sdb                Int?
+  wc                 Int?
+  cuisine            Int?
+  energieChauffage   String?
+  formatChauffage    String?
+  parking            Int?
+  piscine            Boolean?
+  terrasse           Int?
+  exposition         String?
+  anneeConstruction  Int?
+  ascenseur          Boolean?
+  balcon             Int?
+  ville              String
+  cp                 Int?
+  departement        String
+  isNotAvailable     Boolean?
+  statut             String?
+  meuble             Boolean?
+  dateEnr            DateTime?
+  dateMaj            DateTime?
+  latitude           Float?
+  longitude          Float?
+  videoLink          String?
+  urlBien            String?
   publishedInWebSite Boolean?
   publishedInApp     Boolean?
   visiteImmediat     Boolean?
   bienCategory       String?
   chauffages         String?
-  photos            MandatPhoto[]
+  photos             MandatPhoto[]
 }
 
 model MandatPhoto {
-  id        Int     @id @default(autoincrement())
-  mandatId  Int?
-  filename  String  @db.VarChar(255)
-  src       String  @default("") @db.VarChar(255)
-  position  Int?
-  mandat    Mandat? @relation(fields: [mandatId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  id       Int     @id @default(autoincrement())
+  mandatId Int?
+  filename String  @db.VarChar(255)
+  src      String  @default("") @db.VarChar(255)
+  position Int?
+  mandat   Mandat? @relation(fields: [mandatId], references: [id], onDelete: Restrict, onUpdate: Restrict)
 
   @@index([mandatId])
 }
 
 model User {
-  id                Int      @id @default(autoincrement())
-  email             String   @unique @db.VarChar(255)
-  authToken         String?  @db.VarChar(255)
-  tokenCreatedAt    DateTime?
-  isSubscribed      Boolean  @default(true)
-  createdAt         DateTime @default(now())
+  id             Int       @id @default(autoincrement())
+  email          String    @unique @db.VarChar(255)
+  authToken      String?   @db.VarChar(255)
+  tokenCreatedAt DateTime?
+  isSubscribed   Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+
+  @@index([email])
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  firstName String?  @db.VarChar(100)
+  lastName  String?  @db.VarChar(100)
+  email     String   @db.VarChar(255)
+  phone     String?  @db.VarChar(30)
+  subject   String?  @db.VarChar(255)
+  message   String?
+  createdAt DateTime @default(now())
 
   @@index([email])
 }
