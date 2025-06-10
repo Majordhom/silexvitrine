@@ -85,3 +85,16 @@ model User {
 
   @@index([email])
 }
+
+model SearchQuery {
+  id         String   @id @default(cuid())
+  sessionId  String?  @db.VarChar(255)
+  email      String?  @db.VarChar(255)
+  criteria   Json
+  userAgent  String?
+  ip         String?
+  createdAt  DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([email])
+}
