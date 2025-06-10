@@ -1,0 +1,238 @@
+@use 'tailwindcss';
+@use "sass:map";
+
+$modalMaxWidth: (
+  '3xs': 256,
+  '2xs': 288,
+  'xs': 320,
+  'sm': 384,
+  'md': 448,
+  'lg': 512,
+  'xl': 576,
+  '2xl': 672,
+  '3xl': 768,
+  '4xl': 896,
+  '5xl': 1024,
+  '6xl': 1152,
+  '7xl': 1280
+);
+
+$baseColors: (
+  'white': hsl(0, 0%, 100%),
+  'grey': hsl(0, 0%, 71%),
+  'blackWarm': hsl(0, 0%, 23%),
+  'black': hsl(0, 0%, 0%),
+  'red': hsl(0, 100%, 40%),
+  'blue': hsl(225, 100%, 70%),
+  'yellow': hsl(53, 100%, 76%),
+  'orange': hsl(25, 100%, 50%),
+  'green': hsl(106, 100%, 31%),
+  'purple': hsl(270, 50%, 40%),
+  'grayStone': hsl(60, 5%, 96%),
+  'darkerGrayStone': hsl(60, 14%, 96%),
+
+  // Mandat Statuses
+  'mandatEnCreation': hsl(35, 93%, 42%),
+  'mandatEnModeration': hsl(30, 100%, 50%),
+  'mandatActif': hsl(124, 77%, 37%),
+  'mandatSousCompromis': hsl(315, 100%, 38%),
+  'mandatVendu': hsl(301, 71%, 23%),
+  'mandatLoue': hsl(301, 71%, 23%),
+  'mandatArchive': hsl(90, 8%, 30%),
+
+  // Project Statuses
+  'projectRdvAConfirmer': hsl(216, 100%, 50%),
+  'projectAttenteBdv': hsl(232, 100%, 29%),
+  'projectVisiteProgrammee': hsl(232, 100%, 29%),
+  'projectVisiteAnnulee': hsl(222, 21%, 29%),
+  'projectAvisRedige': hsl(216, 100%, 34%),
+
+  'projectOffreEnCours': hsl(342, 97%, 61%),
+  'projectAttenteCompromis': hsl(342, 97%, 61%),
+  'projectSousCompromis': hsl(315, 100%, 38%),
+  'projectVendu': hsl(301, 71%, 23%),
+
+  'projectNouveau': hsl(124, 77%, 37%),
+  'projectReattribution': hsl(124, 77%, 37%),
+  'projectARappeler': hsl(37, 100%, 50%),
+  'projectInjoignable': hsl(2, 98%, 49%),
+  'projectRapprochementEnCours': hsl(21, 100%, 45%),
+  'projectStandBy': hsl(28, 22%, 41%),
+  'projectArchive': hsl(90, 8%, 30%),
+
+  'projectContreVisiteAConfirmer': hsl(260, 100%, 50%),
+  'projectContreVisiteAttenteBdv': hsl(260, 72%, 42%),
+  'projectContreVisiteProgrammee': hsl(260, 72%, 42%),
+
+  'userInactif': hsl(47, 68%, 64%)
+);
+
+$themeColors: (
+  primary: map.get($baseColors, 'purple'),
+  secondary: map.get($baseColors, 'blackWarm'),
+  default: map.get($baseColors, 'grey'),
+  danger: map.get($baseColors, 'red'),
+  success: map.get($baseColors, 'green'),
+  warning: map.get($baseColors, 'orange'),
+  text: map.get($baseColors, 'black'),
+  textLight: map.get($baseColors, 'blackWarm'),
+  textHighlight: map.get($baseColors, 'white'),
+  background: map.get($baseColors, 'grayStone'),
+  backgroundLight:map.get($baseColors, 'darkerGrayStone'),
+);
+
+$colors: map.merge($baseColors, $themeColors);
+
+@theme {
+  @each $name, $value in $colors {
+    --color-#{$name}: #{$value};
+  }
+}
+
+// safelist for tailwind
+@source inline('md:grid-cols-{1,2,3,4,5,6}');
+@source inline('bg-gray-400');
+@each $name, $value in $colors {
+  @source inline('from-#{$name}');
+  @source inline('bg-#{$name}');
+  @source inline('hover:bg-#{$name}');
+  @source inline('hover:bg-#{$name}/15');
+  @source inline('text-#{$name}');
+  @source inline('hover:text-#{$name}');
+  @source inline('border-#{$name}');
+  @source inline('hover:border-#{$name}');
+}
+@each $name, $value in $modalMaxWidth {
+  @source inline('sm:max-w-[#{$value}px]');
+}
+
+:root {
+  font-size: 15px;
+}
+
+body {
+  color:  map.get($themeColors, 'black');
+  background-color:  map.get($themeColors, 'background');
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-y: scroll;
+  max-width: 100vw;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+
+  &.modal-open {
+    overflow: hidden;
+  }
+
+  //&.loading {
+  //  background-image: url('/img/silex.logo_baseline.gif');
+  //  background-repeat: no-repeat;
+  //  background-position: center;
+  //  background-color: white;
+  //}
+
+  ::-moz-selection {
+    background: map.get($colors, 'primary');
+    color: map.get($colors, 'white');
+  }
+
+  ::selection {
+    background: map.get($colors, 'primary');
+    color: map.get($colors, 'white');
+  }
+
+  button {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .custom-scrollbar {
+    & {
+      scrollbar-color: #c1c1c1 transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #c1c1c1;
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  }
+
+  .-mt-screen {
+    margin-top: -100vh;
+  }
+
+  .no-calendar {
+    *::-webkit-inner-spin-button,
+    *::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
+    }
+  }
+
+  .no-clock {
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
+    }
+  }
+
+  .card-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    perspective: 1000px;
+
+    &.animated {
+      .card-front-face,
+      .card-back-face {
+        transition: transform 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+      }
+    }
+
+    &.card-inner-flipped {
+      .card-front-face {
+        transform: rotateY(180deg);
+      }
+
+      .card-back-face {
+        transform: rotateY(360deg);
+      }
+    }
+
+    .card-front-face {
+      grid-column: 1;
+      grid-row: 1;
+      backface-visibility: hidden;
+      transform: rotateY(0deg);
+    }
+
+    .card-back-face {
+      grid-column: 1;
+      grid-row: 1;
+      position: relative;
+      backface-visibility: hidden;
+      transform: rotateY(180deg);
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
