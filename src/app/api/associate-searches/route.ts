@@ -4,7 +4,7 @@ import { getOrCreateSessionId } from '@/app/_lib/session';
 
 export async function POST(req: NextRequest) {
     const { email } = await req.json();
-    const sessionId = getOrCreateSessionId();
+    const sessionId = await getOrCreateSessionId();
 
     if (!email) {
         return NextResponse.json({ error: 'Email is required' }, { status: 400 });

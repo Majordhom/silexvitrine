@@ -30,7 +30,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
     const isActive = (path: Url) => pathname === path;
 
     return (
-        <nav className="pb-4 md:pb-8 flex justify-between items-center">
+        <nav className="p-4 md:pb-8 flex justify-between items-center">
             <Link
                 href="/"
                 className="text-lg md:text-3xl font-bold text-spotify-green"
