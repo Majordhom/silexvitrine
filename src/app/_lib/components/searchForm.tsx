@@ -4,7 +4,7 @@ import { Input } from "@/app/_lib/ui-kit/components/input";
 import { Select } from "@/app/_lib/ui-kit/components/select";
 import { Button } from "@/app/_lib/ui-kit/components/button";
 
-const nbPiecesOptions = [
+const nb_piecesOptions = [
     { key: "1", label: "1" },
     { key: "2", label: "2" },
     { key: "3", label: "3" },
@@ -13,7 +13,7 @@ const nbPiecesOptions = [
     { key: "6", label: "6 et +" },
 ];
 
-const typeBienOptions = [
+const type_bienOptions = [
     { key: "Appartement", label: "Appartement" },
     { key: "Villa", label: "Villa" },
     { key: "Maison", label: "Maison" },
@@ -31,7 +31,7 @@ const typeBienOptions = [
     { key: "Local d'activité", label: "Local d'activité" },
 ];
 
-const energieChauffageOptions = [
+const energie_chauffageOptions = [
     { key: "Accumulateurs", label: "Accumulateurs" },
     { key: "Air pulsé", label: "Air pulsé" },
     { key: "Climatisation réversible", label: "Climatisation réversible" },
@@ -49,9 +49,9 @@ const energieChauffageOptions = [
 ];
 
 const initialState = {
-    nbPieces: "",
-    typeBien: "",
-    energieChauffage: "",
+    nb_pieces: "",
+    type_bien: "",
+    energie_chauffage: "",
     prixMin: "",
     prixMax: "",
     secteur: "",
@@ -76,25 +76,25 @@ return (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <Select
                 label="Nombre de pièces"
-                value={values.nbPieces}
-                onChange={(v) => handleChange("nbPieces", v || "")}
-                options={nbPiecesOptions}
+                value={values.nb_pieces}
+                onChange={(v) => handleChange("nb_pieces", v || "")}
+                options={nb_piecesOptions}
                 placeholder="Sélectionnez..."
             />
             <Select
                 label="Type de bien"
-                value={values.typeBien}
-                onChange={(v) => handleChange("typeBien", v || "")}
-                options={typeBienOptions}
+                value={values.type_bien}
+                onChange={(v) => handleChange("type_bien", v || "")}
+                options={type_bienOptions}
                 placeholder="Sélectionnez..."
             />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <Select
                 label="Type de chauffage"
-                value={values.energieChauffage}
-                onChange={(v) => handleChange("energieChauffage", v || "")}
-                options={energieChauffageOptions}
+                value={values.energie_chauffage}
+                onChange={(v) => handleChange("energie_chauffage", v || "")}
+                options={energie_chauffageOptions}
                 placeholder="Sélectionnez..."
             />
             <Input

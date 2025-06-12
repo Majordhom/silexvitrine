@@ -18,30 +18,30 @@ datasource db {
 model Mandat {
   id                 Int      @id @default(autoincrement())
   reference          String   @unique
-  typeOffreCode      String
-  typeOffre          String
+  type_offre_code      String
+  type_offre          String
   corps              String
   prix               Int
   charges            String?
   foncier            Int?
-  typeMandat         String
-  typeBien           String
-  typeBienCode       String
-  surfaceHabitable   Int?
-  nbPieces           Int?
+  type_mandat         String
+  type_bien           String
+  type_bien_code       String
+  surface_habitable   Int?
+  nb_pieces           Int?
   chambres           Int?
-  nbEtages           Int?
+  nb_etages           Int?
   etage              Int?
   sdb                Int?
   wc                 Int?
   cuisine            Int?
-  energieChauffage   String?
-  formatChauffage    String?
+  energie_chauffage   String?
+  format_chauffage    String?
   parking            Int?
   piscine            Boolean?
   terrasse           Int?
   exposition         String?
-  anneeConstruction  Int?
+  annee_construction  Int?
   ascenseur          Boolean?
   balcon             Int?
   ville              String
@@ -54,12 +54,12 @@ model Mandat {
   dateMaj            DateTime?
   latitude           Float?
   longitude          Float?
-  videoLink          String?
+  video_link          String?
   urlBien            String?
   publishedInWebSite Boolean?
   publishedInApp     Boolean?
-  visiteImmediat     Boolean?
-  bienCategory       String?
+  visite_immediat     Boolean?
+  bien_category       String?
   chauffages         String?
   photos            MandatPhoto[]
 }

@@ -19,12 +19,12 @@ export default async function Annonces() {
                             annonce={{
                                 id: annonce.id,
                                 reference: annonce.reference,
-                                typeBien: annonce.typeBien,
+                                type_bien: annonce.type_bien,
                                 prix: annonce.prix,
                                 ville: annonce.ville,
                                 cp: annonce.cp,
-                                nbPieces: annonce.nbPieces,
-                                surfaceHabitable: annonce.surfaceHabitable,
+                                nb_pieces: annonce.nb_pieces,
+                                surface_habitable: annonce.surface_habitable,
                                 photos: annonce.photos,
                             }}
                         />

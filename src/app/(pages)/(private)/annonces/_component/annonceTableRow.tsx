@@ -3,12 +3,12 @@ import { AnnonceCardHeader } from "./annonceCardHeader";
 export type Annonce = {
     id: number;
     reference: string;
-    typeBien: string;
+    type_bien: string;
     prix: number;
     ville: string;
     cp?: number;
-    nbPieces?: number;
-    surfaceHabitable?: number;
+    nb_pieces?: number;
+    surface_habitable?: number;
     photos?: { src: string }[];
 };
 
