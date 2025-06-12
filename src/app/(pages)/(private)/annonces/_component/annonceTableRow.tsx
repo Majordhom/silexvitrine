@@ -6,9 +6,9 @@ export type Annonce = {
     type_bien: string;
     prix: number;
     ville: string;
-    cp?: number;
-    nb_pieces?: number;
-    surface_habitable?: number;
+    cp: number | null;
+    nb_pieces: number | null;
+    surface_habitable: number | null;
     photos?: { src: string }[];
 };
 
