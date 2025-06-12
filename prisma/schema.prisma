@@ -16,7 +16,7 @@ datasource db {
 
 
 model Mandat {
-  id                 Int           @id @default(autoincrement())
+  id                 Int      @id @default(autoincrement())
   reference          String   @unique
   typeOffreCode      String
   typeOffre          String
