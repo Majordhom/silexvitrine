@@ -22,9 +22,9 @@ export default async function Annonces() {
                                 type_bien: annonce.type_bien,
                                 prix: annonce.prix,
                                 ville: annonce.ville,
-                                cp: annonce.cp,
-                                nb_pieces: annonce.nb_pieces,
-                                surface_habitable: annonce.surface_habitable,
+                                cp: annonce.cp ?? undefined,
+                                nb_pieces: annonce.nb_pieces ?? undefined,
+                                surface_habitable: annonce.surface_habitable ?? undefined,
                                 photos: annonce.photos,
                             }}
                         />

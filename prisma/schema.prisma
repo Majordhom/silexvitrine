@@ -41,7 +41,7 @@ model Mandat {
   piscine            Boolean?
   terrasse           Int?
   exposition         String?
-  annee_construction  Int?
+  annee_construction  String?
   ascenseur          Boolean?
   balcon             Int?
   ville              String
