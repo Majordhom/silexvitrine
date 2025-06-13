@@ -4,15 +4,14 @@ import { Annonce } from "./annonceTableRow";
 export function AnnonceCardHeader({ annonce }: { annonce: Annonce }) {
     console.log(annonce);
     return (
-        <div className="w-64 aspect-square bg-white rounded-2xl shadow-md flex flex-col overflow-hidden">
-            {/* Photo (2/3 du haut) */}
+        <div className="h-full w-full aspect-square bg-white rounded-2xl shadow-md flex flex-col overflow-hidden">
             <div className="relative w-full" style={{ height: "66%" }}>
                 {annonce.photos && annonce.photos.length > 0 ? (
                     <Image
                         src={annonce.photos[0].src}
                         alt="photo"
                         fill
-                        className="object-cover w-full h-full rounded-t-2xl"
+                        className="object-cover w-full h-full rounded-2xl"
                         sizes="256px"
                         priority
                     />
@@ -22,11 +21,11 @@ export function AnnonceCardHeader({ annonce }: { annonce: Annonce }) {
                     </div>
                 )}
             </div>
-            {/* Infos (1/3 du bas) */}
-            <div className="flex flex-col justify-center items-center flex-1 px-3 py-2 gap-1">
+            <div className="flex flex-col justify-center flex-1 px-3 py-2 gap-1">
                 <div className="text-xl font-bold text-primary">{annonce.prix.toLocaleString()}€</div>
                 <div className="text-sm text-gray-700">
                     {annonce.type_bien}
+                    {annonce.nb_pieces ? ` • ${annonce.nb_pieces }   pièces` : ""}
                     {annonce.surface_habitable ? ` • ${annonce.surface_habitable} m²` : ""}
                 </div>
                 <div className="text-xs text-gray-500">

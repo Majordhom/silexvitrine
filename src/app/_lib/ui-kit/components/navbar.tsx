@@ -9,7 +9,7 @@ interface INavbarProps {}
 
 const navItems = [
     {
-        id: "accueil",
+        id: "(accueil)",
         label: "Accueil",
         href: "/",
     },
@@ -42,9 +42,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
                     <li key={eachItem.id}>
                         <Link
                             href={eachItem.href}
-                            className={`${
-                                isActive(eachItem.href) ? "text-spotify-green" : ""
-                            }`}
+                            className={`${isActive(eachItem.href) ? "text-spotify-green" : ""}`}
                         >
                             {eachItem.label}
                         </Link>
