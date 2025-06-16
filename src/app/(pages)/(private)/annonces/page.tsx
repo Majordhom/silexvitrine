@@ -24,7 +24,16 @@ export default async function Annonces({ searchParams }: { searchParams: { page?
         <div>
             <main className="flex flex-col bg-white gap-[32px] row-start-2 items-center mx-auto px-8 sm:px-8 lg:px-0">
                 <div className="w-full max-w-5xl flex flex-col gap-8">
-                    {/* ... titre et ModalSearch ... */}
+                    <div className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex flex-col text-center sm:text-left sm:items-start">
+                            <h1 className="text-5xl mb-4 text-primary font-bold">Découvrez nos biens</h1>
+                            <p className="text-gray-600">Explorez notre sélection de propriétés récemment publiées.
+                                Chacune d'elles offre un cadre de vie unique et moderne.</p>
+                        </div>
+                        <div className="mt-4 sm:mt-0 flex justify-center sm:justify-end w-full sm:w-auto">
+                            <ModalSearch/>
+                        </div>
+                    </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                         {annonces.map((annonce) => (
                             <AnnonceTableRow
@@ -60,7 +69,6 @@ export default async function Annonces({ searchParams }: { searchParams: { page?
                     </div>
                 </div>
             </main>
-            {/*<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>*/}
         </div>
     );
 }
