@@ -9,7 +9,9 @@ const ModalSearch: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     return (
         <>
-            <Button className={"self-center"} onClick={() => setIsModalOpen(true)}>
+            <Button className={"self-center"}
+                    onClick={() => setIsModalOpen(true)}
+                    color="primary">
                 Rechercher
             </Button>
 

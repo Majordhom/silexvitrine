@@ -52,7 +52,7 @@ export default async function RootLayout({
           />
       </Head>
       <body className="font-titillium-web antialiased p-4 container md:mx-auto md:p-10 bg-spotify-black">
-          <div  className="bg-white grid grid-rows-[20px_1fr_20px] font-[family-name:var(--font-geist-sans)]">
+          <div  className="bg-white pt-8 grid grid-rows-[20px_1fr_20px] font-[family-name:var(--font-geist-sans)]">
             {children}
           </div>
       </body>

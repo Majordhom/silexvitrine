@@ -52,7 +52,7 @@ export default async function RootLayout({
           />
       </Head>
       <body className="font-titillium-web antialiased p-4 container md:mx-auto md:p-10 bg-spotify-black">
-      <Navbar/>
+      <Navbar />
       {children}
       </body>
       </html>

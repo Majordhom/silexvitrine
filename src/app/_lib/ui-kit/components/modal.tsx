@@ -62,7 +62,7 @@ export const Modal = ({
             {/* Modal container */}
             <section
                 className={`
-          relative w-full max-h-dvh overflow-auto bg-white
+          relative w-full max-h-dvh overflow-auto bg-gray-200
           ${modalMaxWidth[size]}
           ${size !== "full" ? "rounded-2xl" : ""}
           sm:mx-4
