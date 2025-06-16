@@ -6,7 +6,11 @@ import { Input } from "@/app/_lib/ui-kit/components/input";
 import { Select } from "@/app/_lib/ui-kit/components/select";
 import { Textarea } from "@/app/_lib/ui-kit/components/textarea";
 
-const ContactForm = () => {
+type ContactFormProps = {
+    className?: string;
+}
+
+const ContactForm = ({className}: ContactFormProps) => {
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -59,16 +63,10 @@ const ContactForm = () => {
             setIsSubmitting(false);
         }
 
-        // test Simulation d'envoi
-        // setTimeout(() => {
-        //     console.log("Formulaire soumis:", formData);
-        //     setIsSubmitting(false);
-        //     alert("Merci pour votre message ! Nous vous répondrons bientôt.");
-        // }, 1500);
     };
 
     return (
-        <div className="max-w-4xl mx-auto px-4 py-8">
+        <div className={`max-w-4xl mx-auto px-4 py-8 ${className}` }>
             <div className="text-center mb-12">
                 <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
                     Contactez-nous
@@ -97,7 +95,7 @@ const ContactForm = () => {
                     </div>
 
                     {/* Email et Téléphone */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-6">
                         <Input
                             label="Email"
                             value={formData.email}
