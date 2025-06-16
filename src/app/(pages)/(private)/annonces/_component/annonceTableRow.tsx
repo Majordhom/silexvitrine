@@ -1,4 +1,5 @@
 import { AnnonceCardHeader } from "./annonceCardHeader";
+import Link from "next/link";
 
 export type Annonce = {
     id: number;
@@ -13,5 +14,9 @@ export type Annonce = {
 };
 
 export function AnnonceTableRow({ annonce }: { annonce: Annonce }) {
-    return <AnnonceCardHeader annonce={annonce} />;
+    return (
+        <Link href={`/annonces/${annonce.id}`}>
+            <AnnonceCardHeader annonce={annonce} />
+        </Link>
+    );
 }
