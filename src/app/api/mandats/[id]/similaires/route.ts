@@ -1,0 +1,49 @@
+import { NextResponse } from 'next/server';
+import { prisma } from '@/app/_lib/prisma';
+
+export async function GET(request: Request, { params }: { params: { id: string } }) {
+    const id = parseInt(params.id);
+
+    if (isNaN(id)) {
+        return NextResponse.json({ error: 'ID invalide' }, { status: 400 });
+    }
+
+    // Récupérer le mandat courant pour connaître son secteur et type
+    const mandat = await prisma.mandat.findUnique({
+        where: { id },
+        select: {
+            id: true,
+            type_bien: true,
+            cp: true,
+        },
+    });
+
+    if (!mandat) {
+        return NextResponse.json({ error: 'Mandat introuvable' }, { status: 404 });
+    }
+
+    // Récupérer 3 biens similaires (même secteur OU même type de bien), exclure celui-ci
+    const similaires = await prisma.mandat.findMany({
+        where: {
+            id: { not: id },
+            cp: mandat.cp, // même code postal
+            type_bien: mandat.type_bien, // même type de bien
+        },
+        orderBy: { prix: 'desc' },
+        take: 3,
+        select: {
+            id: true,
+            prix: true,
+            type_bien: true,
+            surface_habitable: true,
+            cp: true,
+            ville: true,
+            photos: {
+                select: { src: true },
+                take: 1,
+            },
+        },
+    });
+
+    return NextResponse.json(similaires);
+}
