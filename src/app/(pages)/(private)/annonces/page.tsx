@@ -2,31 +2,29 @@ import { prisma } from "@/app/_lib/prisma";
 import { AnnonceTableRow } from "./_component/annonceTableRow";
 import ModalSearch from "@/app/_lib/components/modalSearch";
 
+const PAGE_SIZE = 12;
 
-export default async function Annonces() {
-    const annonces = await prisma.mandat.findMany({
-        orderBy: { dateMaj: "desc" },
-        include: { photos: true },
-        take: 30,
-    });
+export default async function Annonces({ searchParams }: { searchParams: { page?: string } }) {
+    const page = Math.max(1, parseInt(searchParams.page || "1", 10));
+    const skip = (page - 1) * PAGE_SIZE;
 
+    const [annonces, total] = await Promise.all([
+        prisma.mandat.findMany({
+            orderBy: { dateMaj: "desc" },
+            include: { photos: true },
+            skip,
+            take: PAGE_SIZE,
+        }),
+        prisma.mandat.count(),
+    ]);
 
-    console.log("info annonces", annonces)
+    const totalPages = Math.ceil(total / PAGE_SIZE);
 
     return (
         <div>
             <main className="flex flex-col bg-white gap-[32px] row-start-2 items-center mx-auto px-8 sm:px-8 lg:px-0">
                 <div className="w-full max-w-5xl flex flex-col gap-8">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                        <div className="flex-1">
-                            <h1 className="text-4xl font-bold text-left">Découvrez nos biens</h1>
-                            <p className="text-left">Explorez notre sélection de propriétés récemment publiées. Chacune
-                                d&#39;elles offre un cadre de vie unique et moderne.</p>
-                        </div>
-                        <div className="w-full sm:w-auto flex justify-center sm:justify-end">
-                            <ModalSearch/>
-                        </div>
-                    </div>
+                    {/* ... titre et ModalSearch ... */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
                         {annonces.map((annonce) => (
                             <AnnonceTableRow
@@ -45,9 +43,24 @@ export default async function Annonces() {
                             />
                         ))}
                     </div>
+                    <div className="flex justify-center gap-4 mt-6">
+                        <a
+                            href={`?page=${page - 1}`}
+                            className={`px-4 py-2 rounded ${page <= 1 ? "pointer-events-none opacity-50" : "bg-gray-200 hover:bg-gray-300"}`}
+                        >
+                            Précédent
+                        </a>
+                        <span className="px-4 py-2">{page} / {totalPages}</span>
+                        <a
+                            href={`?page=${page + 1}`}
+                            className={`px-4 py-2 rounded ${page >= totalPages ? "pointer-events-none opacity-50" : "bg-gray-200 hover:bg-gray-300"}`}
+                        >
+                            Suivant
+                        </a>
+                    </div>
                 </div>
             </main>
-            <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>
+            {/*<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>*/}
         </div>
     );
 }

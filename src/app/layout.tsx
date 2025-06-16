@@ -5,6 +5,7 @@ import { Titillium_Web } from "next/font/google";
 import "./globals.scss";
 import Head from "next/head";
 import Navbar from "@/app/_lib/ui-kit/components/navbar";
+import Footer from "@/app/_lib/ui-kit/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,9 +52,11 @@ export default async function RootLayout({
               rel="stylesheet"
           />
       </Head>
+
       <body className="font-titillium-web antialiased p-4 container md:mx-auto md:p-10 bg-spotify-black">
-      <Navbar />
-      {children}
+        <Navbar/>
+        {children}
+        <Footer/>
       </body>
       </html>
   );
