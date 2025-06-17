@@ -4,18 +4,40 @@ import ModalSearch from "@/app/_lib/components/modalSearch";
 
 const PAGE_SIZE = 12;
 
-export default async function Annonces({ searchParams }: { searchParams: { page?: string } }) {
+export default async function Annonces({
+                                           searchParams,
+                                       }: {
+    searchParams: {
+        page?: string;
+        nb_pieces?: string;
+        type_bien?: string;
+        //energie_chauffage?: string;
+        prixMin?: string;
+        prixMax?: string;
+        secteur?: string;
+    };
+}) {
     const page = Math.max(1, parseInt(searchParams.page || "1", 10));
     const skip = (page - 1) * PAGE_SIZE;
 
+    // Construction dynamique du filtre Prisma
+    const where: any = {};
+    if (searchParams.nb_pieces) where.nb_pieces = Number(searchParams.nb_pieces);
+    if (searchParams.type_bien) where.type_bien = searchParams.type_bien;
+    //if (searchParams.energie_chauffage) where.energie_chauffage = searchParams.energie_chauffage;
+    if (searchParams.prixMin) where.prix = { ...where.prix, gte: Number(searchParams.prixMin) };
+    if (searchParams.prixMax) where.prix = { ...where.prix, lte: Number(searchParams.prixMax) };
+    if (searchParams.secteur) where.cp = searchParams.secteur;
+
     const [annonces, total] = await Promise.all([
         prisma.mandat.findMany({
+            where,
             orderBy: { dateMaj: "desc" },
             include: { photos: true },
             skip,
             take: PAGE_SIZE,
         }),
-        prisma.mandat.count(),
+        prisma.mandat.count({ where }),
     ]);
 
     const totalPages = Math.ceil(total / PAGE_SIZE);
@@ -31,7 +53,7 @@ export default async function Annonces({ searchParams }: { searchParams: { page?
                                 Chacune d'elles offre un cadre de vie unique et moderne.</p>
                         </div>
                         <div className="mt-4 sm:mt-0 flex justify-center sm:justify-end w-full sm:w-auto">
-                            <ModalSearch/>
+                            <ModalSearch />
                         </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">

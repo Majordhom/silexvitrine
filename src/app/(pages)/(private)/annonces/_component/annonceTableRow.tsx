@@ -15,8 +15,6 @@ export type Annonce = {
 
 export function AnnonceTableRow({ annonce }: { annonce: Annonce }) {
     return (
-        <Link href={`/annonces/${annonce.id}`}>
-            <AnnonceCardHeader annonce={annonce} />
-        </Link>
+        <AnnonceCardHeader annonce={annonce} />
     );
 }

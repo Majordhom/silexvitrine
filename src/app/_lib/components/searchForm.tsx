@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/app/_lib/ui-kit/components/input";
 import { Select } from "@/app/_lib/ui-kit/components/select";
 import { Button } from "@/app/_lib/ui-kit/components/button";
@@ -17,7 +17,7 @@ const type_bienOptions = [
     { key: "Appartement", label: "Appartement" },
     { key: "Villa", label: "Villa" },
     { key: "Maison", label: "Maison" },
-    { key: "Rez-de-Jardin", label: "Rez-de-Jardin" },
+    { key: "Rez-de-jardin", label: "Rez-de-Jardin" },
     { key: "Studio", label: "Studio" },
     { key: "Chambre", label: "Chambre" },
     { key: "Duplex", label: "Duplex" },
@@ -27,38 +27,50 @@ const type_bienOptions = [
     { key: "Garage", label: "Garage" },
     { key: "Immeuble", label: "Immeuble" },
     { key: "Commerce", label: "Commerce" },
-    { key: "Terrain constructible", label: "Terrain constructible" },
-    { key: "Local d'activité", label: "Local d'activité" },
+    { key: "Terrain", label: "Terrain constructible" },
+    { key: "Local-activite", label: "Local d'activité" },
 ];
 
-const energie_chauffageOptions = [
-    { key: "Accumulateurs", label: "Accumulateurs" },
-    { key: "Air pulsé", label: "Air pulsé" },
-    { key: "Climatisation réversible", label: "Climatisation réversible" },
-    { key: "Convecteur", label: "Convecteur" },
-    { key: "Fluide caloporteur", label: "Fluide caloporteur" },
-    { key: "Plafond", label: "Plafond" },
-    { key: "Pompe à chaleur", label: "Pompe à chaleur" },
-    { key: "Rayonnement", label: "Rayonnement" },
-    { key: "Au sol et plafond", label: "Au sol et plafond" },
-    { key: "Au sol", label: "Au sol" },
-    { key: "Cheminée", label: "Cheminée" },
-    { key: "Insert", label: "Insert" },
-    { key: "Poêle", label: "Poêle" },
-    { key: "Radiateur", label: "Radiateur" },
-];
+// const energie_chauffageOptions = [
+//     { key: "accumulateurs", label: "Accumulateurs" },
+//     { key: "air-pulse", label: "Air pulsé" },
+//     { key: "clim-reversible", label: "Climatisation réversible" },
+//     { key: "convecteur", label: "Convecteur" },
+//     { key: "fluide-caloporteur", label: "Fluide caloporteur" },
+//     { key: "plafond", label: "Plafond" },
+//     { key: "pompe-a-chaleur", label: "Pompe à chaleur" },
+//     { key: "rayonnement", label: "Rayonnement" },
+//     { key: "sol-plafond", label: "Au sol et plafond" },
+//     { key: "au-sol", label: "Au sol" },
+//     { key: "cheminee", label: "Cheminée" },
+//     { key: "insert", label: "Insert" },
+//     { key: "poele", label: "Poêle" },
+//     { key: "radiateur", label: "Radiateur" },
+// ];
 
 const initialState = {
     nb_pieces: "",
     type_bien: "",
-    energie_chauffage: "",
+    //energie_chauffage: "",
     prixMin: "",
     prixMax: "",
     secteur: "",
 };
 
-const SearchForm = ({ onSubmit }: { onSubmit?: (values: any) => void }) => {
+type SearchFormProps = {
+    onSubmit?: (values: any) => void;
+    initialValues?: Partial<typeof initialState>;
+};
+
+const SearchForm = ({ onSubmit, initialValues }: SearchFormProps) => {
     const [values, setValues] = useState(initialState);
+
+    // Met à jour le state si initialValues change
+    useEffect(() => {
+        if (initialValues) {
+            setValues((prev) => ({ ...prev, ...initialValues }));
+        }
+    }, [initialValues]);
 
     const handleChange = (field: keyof typeof values, value: string) => {
         setValues((prev) => ({ ...prev, [field]: value }));
@@ -89,22 +101,7 @@ return (
                 placeholder="Sélectionnez..."
             />
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <Select
-                label="Type de chauffage"
-                value={values.energie_chauffage}
-                onChange={(v) => handleChange("energie_chauffage", v || "")}
-                options={energie_chauffageOptions}
-                placeholder="Sélectionnez..."
-            />
-            <Input
-                label="Secteur"
-                value={values.secteur}
-                onChange={(v) => handleChange("secteur", v)}
-                placeholder="Ex : 75000"
-                type="text"
-            />
-        </div>
+
         <div className="grid grid-cols-2 gap-4">
             <Input
                 label="Prix minimum"
@@ -123,6 +120,24 @@ return (
                 min="0"
             />
         </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {/*<Select*/}
+            {/*    label="Type de chauffage"*/}
+            {/*    value={values.energie_chauffage}*/}
+            {/*    onChange={(v) => handleChange("energie_chauffage", v || "")}*/}
+            {/*    options={energie_chauffageOptions}*/}
+            {/*    placeholder="Sélectionnez..."*/}
+            {/*/>*/}
+            <Input
+                label="Secteur"
+                value={values.secteur}
+                onChange={(v) => handleChange("secteur", v)}
+                placeholder="Ex : 75000"
+                type="text"
+            />
+        </div>
+
         <div className="flex gap-2 justify-end pt-4">
             <Button type="button" variant="shadow" onClick={handleReset}>
                 Réinitialiser la recherche
