@@ -8,7 +8,7 @@ import { Url } from "next/dist/shared/lib/router/router";
 const navItems = [
     { id: "(accueil)", label: "Accueil", href: "/" },
     { id: "annonces", label: "Propriétés", href: "/annonces" },
-    { id: "contact", label: "Contact", href: "/contact" },
+    { id: "about", label: "À propos", href: "/" }, // À propos ajouté
 ];
 
 const Navbar: React.FunctionComponent = () => {
@@ -17,24 +17,34 @@ const Navbar: React.FunctionComponent = () => {
     const [open, setOpen] = useState(false);
 
     return (
-        <nav className="p-4 md:pb-8 flex sm:justify-between md:justify-start items-center relative">
-            {/* Logo toujours à gauche */}
-            <Link href="/" className="text-lg md:text-3xl font-bold text-black hover:text-gray-500">
-                Logo
-            </Link>
-            {/* Liens desktop à gauche du menu */}
-            <ul className="hidden md:flex items-center gap-4 ml-8">
-                {navItems.map((eachItem) => (
-                    <li key={eachItem.id}>
-                        <Link
-                            href={eachItem.href}
-                            className={`${isActive(eachItem.href) ? "text-black" : ""}`}
-                        >
-                            {eachItem.label}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
+        <nav className="p-4 md:pb-8 flex items-center relative">
+            {/* Groupe gauche : logo + liens */}
+            <div className="flex items-center gap-8 flex-1">
+                <Link href="/" className="text-lg md:text-3xl font-bold text-black hover:text-gray-500">
+                    Logo
+                </Link>
+                <ul className="hidden md:flex items-center gap-4">
+                    {navItems.map((eachItem) => (
+                        <li key={eachItem.id}>
+                            <Link
+                                href={eachItem.href}
+                                className={`${isActive(eachItem.href) ? "text-black" : ""}`}
+                            >
+                                {eachItem.label}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            {/* Bouton Contact à droite en desktop */}
+            <div className="hidden md:block">
+                <Link
+                    href="/contact"
+                    className="bg-gray-300 text-black px-5 py-2 rounded-full shadow hover:bg-gray-400/80 transition"
+                >
+                    Contact
+                </Link>
+            </div>
             {/* Hamburger mobile à droite */}
             <button
                 className="md:hidden flex flex-col justify-center items-center w-8 h-8 ml-auto"
@@ -59,6 +69,16 @@ const Navbar: React.FunctionComponent = () => {
                             </Link>
                         </li>
                     ))}
+                    {/* Contact en mobile */}
+                    <li>
+                        <Link
+                            href="/contact"
+                            className={`${isActive("/contact") ? "text-black" : ""}`}
+                            onClick={() => setOpen(false)}
+                        >
+                            Contact
+                        </Link>
+                    </li>
                 </ul>
             )}
         </nav>
