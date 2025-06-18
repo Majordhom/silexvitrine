@@ -7,6 +7,12 @@ import Head from "next/head";
 import Navbar from "@/app/_lib/ui-kit/components/navbar";
 import Footer from "@/app/_lib/ui-kit/components/footer";
 
+if (typeof window === "undefined") {
+    // Importe et lance le cron
+    import("@/app/_lib/cron/importMandatCron");
+}
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

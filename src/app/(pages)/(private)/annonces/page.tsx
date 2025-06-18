@@ -27,7 +27,7 @@ export default async function Annonces({
     //if (searchParams.energie_chauffage) where.energie_chauffage = searchParams.energie_chauffage;
     if (searchParams.prixMin) where.prix = { ...where.prix, gte: Number(searchParams.prixMin) };
     if (searchParams.prixMax) where.prix = { ...where.prix, lte: Number(searchParams.prixMax) };
-    if (searchParams.secteur) where.cp = searchParams.secteur;
+    if (searchParams.secteur) where.cp = Number(searchParams.secteur);
 
     const [annonces, total] = await Promise.all([
         prisma.mandat.findMany({
