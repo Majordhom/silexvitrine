@@ -7,27 +7,21 @@ const PAGE_SIZE = 12;
 export default async function Annonces({
                                            searchParams,
                                        }: {
-    searchParams: {
-        page?: string;
-        nb_pieces?: string;
-        type_bien?: string;
-        //energie_chauffage?: string;
-        prixMin?: string;
-        prixMax?: string;
-        secteur?: string;
-    };
+    searchParams: any;
 }) {
-    const page = Math.max(1, parseInt(searchParams.page || "1", 10));
+    // Correction : attendre searchParams si c'est une Promise
+    const params = await searchParams;
+    const page = Math.max(1, parseInt(params.page || "1", 10));
     const skip = (page - 1) * PAGE_SIZE;
 
     // Construction dynamique du filtre Prisma
     const where: any = {};
-    if (searchParams.nb_pieces) where.nb_pieces = Number(searchParams.nb_pieces);
-    if (searchParams.type_bien) where.type_bien = searchParams.type_bien;
-    //if (searchParams.energie_chauffage) where.energie_chauffage = searchParams.energie_chauffage;
-    if (searchParams.prixMin) where.prix = { ...where.prix, gte: Number(searchParams.prixMin) };
-    if (searchParams.prixMax) where.prix = { ...where.prix, lte: Number(searchParams.prixMax) };
-    if (searchParams.secteur) where.cp = searchParams.secteur;
+    if (params.nb_pieces) where.nb_pieces = Number(params.nb_pieces);
+    if (params.type_bien) where.type_bien = params.type_bien;
+    //if (params.energie_chauffage) where.energie_chauffage = params.energie_chauffage;
+    if (params.prixMin) where.prix = { ...where.prix, gte: Number(params.prixMin) };
+    if (params.prixMax) where.prix = { ...where.prix, lte: Number(params.prixMax) };
+    if (params.secteur) where.cp = Number(params.secteur);
 
     const [annonces, total] = await Promise.all([
         prisma.mandat.findMany({
@@ -50,7 +44,7 @@ export default async function Annonces({
                         <div className="flex flex-col text-center sm:text-left sm:items-start">
                             <h1 className="text-5xl mb-4 text-primary font-bold">Découvrez nos biens</h1>
                             <p className="text-gray-600">Explorez notre sélection de propriétés récemment publiées.
-                                Chacune d'elles offre un cadre de vie unique et moderne.</p>
+                                Chacune d&#39;elles offre un cadre de vie unique et moderne.</p>
                         </div>
                         <div className="mt-4 sm:mt-0 flex justify-center sm:justify-end w-full sm:w-auto">
                             <ModalSearch />

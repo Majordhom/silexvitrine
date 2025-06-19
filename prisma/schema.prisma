@@ -111,3 +111,13 @@ model ContactMessage {
 
   @@index([email])
 }
+
+model DataSearch {
+  id           Int      @id @default(autoincrement())
+  nb_pieces    Int?  // ou Int? selon ton besoin
+  type_bien    String?
+  prixMin      Int?
+  prixMax      Int?
+  secteur      Int?
+  createdAt    DateTime @default(now())
+}
