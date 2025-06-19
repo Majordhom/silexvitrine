@@ -25,7 +25,7 @@ export default function Accueil() {
     }, []);
 
     return (
-        <>
+        <div className="w-full max-w-5xl flex flex-col px-auto mx-auto gap-8">
             <div
                 className="background-accueil-degrade w-full flex flex-col items-center justify-center text-center gap-8 p-20 md:p-24 lg:p-32 xl:p-40 2xl:p-48 rounded-2xl min-w-0">
                 <h1 className="text-4xl font-bold text-primary">Trouvez votre maison de rêve aujourd'hui</h1>
@@ -65,6 +65,6 @@ export default function Accueil() {
                     ))}
                 </div>
             </div>
-        </>
+        </div>
     );
 }
