@@ -37,7 +37,7 @@ const ModalSearch: React.FC = () => {
 
     return (
         <>
-            <Buttonsearch className={"self-center w-full sm:w-auto rounded-full"}
+            <Buttonsearch className={"self-center w-full sm:w-auto rounded-full z-10"}
                     onClick={() => setIsModalOpen(true)}
                     color="primary">
                 Filtrer
