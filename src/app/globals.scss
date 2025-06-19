@@ -235,4 +235,20 @@ body {
       width: 100%;
     }
   }
+
+  .background-accueil-degrade {
+    background-size: cover;
+    background-image: url('../../public/fondEcranAccueil.jpg');
+    background-position: center;
+    position: relative;
+  }
+
+  .background-accueil-degrade::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: #9747ff;
+    border-radius: 10px;
+    opacity: 0.1;
+  }
 }

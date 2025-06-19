@@ -42,9 +42,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <div className="bg-gradient-to-tr from-fuchsia-100 from-5% via-white via-50% to-fuchsia-100 to-95% grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-          <div className="row-start-2">{children}</div>
-          <div className="row-start-3">{/*emplacement Footer*/}</div>
+      <div className="bg-gradient-to-tr from-fuchsia-100 from-5% via-white via-50% to-fuchsia-100 to-95% min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+          {children}
+          <div className="row-start-3">
+              {/*emplacement Footer*/}
+              <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
+          </div>
       </div>
   );
 }

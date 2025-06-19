@@ -8,7 +8,7 @@ export type ButtonProps = {
     onClick?: MouseEventHandler,
     children?: React.ReactNode,
     className?: string,
-    variant?: 'solid' | 'shadow' | 'shadow-bordered' | 'chip' | 'chip-bordered' | 'sm-chip' | 'sm-chip-bordered' | 'underline',
+    variant?: 'solid' | 'shadow' | 'shadow-bordered' | 'no-shadow' | 'chip' | 'chip-bordered' | 'sm-chip' | 'sm-chip-bordered' | 'underline',
     isDisabled?: boolean,
     isLoading?: boolean,
     startContent?: React.ReactNode,
@@ -81,10 +81,10 @@ export const Button = ({startContent, isDisabled, isLoading, color, textColor, o
     let twClasses
     if (normalizedVariant === 'solid') {
         twClasses = buttonSolidClasses(textColor, color)
-    } else if (normalizedVariant === 'solid') {
-        twClasses = buttonSolidClasses(textColor, color)
     } else if (normalizedVariant === 'shadow') {
         twClasses = buttonShadowClasses(textColor, color)
+    } else if (normalizedVariant === 'no-shadow') {
+        twClasses = buttonShadowClasses(textColor, color).replace(/shadow-[^\s]*/g, '')
     } else if (normalizedVariant === 'shadow-bordered') {
         twClasses = buttonShadowBorderedClasses(textColor, color)
     } else if (normalizedVariant === 'chip') {

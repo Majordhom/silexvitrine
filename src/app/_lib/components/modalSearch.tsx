@@ -32,7 +32,7 @@ const ModalSearch: React.FC = () => {
 
     return (
         <>
-            <Button className={"self-center"}
+            <Button className={"self-center z-10"}
                     onClick={() => setIsModalOpen(true)}
                     color="primary">
                 Filtrer
