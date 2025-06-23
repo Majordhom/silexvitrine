@@ -31,7 +31,7 @@ export const Textarea = ({
                          }: Props) => {
     return <>
         <div className={'group relative'}>
-            <div className={'bg-gray-100 group-hover:bg-gray-200 text-sm transition-all duration-200 rounded-2xl p-2'}>
+            <div className={'bg-white group-hover:bg-gray-200 text-sm transition-all duration-200 rounded-2xl p-2'}>
         <textarea
             ref={textareaRef}
             cols={cols}

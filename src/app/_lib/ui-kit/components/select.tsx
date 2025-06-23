@@ -111,7 +111,7 @@ export const SelectMultiple = ({values = [], isInvalid, errorMessage, onChange, 
 
             <div className={'absolute h-10 w-full'}> {/* absolute because the size is based on the hidden options */}
                 {/* button */}
-                <button className={`${isInvalid ? '!border-danger bg-red-50' : ''} border-1 border-transparent bg-gray-100 flex flex-row gap-1 justify-between items-center w-full cursor-pointer hover:bg-gray-200 transition-all duration-300 rounded-2xl whitespace-nowrap truncate h-full px-2`}
+                <button className={`${isInvalid ? '!border-danger bg-red-50' : ''} border-1 border-transparent bg-white flex flex-row gap-1 justify-between items-center w-full cursor-pointer hover:bg-gray-200 transition-all duration-300 rounded-2xl whitespace-nowrap truncate h-full px-2`}
                         onClick={openPopup} type="button">
                     <div>{selectedLabels}</div>
                     <ChevronDownIcon className={`size-3 transition-all duration-300 ${isPopupOpen ? 'rotate-180' : 'rotate-0'}`}/>

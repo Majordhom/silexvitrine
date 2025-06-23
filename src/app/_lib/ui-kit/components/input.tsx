@@ -62,7 +62,7 @@ export const Input = ({ref, classNames, description, onKeyDown, onClick, onBlur,
 
     return <label className={`flex flex-col ${className ?? ''} ${classNames?.base ?? ''}`}>
         {label && <span className={`text-sm ${classNames?.label ?? ''}`}>{label}</span>}
-        <div className={`relative flex gap-1 border-1 border-transparent ${isDisabled ? ' !border-gray-100 ' : 'bg-gray-100 hover:bg-gray-200'} ${isInvalid ? '!border-danger bg-red-50' : ''}  transition-all duration-200 rounded-xl p-2 ${classNames?.input ?? ''}`}>
+        <div className={`relative flex gap-1 border-1 border-transparent ${isDisabled ? ' !border-gray-100 ' : 'bg-white hover:bg-gray-200'} ${isInvalid ? '!border-danger bg-red-50' : ''}  transition-all duration-200 rounded-xl p-2 ${classNames?.input ?? ''}`}>
             {startContent && <div className={'flex-0 flex flex-row'}>{startContent}</div>}
             <input disabled={isDisabled}
                    ref={ref}

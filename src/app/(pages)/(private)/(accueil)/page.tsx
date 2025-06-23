@@ -1,12 +1,12 @@
 "use client";
 import ModalSearch from "@/app/_lib/components/modalSearch";
-import { Input } from "@/app/_lib/ui-kit/components/input";
-import { Search } from "lucide-react";
-import {useState, useEffect, useRef} from "react";
+import {Input} from "@/app/_lib/ui-kit/components/input";
+import {Search} from "lucide-react";
+import {useState, useEffect} from "react";
 import ScrollDownButton from "@/app/_lib/ui-kit/components/ScrollDownButton";
 import {AnnonceCardHeader} from "@/app/(pages)/(private)/annonces/_component/annonceCardHeader";
 import {Annonce} from "@/app/(pages)/(private)/annonces/_component/annonceTableRow";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import AnnonceScroller from "@/app/_lib/components/annonceScroller";
 
 export default function Accueil() {
     const [searchValue, setSearchValue] = useState("");
@@ -24,20 +24,6 @@ export default function Accueil() {
 
         fetchMandats();
     }, []);
-
-    const scrollRef = useRef<HTMLDivElement>(null);
-
-    const scrollLeft = () => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
-        }
-    };
-
-    const scrollRight = () => {
-        if (scrollRef.current) {
-            scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
-        }
-    };
 
     return (
         <div className="w-full max-w-5xl flex flex-col px-auto mx-auto gap-8">
@@ -64,44 +50,24 @@ export default function Accueil() {
             </div>
 
             <div className="flex justify-center my-8">
-                <ScrollDownButton />
+                <ScrollDownButton/>
             </div>
 
             <div id="biens-recents" className="mt-16">
                 <h2 className="text-3xl text-primary font-semibold mb-6 text-center">Découvrez nos derniers biens</h2>
                 <p className="text-base max-w-xl text-blackWarm mx-auto text-center mb-8">
-                    Explorez notre sélection de propriétés récemment publiées. Chacune d'elles offre un cadre de vie unique et moderne.
+                    Explorez notre sélection de propriétés récemment publiées. Chacune d'elles offre un cadre de vie
+                    unique et moderne.
                 </p>
+                <AnnonceScroller
+                    className="flex gap-10 overflow-x-auto scroll-smooth snap-x md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible"
+                    children={annoncesRecentes.map((annonce) => (
+                        <div key={annonce.id} className="flex-shrink-0 w-[300px] snap-start md:w-auto">
+                            <AnnonceCardHeader annonce={annonce}/>
+                        </div>
+                    ))}
 
-                <div className="relative">
-                    {/* flèche gauche */}
-                    <button
-                        onClick={scrollLeft}
-                        className="absolute left-1 top-1/2 -translate-y-1/2 bg-gray-200 p-2 rounded-full md:hidden z-10"
-                    >
-                        <ChevronLeft className="h-6 w-6" />
-                    </button>
-
-                    {/* liste des annonces */}
-                    <div
-                        ref={scrollRef}
-                        className="flex gap-10 overflow-x-auto scroll-smooth snap-x md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible"
-                    >
-                        {annoncesRecentes.map((annonce) => (
-                            <div key={annonce.id} className="flex-shrink-0 w-[300px] snap-start md:w-auto">
-                                <AnnonceCardHeader annonce={annonce} />
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* flèche droite */}
-                    <button
-                        onClick={scrollRight}
-                        className="absolute right-1 top-1/2 -translate-y-1/2 bg-gray-200 p-2 rounded-full md:hidden z-10"
-                    >
-                        <ChevronRight className="h-6 w-6" />
-                    </button>
-                </div>
+                />
             </div>
         </div>
     );

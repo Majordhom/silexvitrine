@@ -1,7 +1,7 @@
 // app/contact/page.tsx
 "use client";
 import { useState } from "react";
-import { Button } from "@/app/_lib/ui-kit/components/button";
+import { Button, buttonChipClasses } from "@/app/_lib/ui-kit/components/button";
 import { Input } from "@/app/_lib/ui-kit/components/input";
 import { Select } from "@/app/_lib/ui-kit/components/select";
 import { Textarea } from "@/app/_lib/ui-kit/components/textarea";
@@ -65,9 +65,10 @@ const ContactForm = ({className}: ContactFormProps) => {
 
     };
 
+
     return (
-        <div className={`max-w-4xl mx-auto px-4 py-8 ${className}` }>
-            <div className="text-center mb-12">
+        <div className={className}>
+            <div className="text-center mb-4 p-8">
                 <h1 className="text-3xl md:text-4xl font-bold text-primary mb-4">
                     Contactez-nous
                 </h1>
@@ -76,10 +77,10 @@ const ContactForm = ({className}: ContactFormProps) => {
                 </p>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+            <div className="rounded-2xl p-6 md:p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
                     {/* Prénom et Nom */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <Input
                             label="Prénom"
                             value={formData.firstName}
@@ -95,7 +96,7 @@ const ContactForm = ({className}: ContactFormProps) => {
                     </div>
 
                     {/* Email et Téléphone */}
-                    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <Input
                             label="Email"
                             value={formData.email}
@@ -104,7 +105,7 @@ const ContactForm = ({className}: ContactFormProps) => {
                             type="email"
                         />
                         <Input
-                            label="Numéro de téléphone"
+                            label="Téléphone"
                             value={formData.phone}
                             onChange={(value) => handleChange("phone", value)}
                             placeholder="+33 1 23 45 67 89"
@@ -134,13 +135,12 @@ const ContactForm = ({className}: ContactFormProps) => {
                     </div>
 
                     {/* Bouton d'envoi */}
-                    <div className="pt-4">
+                    <div className="pt-4 flex justify-center md:justify-end">
                         <Button
-                            variant="solid"
+                            variant="chip"
                             color="primary"
                             type="submit"
                             isLoading={isSubmitting}
-                            className="w-full md:w-auto px-8 py-3 text-lg font-medium"
                         >
                             {isSubmitting ? "Envoi en cours..." : "Envoyer"}
                         </Button>
