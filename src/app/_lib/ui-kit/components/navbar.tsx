@@ -8,7 +8,7 @@ import { Url } from "next/dist/shared/lib/router/router";
 const navItems = [
     { id: "(accueil)", label: "Accueil", href: "/" },
     { id: "annonces", label: "Propriétés", href: "/annonces" },
-    { id: "about", label: "À propos", href: "/" }, // À propos ajouté
+    { id: "about", label: "À propos", href: "/apropos" }, // À propos ajouté
 ];
 
 const Navbar: React.FunctionComponent = () => {

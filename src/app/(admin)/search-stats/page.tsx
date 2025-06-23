@@ -135,7 +135,7 @@ function renderPeriod(period: Period, dates: string[], start: Date | null, end: 
 }
 
 export default function SearchStatsPage() {
-    const [period, setPeriod] = useState<Period>("month");
+    const [period, setPeriod] = useState<Period>("day");
     const [start, setStart] = useState<Date | null>(null);
     const [end, setEnd] = useState<Date | null>(null);
     const [data, setData] = useState<StatsData | null>(null);
@@ -255,7 +255,7 @@ export default function SearchStatsPage() {
                             {isMobile && renderLegend(data.types, bluePalette)}
                         </div>
                         <div>
-                            <h2 className="text-xl font-semibold mb-2">Fourchettes de prix recherchées</h2>
+                            <h2 className="text-xl font-semibold mb-2">Fourchettes de prix recherchés</h2>
                             <Bar
                                 key={"prix-" + (isMobile ? "mobile" : "desktop")}
                                 data={{
