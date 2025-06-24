@@ -1,6 +1,3 @@
-import Image from "next/image";
-import {prisma} from "@/app/_lib/prisma";
-import {revalidatePath} from "next/cache";
 import ContactForm from "@/app/_lib/components/contactForm";
 
 export default async function Contact() {

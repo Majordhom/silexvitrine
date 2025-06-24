@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Roboto } from "next/font/google";
-import { Titillium_Web } from "next/font/google";
 import "@/app/globals.scss";
 
 export const metadata: Metadata = {
