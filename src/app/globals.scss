@@ -251,4 +251,13 @@ body {
     border-radius: 10px;
     opacity: 0.1;
   }
+
+  .card-base {
+    @apply bg-white rounded-2xl shadow-md p-6 flex flex-col items-center text-center;
+  }
+
+  .page-gradient {
+    @apply bg-gradient-to-tr from-fuchsia-100 via-white to-fuchsia-100 min-h-screen;
+  }
+
 }

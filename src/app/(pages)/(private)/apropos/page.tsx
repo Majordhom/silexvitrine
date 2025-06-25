@@ -1,4 +1,4 @@
-import ImageDummy from "@/app/_lib/components/ImageDummy";
+import SectionCard from "@/app/_lib/components/SectionCard";
 
 const sections = [
     { id: "histoire", title: "Notre histoire", text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse euismod, urna eu tincidunt consectetur, nisi nisl aliquam enim, nec cursus enim erat nec urna. Mauris euismod, sapien nec laoreet dictum, enim erat dictum urna, nec cursus enim erat nec urna." },
@@ -16,14 +16,12 @@ export default function AproposAgencePage() {
             </div>
             <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-8">
                 {sections.map((section) => (
-                    <div
+                    <SectionCard
                         key={section.id}
-                        className="bg-white rounded-xl shadow p-6 flex flex-col items-center text-center"
-                    >
-                        <h1 className="text-xl md:text-2xl font-semibold mb-4 text-primary">{section.title}</h1>
-                        <ImageDummy alt={section.title}/>
-                        <p className="text-gray-700 mt-4">{section.text}</p>
-                    </div>
+                        title={section.title}
+                        text={section.text}
+                        imageAlt={section.title}
+                    />
                 ))}
             </div>
         </main>

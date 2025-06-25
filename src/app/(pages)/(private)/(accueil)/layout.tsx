@@ -1,35 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Roboto } from "next/font/google";
-import { Titillium_Web } from "next/font/google";
 import "@/app/globals.scss";
-import Head from "next/head";
-import Navbar from "@/app/_lib/ui-kit/components/navbar";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const roboto = Roboto({
-    subsets: ["latin"],
-    weight: ["400", "600", "700", "900"],
-    display: "swap",
-    variable: "--font-roboto",
-});
-
-const titillium_web = Titillium_Web({
-    subsets: ["latin"],
-    weight: ["400", "600", "700", "900"],
-    display: "swap",
-    variable: "--font-titillium-web",
-});
-
 
 export const metadata: Metadata = {
   title: "Page d'Accueil",
@@ -42,12 +12,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <div className="bg-gradient-to-tr from-fuchsia-100 from-5% via-white via-50% to-fuchsia-100 to-95% min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+      <div className="page-gradient items-center mx-auto py-8 px-8 sm:px-8 lg:px-40">
           {children}
-          <div className="row-start-3">
-              {/*emplacement Footer*/}
-              <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
-          </div>
+          <div className="row-start-3">{/*emplacement Footer*/}</div>
       </div>
   );
 }

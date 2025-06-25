@@ -1,8 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Input } from "@/app/_lib/ui-kit/components/input";
-import { Select } from "@/app/_lib/ui-kit/components/select";
 import { Button } from "@/app/_lib/ui-kit/components/button";
+import SearchFormField from "./SearchFormField";
 
 const nb_piecesOptions = [
     { key: "1", label: "1" },
@@ -86,55 +85,52 @@ const SearchForm = ({ onSubmit, initialValues }: SearchFormProps) => {
 return (
     <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <Select
+            <SearchFormField
+                type="select"
                 label="Nombre de pièces"
                 value={values.nb_pieces}
-                onChange={(v) => handleChange("nb_pieces", v || "")}
+                onChange={(v) => handleChange("nb_pieces", v)}
                 options={nb_piecesOptions}
                 placeholder="Sélectionnez..."
             />
-            <Select
+            <SearchFormField
+                type="select"
                 label="Type de bien"
                 value={values.type_bien}
-                onChange={(v) => handleChange("type_bien", v || "")}
+                onChange={(v) => handleChange("type_bien", v)}
                 options={type_bienOptions}
                 placeholder="Sélectionnez..."
             />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-            <Input
+            <SearchFormField
+                type="input"
                 label="Prix minimum"
                 value={values.prixMin}
                 onChange={(v) => handleChange("prixMin", v)}
                 placeholder="€"
-                type="number"
+                inputType="number"
                 min="0"
             />
-            <Input
+            <SearchFormField
+                type="input"
                 label="Prix maximum"
                 value={values.prixMax}
                 onChange={(v) => handleChange("prixMax", v)}
                 placeholder="€"
-                type="number"
+                inputType="number"
                 min="0"
             />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/*<Select*/}
-            {/*    label="Type de chauffage"*/}
-            {/*    value={values.energie_chauffage}*/}
-            {/*    onChange={(v) => handleChange("energie_chauffage", v || "")}*/}
-            {/*    options={energie_chauffageOptions}*/}
-            {/*    placeholder="Sélectionnez..."*/}
-            {/*/>*/}
-            <Input
+            <SearchFormField
+                type="input"
                 label="Secteur"
                 value={values.secteur}
                 onChange={(v) => handleChange("secteur", v)}
                 placeholder="Ex : 75000"
-                type="text"
             />
         </div>
 
