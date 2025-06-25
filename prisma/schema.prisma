@@ -14,34 +14,33 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Mandat {
-  id                 Int      @id @default(autoincrement())
-  reference          String   @unique
-  type_offre_code      String
-  type_offre          String
+  id                 Int           @id @default(autoincrement())
+  reference          String        @unique
+  type_offre_code    String
+  type_offre         String
   corps              String
   prix               Int
   charges            String?
   foncier            Int?
-  type_mandat         String
-  type_bien           String
-  type_bien_code       String
-  surface_habitable   Int?
-  nb_pieces           Int?
+  type_mandat        String
+  type_bien          String
+  type_bien_code     String
+  surface_habitable  Int?
+  nb_pieces          Int?
   chambres           Int?
-  nb_etages           Int?
+  nb_etages          Int?
   etage              Int?
   sdb                Int?
   wc                 Int?
   cuisine            Int?
-  energie_chauffage   String?
-  format_chauffage    String?
+  energie_chauffage  String?
+  format_chauffage   String?
   parking            Int?
   piscine            Boolean?
   terrasse           Int?
   exposition         String?
-  annee_construction  String?
+  annee_construction String?
   ascenseur          Boolean?
   balcon             Int?
   ville              String
@@ -54,14 +53,14 @@ model Mandat {
   dateMaj            DateTime?
   latitude           Float?
   longitude          Float?
-  video_link          String?
+  video_link         String?
   urlBien            String?
   publishedInWebSite Boolean?
   publishedInApp     Boolean?
-  visite_immediat     Boolean?
-  bien_category       String?
+  visite_immediat    Boolean?
+  bien_category      String?
   chauffages         String?
-  photos            MandatPhoto[]
+  photos             MandatPhoto[]
 }
 
 model MandatPhoto {
@@ -87,13 +86,13 @@ model User {
 }
 
 model SearchQuery {
-  id         String   @id @default(cuid())
-  sessionId  String?  @db.VarChar(255)
-  email      String?  @db.VarChar(255)
-  criteria   Json
-  userAgent  String?
-  ip         String?
-  createdAt  DateTime @default(now())
+  id        String   @id @default(cuid())
+  sessionId String?  @db.VarChar(255)
+  email     String?  @db.VarChar(255)
+  criteria  Json
+  userAgent String?
+  ip        String?
+  createdAt DateTime @default(now())
 
   @@index([sessionId])
   @@index([email])
@@ -113,11 +112,22 @@ model ContactMessage {
 }
 
 model DataSearch {
-  id           Int      @id @default(autoincrement())
-  nb_pieces    Int?  // ou Int? selon ton besoin
-  type_bien    String?
-  prixMin      Int?
-  prixMax      Int?
-  secteur      Int?
-  createdAt    DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  nb_pieces Int? // ou Int? selon ton besoin
+  type_bien String?
+  prixMin   Int?
+  prixMax   Int?
+  secteur   Int?
+  createdAt DateTime @default(now())
+}
+
+model Abonne {
+  id                  String    @id @default(uuid())
+  email               String    @unique
+  dateInscription     DateTime  @default(now())
+  dateDesinscription  DateTime?
+  statutActif         Boolean   @default(true)
+  token               String?
+  tokenDesinscription String?
+  tokenSuppression    String?
 }

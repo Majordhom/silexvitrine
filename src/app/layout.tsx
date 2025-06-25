@@ -6,6 +6,7 @@ import "./globals.scss";
 import Head from "next/head";
 import Navbar from "@/app/_lib/ui-kit/components/navbar";
 import Footer from "@/app/_lib/ui-kit/components/footer";
+import { Toaster} from "react-hot-toast";
 
 if (typeof window === "undefined") {
     // Importe et lance le cron
@@ -62,6 +63,7 @@ export default async function RootLayout({
       <body className="font-titillium-web antialiased p-4 container md:mx-auto md:p-10 bg-spotify-black">
         <Navbar/>
         {children}
+        <Toaster position="top-center" reverseOrder={false} />
         <Footer/>
       </body>
       </html>

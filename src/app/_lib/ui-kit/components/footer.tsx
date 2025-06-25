@@ -99,7 +99,7 @@ export default function Footer() {
                         <Link href="/" className="text-white text-base no-underline opacity-85">Support</Link>
                         <Link href="/" className="text-white text-base no-underline opacity-85">Carrières</Link>
                         <Link href="/" className="text-white text-base no-underline opacity-85">Presse</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Partenaires</Link>
+                        <Link href="/newsletter" className="text-white text-base no-underline opacity-85">Newsletter</Link>
                     </div>
                 </div>
             </div>

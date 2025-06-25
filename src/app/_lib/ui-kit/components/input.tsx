@@ -21,9 +21,10 @@ type Props = {
     description?: string | ReactNode | ReactNode[],
     ref?: Ref<HTMLInputElement>
     errorMessage?: string,
+    required?: boolean,
 }
 
-export const Input = ({ref, classNames, description, onKeyDown, onClick, onBlur, value, onChange, type = 'text', className = '', name, isDisabled, isInvalid, label, startContent, endContent, placeholder, errorMessage, min, max}: Props) => {
+export const Input = ({ref, classNames, description, onKeyDown, onClick, onBlur, value, onChange, type = 'text', className = '', name, isDisabled, isInvalid, label, startContent, endContent, placeholder, errorMessage, min, max, required}: Props) => {
     const minValue = type === 'number' ? (min !== undefined ? min : 0) : min;
 
     const handleChange = (newValue: string) => {
@@ -77,10 +78,11 @@ export const Input = ({ref, classNames, description, onKeyDown, onClick, onBlur,
                    min={minValue}
                    max={max}
                    placeholder={placeholder}
+                   required={required}
             />
             {endContent && <div className={'flex-0 flex flex-row'}>{endContent}</div>}
         </div>
         {description && <span className="text-xs text-textLight">{description}</span>}
-        {errorMessage && <span className={`${isInvalid ? '' : 'opacity-0'} text-danger text-xs`}>{errorMessage}</span>}
+        {errorMessage && <span className="text-danger text-xs mt-1 p-2">{errorMessage}</span>}
     </label>
 }

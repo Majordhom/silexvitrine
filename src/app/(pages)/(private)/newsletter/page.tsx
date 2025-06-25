@@ -1,0 +1,45 @@
+"use client";
+
+import { useState } from "react";
+import { Input } from "@/app/_lib/ui-kit/components/input";
+import { Button } from "@/app/_lib/ui-kit/components/button";
+
+export default function NewsletterPage() {
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+
+    const handleSubscribe = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        try {
+            const res = await fetch("/api/newsletter/subscribe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email.trim().toLowerCase() }),
+            });
+
+            const data = await res.json();
+            setMessage(data.message);
+            setEmail("");
+        } catch (error) {
+            setMessage("Erreur lors de l'inscription. Réessaie.");
+        }
+    };
+
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
+            <h1 className="text-3xl text-primary font-bold mb-6">Inscription à la Newsletter</h1>
+            <form onSubmit={handleSubscribe} className="flex flex-col gap-4 w-full max-w-md">
+                <Input
+                    type="email"
+                    placeholder="Votre adresse e-mail"
+                    value={email}
+                    onChange={value => setEmail(value)}
+                    required
+                    errorMessage={message}
+                />
+                <Button type="submit" variant="chip" className="max-w-[100px] self-end bg-primary">S'inscrire</Button>
+            </form>
+        </div>
+    );
+}
