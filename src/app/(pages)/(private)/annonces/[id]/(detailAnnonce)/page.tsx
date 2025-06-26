@@ -14,7 +14,7 @@ export async function generateStaticParams() {
     const annonces = await prisma.mandat.findMany({
         select: {id: true}
     })
-    return annonces.map(mandat => ({id: mandat.id.toString()}))
+    return annonces.map(mandat => ({ params: { id: mandat.id.toString() } }))
 }
 
 // Fonction pour nettoyer la description

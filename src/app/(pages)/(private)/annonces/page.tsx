@@ -18,7 +18,6 @@ export default async function Annonces({
     const where: any = {};
     if (params.nb_pieces) where.nb_pieces = Number(params.nb_pieces);
     if (params.type_bien) where.type_bien = params.type_bien;
-    //if (params.energie_chauffage) where.energie_chauffage = params.energie_chauffage;
     if (params.prixMin) where.prix = { ...where.prix, gte: Number(params.prixMin) };
     if (params.prixMax) where.prix = { ...where.prix, lte: Number(params.prixMax) };
     if (params.secteur) where.cp = Number(params.secteur);

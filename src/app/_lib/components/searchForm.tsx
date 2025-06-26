@@ -1,8 +1,12 @@
+// Composant React : formulaire de recherche pour filtrer des biens immobiliers.
+// Utilise des hooks pour gérer l'état local et les effets liés aux valeurs initiales.
 "use client";
 import { useEffect, useState } from "react";
 import { Button } from "@/app/_lib/ui-kit/components/button";
 import SearchFormField from "./SearchFormField";
+import SecteursInput from "./SecteursInput";
 
+// Options pour le champ "Nombre de pièces"
 const nb_piecesOptions = [
     { key: "1", label: "1" },
     { key: "2", label: "2" },
@@ -12,6 +16,7 @@ const nb_piecesOptions = [
     { key: "6", label: "6 et +" },
 ];
 
+// Options pour le champ "Type de bien"
 const type_bienOptions = [
     { key: "Appartement", label: "Appartement" },
     { key: "Villa", label: "Villa" },
@@ -30,37 +35,23 @@ const type_bienOptions = [
     { key: "Local-activite", label: "Local d'activité" },
 ];
 
-// const energie_chauffageOptions = [
-//     { key: "accumulateurs", label: "Accumulateurs" },
-//     { key: "air-pulse", label: "Air pulsé" },
-//     { key: "clim-reversible", label: "Climatisation réversible" },
-//     { key: "convecteur", label: "Convecteur" },
-//     { key: "fluide-caloporteur", label: "Fluide caloporteur" },
-//     { key: "plafond", label: "Plafond" },
-//     { key: "pompe-a-chaleur", label: "Pompe à chaleur" },
-//     { key: "rayonnement", label: "Rayonnement" },
-//     { key: "sol-plafond", label: "Au sol et plafond" },
-//     { key: "au-sol", label: "Au sol" },
-//     { key: "cheminee", label: "Cheminée" },
-//     { key: "insert", label: "Insert" },
-//     { key: "poele", label: "Poêle" },
-//     { key: "radiateur", label: "Radiateur" },
-// ];
-
+// État initial du formulaire de recherche
 const initialState = {
     nb_pieces: "",
     type_bien: "",
     //energie_chauffage: "",
     prixMin: "",
     prixMax: "",
-    secteur: "",
+    secteurs: [] as string[],
 };
 
+// Props du composant SearchForm
 type SearchFormProps = {
     onSubmit?: (values: any) => void;
     initialValues?: Partial<typeof initialState>;
 };
 
+// Composant principal du formulaire
 const SearchForm = ({ onSubmit, initialValues }: SearchFormProps) => {
     const [values, setValues] = useState(initialState);
 
@@ -71,17 +62,21 @@ const SearchForm = ({ onSubmit, initialValues }: SearchFormProps) => {
         }
     }, [initialValues]);
 
-    const handleChange = (field: keyof typeof values, value: string) => {
+    // Gère le changement de valeur d'un champ
+    const handleChange = (field: keyof typeof values, value: string | string[]) => {
         setValues((prev) => ({ ...prev, [field]: value }));
     };
 
+    // Réinitialise le formulaire
     const handleReset = () => setValues(initialState);
 
+    // Gère la soumission du formulaire
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (onSubmit) onSubmit(values);
     };
 
+// Rendu du formulaire
 return (
     <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -125,18 +120,15 @@ return (
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <SearchFormField
-                type="input"
-                label="Secteur"
-                value={values.secteur}
-                onChange={(v) => handleChange("secteur", v)}
-                placeholder="Ex : 75000"
+            <SecteursInput
+                value={values.secteurs}
+                onChange={(secteurs) => handleChange("secteurs", secteurs)}
             />
         </div>
 
         <div className="flex gap-2 justify-end pt-4">
             <Button type="button" variant="shadow" onClick={handleReset}>
-                Réinitialiser la recherche
+            Réinitialiser la recherche
             </Button>
             <Button type="submit" variant="solid" color="primary">
                 Rechercher
