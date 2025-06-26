@@ -6,8 +6,9 @@ import ContactForm from "@/app/_lib/components/contactForm";
 import {AnnonceCardHeader} from "@/app/(pages)/(private)/annonces/_component/annonceCardHeader";
 import AnnoncesScroller from "@/app/_lib/components/annonceScroller";
 
-type PageProps = { params: { id: string } }
-
+type PageProps = {
+    params?: Promise<any>;
+};
 
 // Ça génère toutes les pages /annonces/1, /annonces/2… à la build.
 export async function generateStaticParams() {
@@ -42,13 +43,17 @@ export async function generateStaticParams() {
 // };
 
 
-export default async function AnnoncePage({params}: PageProps) {
+export default async function AnnoncePage({ params }: PageProps) {
 
-    const id = Number(params.id)
-    if (isNaN(id)) return notFound()
+    // const id = Number(params.id)
+    // if (isNaN(id)) return notFound()
+    const {id} = await Promise.resolve(params)
+
+    const mandatId = Number(id);
+    if (isNaN(mandatId)) return notFound();
 
     const mandat = await prisma.mandat.findUnique({
-        where: {id: Number(params.id)},
+        where: {id: mandatId},
         include: {photos: true}
     })
 
@@ -58,7 +63,7 @@ export default async function AnnoncePage({params}: PageProps) {
     const similaires = await prisma.mandat.findMany({
 
         where: {
-            id: {not: id},
+            id: {not: mandatId},
             cp: mandat.cp,
             type_bien: mandat.type_bien,
             prix: {

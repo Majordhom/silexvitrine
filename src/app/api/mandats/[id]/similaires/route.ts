@@ -1,16 +1,17 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/app/_lib/prisma';
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
-    const id = parseInt(params.id);
+export async function GET(request: Request, { params }: { params: Promise<any> }) {
+    const { id } = await params;
 
-    if (isNaN(id)) {
+    const mandatId = parseInt(id);
+    if (isNaN(mandatId)) {
         return NextResponse.json({ error: 'ID invalide' }, { status: 400 });
     }
 
     // Récupérer le mandat courant pour connaître son secteur et type
     const mandat = await prisma.mandat.findUnique({
-        where: { id },
+        where: { id: mandatId },
         select: {
             id: true,
             type_bien: true,
@@ -25,7 +26,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     // Récupérer 3 biens similaires (même secteur OU même type de bien), exclure celui-ci
     const similaires = await prisma.mandat.findMany({
         where: {
-            id: { not: id },
+            id: { not: mandatId }, // Exclure le mandat courant
             cp: mandat.cp, // même code postal
             type_bien: mandat.type_bien, // même type de bien
         },
