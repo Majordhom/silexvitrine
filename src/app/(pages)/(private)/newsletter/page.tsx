@@ -1,21 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import { Input } from "@/app/_lib/ui-kit/components/input";
-import { Button } from "@/app/_lib/ui-kit/components/button";
+import {useState} from "react";
+import {Input} from "@/app/_lib/ui-kit/components/input";
+import {Button} from "@/app/_lib/ui-kit/components/button";
 
 export default function NewsletterPage() {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubscribe = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        setIsSubmitting(true); // Désactive le bouton pour éviter les soumissions multiples
         try {
             const res = await fetch("/api/newsletter/subscribe", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email: email.trim().toLowerCase() }),
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({email: email.trim().toLowerCase()}),
             });
 
             const data = await res.json();
@@ -23,11 +24,14 @@ export default function NewsletterPage() {
             setEmail("");
         } catch (error) {
             setMessage("Erreur lors de l'inscription. Réessaie.");
+        }finally{
+            setIsSubmitting(false); // Réactive le bouton dans tous les cas
         }
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
+        <div
+            className="flex flex-col items-center justify-start min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
             <h1 className="text-3xl text-primary font-bold mb-6">Inscription à la Newsletter</h1>
             <form onSubmit={handleSubscribe} className="flex flex-col gap-4 w-full max-w-md">
                 <Input
@@ -38,7 +42,15 @@ export default function NewsletterPage() {
                     required
                     errorMessage={message}
                 />
-                <Button type="submit" variant="chip" className="max-w-[100px] self-end bg-primary">S'inscrire</Button>
+                <Button
+                    type="submit"
+                    variant="chip"
+                    color="primary"
+                    className="self-end"
+                    isLoading={isSubmitting}
+                >
+                    {isSubmitting ? "Envoi en cours..." : "S'inscrire"}
+                </Button>
             </form>
         </div>
     );
