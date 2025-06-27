@@ -15,21 +15,26 @@ const ModalSearch: React.FC = () => {
     const initialValues = useMemo(() => ({
         nb_pieces: searchParams.get("nb_pieces") || "",
         type_bien: searchParams.get("type_bien") || "",
-        //energie_chauffage: searchParams.get("energie_chauffage") || "",
         prixMin: searchParams.get("prixMin") || "",
         prixMax: searchParams.get("prixMax") || "",
-        secteur: searchParams.get("secteur") || "",
+        secteurs: searchParams.getAll("secteurs") || [],
     }), [searchParams]);
-    const handleSearch = async (filters: Record<string, string>) => {
+    const handleSearch = async (filters: Record<string, any>) => {
+        console.log("Payload envoyé :", filters);
         await fetch("/api/data-search", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(filters),
         });
-        const params = new URLSearchParams(searchParams.toString());
+        const params = new URLSearchParams();
         Object.entries(filters).forEach(([key, value]) => {
-            if (value) params.set(key, value);
-            else params.delete(key);
+            if (Array.isArray(value)) {
+                value.forEach(v => params.append(key, v));
+            } else if (value) {
+                params.set(key, value);
+            } else {
+                params.delete(key);
+            }
         });
         router.push(`/annonces?${params.toString()}`);
         setIsModalOpen(false);

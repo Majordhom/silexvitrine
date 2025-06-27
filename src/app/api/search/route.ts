@@ -12,6 +12,9 @@ export async function POST(req: NextRequest) {
         if (criteria?.prixMax) where.prix = { ...where.prix, lte: criteria.prixMax };
         if (criteria?.ville) where.ville = { contains: criteria.ville, mode: 'insensitive' };
         if (criteria?.type_bien) where.type_bien = criteria.type_bien;
+        if (criteria?.secteurs && Array.isArray(criteria.secteurs)) {
+            where.cp = { in: criteria.secteurs.map(Number) };
+        }
         // Ajouter d'autres critères selon le besoin
 
         const mandats = await prisma.mandat.findMany({

@@ -20,7 +20,15 @@ export default async function Annonces({
     if (params.type_bien) where.type_bien = params.type_bien;
     if (params.prixMin) where.prix = { ...where.prix, gte: Number(params.prixMin) };
     if (params.prixMax) where.prix = { ...where.prix, lte: Number(params.prixMax) };
-    if (params.secteur) where.cp = Number(params.secteur);
+    const secteurs = Array.isArray(params.secteurs)
+        ? params.secteurs
+        : params.secteurs
+            ? [params.secteurs]
+            : [];
+
+    if (secteurs.length > 0) {
+        where.cp = { in: secteurs.map(Number) };
+    }
 
     const [annonces, total] = await Promise.all([
         prisma.mandat.findMany({
