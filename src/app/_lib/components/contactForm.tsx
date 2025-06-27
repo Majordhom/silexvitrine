@@ -8,26 +8,21 @@ import { Textarea } from "@/app/_lib/ui-kit/components/textarea";
 
 type ContactFormProps = {
     className?: string;
+    subjectOptions: Array<{ key: string; label: string }>;
+    defaultSubject?: string | null;
 }
 
-const ContactForm = ({className}: ContactFormProps) => {
+const ContactForm = ({className, subjectOptions, defaultSubject = null}: ContactFormProps) => {
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
         email: "",
         phone: "",
-        subject: null as string | null,
+        subject: defaultSubject,
         message: "",
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    const subjectOptions = [
-        { key: "support", label: "Support technique" },
-        { key: "billing", label: "Facturation" },
-        { key: "partnership", label: "Partenariat" },
-        { key: "other", label: "Autre" },
-    ];
 
     const handleChange = (field: keyof typeof formData, value: string) => {
         setFormData((prev) => ({ ...prev, [field]: value }));

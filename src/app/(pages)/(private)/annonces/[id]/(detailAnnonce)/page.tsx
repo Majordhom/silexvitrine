@@ -66,7 +66,8 @@ export default async function AnnoncePage({params}: PageProps) {
         where: {
             id: {not: mandatId},
             cp: mandat.cp,
-            type_bien: mandat.type_bien,
+            // type_bien: mandat.type_bien,
+            nb_pieces: mandat.nb_pieces,
             prix: {
                 gte: mandat.prix * 0.85, // Prix similaire (85% du prix du mandat courant)
                 lte: mandat.prix * 1.15, // Prix similaire (115% du prix du mandat courant)
@@ -75,6 +76,11 @@ export default async function AnnoncePage({params}: PageProps) {
         take: 3,
         include: {photos: true},
     });
+
+    const subjectOptions = [
+        {key: 'ref-mandat: ' + mandat.reference, label: mandat.reference},
+        {key: 'autre', label: 'autre'}
+    ];
 
     return (
         <div className="container mx-auto p-4">
@@ -117,22 +123,30 @@ export default async function AnnoncePage({params}: PageProps) {
                         <div className="px-8">
                             <MapAnnonce latitude={mandat.latitude ?? 43.2965} longitude={mandat.longitude ?? 5.3698}/>
                         </div>
-                        <ContactForm className="w-full"/>
+                        <ContactForm
+                            className="w-full"
+                            subjectOptions={subjectOptions}
+                            defaultSubject={subjectOptions[0].key}
+                        />
                     </div>
                     <div className="hidden lg:block">
                         <MapAnnonce latitude={mandat.latitude ?? 43.2965} longitude={mandat.longitude ?? 5.3698}/>
                     </div>
 
                     <div className="rounded-xl">
-                        <h2 className="text-xl font-semibold mb-2">Biens similaires</h2>
-                        <AnnoncesScroller
-                            className="flex gap-10 overflow-x-auto scroll-smooth snap-x md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible"
-                            children={similaires.map((annonce) => (
-                                <div key={annonce.id} className="flex-shrink-0 w-[300px] snap-start md:w-auto">
-                                    <AnnonceCardHeader annonce={annonce}/>
-                                </div>
-                            ))}
-                        />
+                        {similaires.length > 0 && (
+                            <>
+                                <h2 className="text-xl font-semibold mb-2">Biens similaires</h2>
+                                <AnnoncesScroller
+                                    className="flex gap-10 overflow-x-auto scroll-smooth snap-x md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible"
+                                    children={similaires.map((annonce) => (
+                                        <div key={annonce.id} className="flex-shrink-0 w-[300px] snap-start md:w-auto">
+                                            <AnnonceCardHeader annonce={annonce}/>
+                                        </div>
+                                    ))}
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
 
@@ -165,7 +179,11 @@ export default async function AnnoncePage({params}: PageProps) {
                     </div>
 
                     {/* Formulaire de contact */}
-                    <ContactForm className="w-full hidden lg:block"/>
+                    <ContactForm
+                        className="w-full hidden lg:block"
+                        subjectOptions={subjectOptions}
+                        defaultSubject={subjectOptions[0].key}
+                    />
                 </div>
             </div>
         </div>
