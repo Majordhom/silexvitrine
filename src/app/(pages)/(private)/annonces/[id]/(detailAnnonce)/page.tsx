@@ -5,6 +5,7 @@ import {Carousel} from "@/app/_lib/ui-kit/components/carousel";
 import ContactForm from "@/app/_lib/components/contactForm";
 import {AnnonceCardHeader} from "@/app/(pages)/(private)/annonces/_component/annonceCardHeader";
 import AnnoncesScroller from "@/app/_lib/components/annonceScroller";
+import MapAnnonce from "@/app/_lib/components/mapAnnonce";
 
 type PageProps = {
     params?: Promise<any>;
@@ -15,7 +16,7 @@ export async function generateStaticParams() {
     const annonces = await prisma.mandat.findMany({
         select: {id: true}
     })
-    return annonces.map(mandat => ({ params: { id: mandat.id.toString() } }))
+    return annonces.map(mandat => ({params: {id: mandat.id.toString()}}))
 }
 
 // Fonction pour nettoyer la description
@@ -43,7 +44,7 @@ export async function generateStaticParams() {
 // };
 
 
-export default async function AnnoncePage({ params }: PageProps) {
+export default async function AnnoncePage({params}: PageProps) {
 
     // const id = Number(params.id)
     // if (isNaN(id)) return notFound()
@@ -87,7 +88,7 @@ export default async function AnnoncePage({ params }: PageProps) {
                             de photos</div>)
                     }
 
-                    {/* Bloc infos + formulaire en mobile */}
+                    {/* Bloc infos + carte + formulaire en mobile */}
                     <div className="block lg:hidden bg-gray-100 rounded-xl space-y-4">
                         <div className="p-8">
                             <h2 className="text-3xl font-bold">
@@ -113,9 +114,14 @@ export default async function AnnoncePage({ params }: PageProps) {
                                 </div>
                             </div>
                         </div>
+                        <div className="px-8">
+                            <MapAnnonce latitude={mandat.latitude ?? 43.2965} longitude={mandat.longitude ?? 5.3698}/>
+                        </div>
                         <ContactForm className="w-full"/>
                     </div>
-
+                    <div className="hidden lg:block">
+                        <MapAnnonce latitude={mandat.latitude ?? 43.2965} longitude={mandat.longitude ?? 5.3698}/>
+                    </div>
 
                     <div className="rounded-xl">
                         <h2 className="text-xl font-semibold mb-2">Biens similaires</h2>
