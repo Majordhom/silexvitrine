@@ -12,7 +12,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <div className="page-gradient items-center mx-auto py-8 px-8 sm:px-8 lg:px-40">
+      <div className="page-gradient items-center mx-auto pb-8 py-8 px-8 sm:px-8 lg:px-40">
           {children}
           <div className="row-start-3">{/*emplacement Footer*/}</div>
       </div>

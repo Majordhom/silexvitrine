@@ -31,7 +31,7 @@ export default function SecteursInput({ value = [], onChange }: SecteursInputPro
                 <input
                     className="border rounded px-2 py-1"
                     type="text"
-                    placeholder="Ex : 75001"
+                    placeholder="Ex : 75001"
                     value={input}
                     onChange={e => setInput(e.target.value.replace(/\D/g, "").slice(0, 5))}
                     onKeyDown={e => {
