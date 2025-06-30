@@ -31,25 +31,41 @@ export default function NewsletterPage() {
         setMessageTimer(timer);
     };
 
+    const validateEmail = (email:string) => {
+        // Expression régulière simple pour valider l'email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@\d]+$/;
+        return emailRegex.test(email);
+    }
 
     const handleSubscribe = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Validation côté client
+        const trimmedEmail = email.trim();
+        if (!trimmedEmail) {
+            showMessage("Veuillez entrer une adresse email", 'error');
+            return;
+        }
+
+        if (!validateEmail(trimmedEmail)) {
+            showMessage("Adresse email invalide", 'error');
+            return;
+        }
+
         setIsSubmitting(true); // Désactive le bouton pour éviter les soumissions multiples
-        setMessageStatus('default');
-        setMessage("");
+        showMessage("", 'default');
         try {
             const res = await fetch("/api/newsletter/subscribe", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({email: email.trim().toLowerCase()}),
+                body: JSON.stringify({email: trimmedEmail.toLowerCase()}),
             });
 
             const data = await res.json();
             showMessage(data.message, res.ok ? 'success' : 'error');
             setEmail("");
         } catch (error) {
-            setMessage("Erreur lors de l'inscription. Réessaie.");
-            setMessageStatus('error');
+            showMessage("Erreur lors de l'inscription. Réessaie.", 'error');
         }finally{
             setIsSubmitting(false); // Réactive le bouton dans tous les cas
         }
