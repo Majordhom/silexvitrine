@@ -25,9 +25,9 @@ export default function ConfirmPage() {
     }, [token]);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
-            <h1 className="text-2xl font-bold mb-4">Confirmation d'inscription</h1>
-            <p className="text-center text-lg">{message}</p>
+        <div className="flex flex-col items-center justify-start min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
+            <h1 className="text-2xl text-primary font-bold my-6">Confirmation d'inscription</h1>
+            <p className="text-center text-success text-lg">{message}</p>
         </div>
     );
 }
