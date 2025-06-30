@@ -1,4 +1,5 @@
 "use client";
+// export const dynamic = "force-dynamic"; //ça sert à forcer le rendu côté serveur pour cette page
 
 import {useEffect, useState} from "react";
 import {useSearchParams} from "next/navigation";
@@ -7,6 +8,7 @@ import {Button} from "@/app/_lib/ui-kit/components/button";
 export default function UnsubscribePage() {
     const [message, setMessage] = useState("");
     const [confirmed, setConfirmed] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
 
@@ -16,25 +18,27 @@ export default function UnsubscribePage() {
             return;
         }
 
+        setIsSubmitting(true); // Désactive le bouton pour éviter les soumissions multiples
         try {
             const res = await fetch(`/api/newsletter/unsubscribe?token=${token}`);
             const data = await res.json();
 
             if (res.ok) {
                 setMessage(data.message);
-                setConfirmed(true);
             } else {
                 setMessage(data.message || "Une erreur est survenue lors de la désinscription.");
             }
         } catch (error) {
             setMessage("Erreur de connexion au serveur. Veuillez réessayer plus tard.");
+        }finally {
+            setIsSubmitting(true) // Réactive le bouton dans tous les cas
         }
     }
 
     return (
         <div
-            className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
-            <h1 className="text-2xl text-primary font-bold mb-4">Désinscription</h1>
+            className="flex flex-col items-center justify-start min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
+            <h1 className="text-2xl text-primary font-bold my-6">Désinscription</h1>
 
             {!message && !confirmed && (
                 <>
@@ -62,8 +66,9 @@ export default function UnsubscribePage() {
                             onClick={handleUnsubscribe}
                             className="bg-red"
                             variant="chip"
+                            isLoading={isSubmitting}
                         >
-                            Oui, me désinscrire
+                            {isSubmitting ? "Traitement..." : "Oui, me désinscrire"}
                         </Button>
                         <a
                             href="/"
@@ -76,7 +81,7 @@ export default function UnsubscribePage() {
             )}
 
             {message && (
-                <p className="text-center text-green-600 text-lg mt-6">{message}</p>
+                <p className="text-center text-textLight text-lg mt-6">{message}</p>
             )}
         </div>
     );

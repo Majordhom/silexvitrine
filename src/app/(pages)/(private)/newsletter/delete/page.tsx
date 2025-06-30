@@ -1,4 +1,5 @@
 "use client";
+// export const dynamic = "force-dynamic";
 
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import {Button} from "@/app/_lib/ui-kit/components/button";
 export default function DeletePage() {
     const [message, setMessage] = useState("");
     const [confirmed, setConfirmed] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
 
@@ -15,15 +17,26 @@ export default function DeletePage() {
             setMessage("Token manquant dans l'URL.");
             return;
         }
+        setIsSubmitting(true);
+        try {
+            const res = await fetch(`/api/newsletter/delete?token=${token}`, {method: "DELETE"});
+            const data = await res.json();
+            if (res.ok) {
+                setMessage(data.message);
+            }else{
+                setMessage(data.message || "Une erreur est survenue lors de la suppression de vos données.");
+            }
+        } catch (error) {
+            setMessage("Erreur de connexion au serveur. Veuillez réessayer plus tard.");
+        } finally {
+            setIsSubmitting(false);
+        }
 
-        const res = await fetch(`/api/newsletter/delete?token=${token}`, { method: "DELETE" });
-        const data = await res.json();
-        setMessage(data.message);
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
-            <h1 className="text-2xl font-bold mb-4">Suppression de vos données</h1>
+        <div className="flex flex-col items-center justify-start min-h-screen p-6 bg-gradient-to-br from-gray-50 to-gray-100">
+            <h1 className="text-2xl font-bold my-6">Suppression de vos données</h1>
 
             {!message && !confirmed && (
                 <>
@@ -48,8 +61,9 @@ export default function DeletePage() {
                             onClick={handleDelete}
                             className="bg-red-600 hover:bg-red-700"
                             variant="chip"
+                            isLoading={isSubmitting}
                         >
-                            Oui, supprimer
+                            {isSubmitting ? "Suppression..." : "Oui, supprimer"}
                         </Button>
                         <a
                             href="/"
@@ -62,7 +76,7 @@ export default function DeletePage() {
             )}
 
             {message && (
-                <p className="text-center text-green-600 text-lg mt-6">{message}</p>
+                <p className="text-center text-textLight text-lg mt-6">{message}</p>
             )}
         </div>
     );
