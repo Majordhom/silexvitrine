@@ -2,12 +2,13 @@ import {NextRequest, NextResponse} from "next/server";
 import {prisma} from "@/app/_lib/prisma";
 import {generateToken} from "@/app/_lib/utils/generateToken";
 import {sendMail} from "@/app/_lib/services/mailer";
+import {validateEmail} from "@/app/_lib/utils/email";
 
 export async function POST(req: NextRequest) {
     try {
         const {email} = await req.json();
 
-        if (!email || !email.includes("@")) {
+        if (!validateEmail(email)) {
             return NextResponse.json({message: "Adresse email invalide."}, {status: 400});
         }
 

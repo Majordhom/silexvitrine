@@ -3,6 +3,7 @@
 import {useState, useEffect} from "react";
 import {Input} from "@/app/_lib/ui-kit/components/input";
 import {Button} from "@/app/_lib/ui-kit/components/button";
+import {validateEmail} from "@/app/_lib/utils/email";
 
 export default function NewsletterPage() {
     const [email, setEmail] = useState("");
@@ -30,12 +31,6 @@ export default function NewsletterPage() {
 
         setMessageTimer(timer);
     };
-
-    const validateEmail = (email:string) => {
-        // Expression régulière simple pour valider l'email
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@\d]+$/;
-        return emailRegex.test(email);
-    }
 
     const handleSubscribe = async (e: React.FormEvent) => {
         e.preventDefault();
