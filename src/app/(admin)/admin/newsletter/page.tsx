@@ -16,6 +16,7 @@ type Abonne = {
 
 export default function AdminNewsletterPage() {
     const [abonnes, setAbonnes] = useState<Abonne[]>([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const loadAbonnes = async () => {
         const res = await fetch("/api/admin/newsletter/list");
@@ -24,16 +25,21 @@ export default function AdminNewsletterPage() {
     };
 
     const handleUnsubscribe = async (id: string) => {
+        setIsSubmitting(true);
         await fetch(`/api/admin/newsletter/unsubscribe?id=${id}`, { method: "PATCH" });
+        setIsSubmitting(false);
         loadAbonnes();
     };
 
     const handleDelete = async (id: string) => {
+        setIsSubmitting(true);
         await fetch(`/api/admin/newsletter/delete?id=${id}`, { method: "DELETE" });
+        setIsSubmitting(false);
         loadAbonnes();
     };
 
     const handleSendNewsletter = async (id: string, message:string) => {
+        setIsSubmitting(true);
         const res = await fetch(`/api/admin/newsletter/send?id=${id}`, {
             method: "POST",
             body: JSON.stringify({message}),
@@ -47,10 +53,11 @@ export default function AdminNewsletterPage() {
             const errorData = await res.json();
             toast.error(`Échec de l’envoi : ${errorData.error || "Erreur inconnue"}`);
         }
-
+        setIsSubmitting(false);
     };
 
     const handleSendAllNewsletter = async (message: string) => {
+        setIsSubmitting(true);
         const res = await fetch("/api/admin/newsletter/send-all", {
             method: "POST",
             body: JSON.stringify({message}),
@@ -65,6 +72,7 @@ export default function AdminNewsletterPage() {
             const errorData = await res.json();
             toast.error(`Échec de l’envoi : ${errorData.error || "Erreur inconnue"}`);
         }
+        setIsSubmitting(false);
     };
 
 
@@ -183,8 +191,9 @@ export default function AdminNewsletterPage() {
                             if (selectedAbonne) await handleUnsubscribe(selectedAbonne.id);
                             setIsUnsubscribeModalOpen(false);
                         }}
+                        isLoading={isSubmitting}
                     >
-                        Confirmer
+                        {isSubmitting ? "Traitement en cours..." : "Confirmer"}
                     </Button>
                 </ModalFooter>
             </Modal>
@@ -203,8 +212,9 @@ export default function AdminNewsletterPage() {
                             if (selectedAbonne) await handleDelete(selectedAbonne.id);
                             setIsDeleteModalOpen(false);
                         }}
+                        isLoading={isSubmitting}
                     >
-                        Confirmer
+                        {isSubmitting ? "Suppression en cours..." : "Confirmer"}
                     </Button>
                 </ModalFooter>
             </Modal>
@@ -232,8 +242,9 @@ export default function AdminNewsletterPage() {
                                 setCustomMessage(""); // reset après envoi
                             }
                         }}
+                        isLoading={isSubmitting}
                     >
-                        Confirmer l’envoi
+                        {isSubmitting ? "Envoi en cours..." : "Confirmer l’envoi"}
                     </Button>
                 </ModalFooter>
             </Modal>
@@ -259,8 +270,9 @@ export default function AdminNewsletterPage() {
                             setIsSendAllModalOpen(false);
                             setCollectiveMessage("");
                         }}
+                        isLoading={isSubmitting}
                     >
-                        Confirmer l’envoi
+                        {isSubmitting? "Envoi en cours..." : "Confirmer l’envoi"}
                     </Button>
                 </ModalFooter>
             </Modal>
