@@ -1,6 +1,6 @@
 "use client";
 
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Input} from "@/app/_lib/ui-kit/components/input";
 import {Button} from "@/app/_lib/ui-kit/components/button";
 
@@ -9,6 +9,28 @@ export default function NewsletterPage() {
     const [message, setMessage] = useState("");
     const [messageStatus, setMessageStatus] = useState<'success' | 'error' | 'default'>('default');
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    //timer pour effacer le message
+    const [messageTimer, setMessageTimer] = useState<NodeJS.Timeout | null>(null);
+
+    const showMessage = (newMessage: string, status: 'error' | 'success' | 'default') => {
+        // Annuler le timer précédent s'il existe
+        if (messageTimer) {
+            clearTimeout(messageTimer);
+        }
+
+        setMessage(newMessage);
+        setMessageStatus(status);
+
+        // Configurer un nouveau timer pour effacer le message après 5 secondes
+        const timer = setTimeout(() => {
+            setMessage("");
+            setMessageStatus('default');
+        }, 5000);
+
+        setMessageTimer(timer);
+    };
+
 
     const handleSubscribe = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -23,8 +45,7 @@ export default function NewsletterPage() {
             });
 
             const data = await res.json();
-            setMessage(data.message);
-            setMessageStatus(res.ok ? 'success' : 'error');
+            showMessage(data.message, res.ok ? 'success' : 'error');
             setEmail("");
         } catch (error) {
             setMessage("Erreur lors de l'inscription. Réessaie.");
@@ -33,6 +54,15 @@ export default function NewsletterPage() {
             setIsSubmitting(false); // Réactive le bouton dans tous les cas
         }
     };
+
+    // Nettoyer le timer quand le composant est démonté
+    useEffect(() => {
+        return () => {
+            if (messageTimer) {
+                clearTimeout(messageTimer);
+            }
+        };
+    }, [messageTimer]);
 
     return (
         <div
