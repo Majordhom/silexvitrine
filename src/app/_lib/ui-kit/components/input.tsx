@@ -21,10 +21,11 @@ type Props = {
     description?: string | ReactNode | ReactNode[],
     ref?: Ref<HTMLInputElement>
     errorMessage?: string,
+    status?: 'error' | 'success' | 'default',
     required?: boolean,
 }
 
-export const Input = ({ref, classNames, description, onKeyDown, onClick, onBlur, value, onChange, type = 'text', className = '', name, isDisabled, isInvalid, label, startContent, endContent, placeholder, errorMessage, min, max, required}: Props) => {
+export const Input = ({ref, classNames, description, onKeyDown, onClick, onBlur, value, onChange, type = 'text', className = '', name, isDisabled, isInvalid, label, startContent, endContent, placeholder, errorMessage, min, max, status = 'default', required}: Props) => {
     const minValue = type === 'number' ? (min !== undefined ? min : 0) : min;
 
     const handleChange = (newValue: string) => {
@@ -61,6 +62,8 @@ export const Input = ({ref, classNames, description, onKeyDown, onClick, onBlur,
         }
     };
 
+    const messageClass = status === 'error'? 'text-danger' : status === 'success' ? 'text-success' : 'text-textLight';
+
     return <label className={`flex flex-col ${className ?? ''} ${classNames?.base ?? ''}`}>
         {label && <span className={`text-sm ${classNames?.label ?? ''}`}>{label}</span>}
         <div className={`relative flex gap-1 border-1 border-transparent ${isDisabled ? ' !border-gray-100 ' : 'bg-white hover:bg-gray-200'} ${isInvalid ? '!border-danger bg-red-50' : ''}  transition-all duration-200 rounded-xl p-2 ${classNames?.input ?? ''}`}>
@@ -83,6 +86,10 @@ export const Input = ({ref, classNames, description, onKeyDown, onClick, onBlur,
             {endContent && <div className={'flex-0 flex flex-row'}>{endContent}</div>}
         </div>
         {description && <span className="text-xs text-textLight">{description}</span>}
-        {errorMessage && <span className="text-danger text-xs mt-1 p-2">{errorMessage}</span>}
+        {errorMessage && (
+            <span className={`text-xs mt-1 p-2 ${messageClass}`}>
+                    {errorMessage}
+            </span>
+        )}
     </label>
 }
