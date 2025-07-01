@@ -6,9 +6,17 @@ import ContactForm from "@/app/_lib/components/contactForm";
 import {AnnonceCardHeader} from "@/app/(pages)/(private)/annonces/_component/annonceCardHeader";
 import AnnoncesScroller from "@/app/_lib/components/annonceScroller";
 import MapAnnonce from "@/app/_lib/components/mapAnnonce";
+import {calculateHaversineDistance, isValidCoordinate} from "@/app/_lib/utils/geo";
+import {Mandat, MandatPhoto} from "@/generated/prisma";
 
 type PageProps = {
     params?: Promise<any>;
+};
+
+type MandatWithPhotos = Mandat & {
+    photos: MandatPhoto[]
+    distance?: number
+    scoreProximite?: number
 };
 
 // Ça génère toutes les pages /annonces/1, /annonces/2… à la build.
@@ -60,22 +68,49 @@ export default async function AnnoncePage({params}: PageProps) {
 
     if (!mandat) return notFound()
 
+    let similaires: MandatWithPhotos[] = [];
 
-    const similaires = await prisma.mandat.findMany({
+    if (!isValidCoordinate(mandat.latitude) || !isValidCoordinate(mandat.longitude)) {
+        // Fallback par code postal
+        similaires = await prisma.mandat.findMany({
+            where: {
+                id: {not: mandatId},
+                cp: mandat.cp,
+                nb_pieces: mandat.nb_pieces,
+                prix: {gte: mandat.prix * 0.85, lte: mandat.prix * 1.15}
+            },
+            take: 3,
+            include: {photos: true}
+        });
+    } else {
+        similaires = await prisma.mandat.findMany({
+            where: {
+                id: {not: mandatId},
+                prix: {gte: mandat.prix * 0.85, lte: mandat.prix * 1.15},
+                nb_pieces: mandat.nb_pieces,
+                latitude: {not: null}, // <-- Filtre non-null
+                longitude: {not: null}  // <-- Filtre non-null
+            },
+            take: 100,
+            include: {photos: true}
+        });
 
-        where: {
-            id: {not: mandatId},
-            cp: mandat.cp,
-            // type_bien: mandat.type_bien,
-            nb_pieces: mandat.nb_pieces,
-            prix: {
-                gte: mandat.prix * 0.85, // Prix similaire (85% du prix du mandat courant)
-                lte: mandat.prix * 1.15, // Prix similaire (115% du prix du mandat courant)
-            }
-        },
-        take: 3,
-        include: {photos: true},
-    });
+        // On filtre les biens similaires pour ne garder que ceux à moins de 1km
+        similaires = similaires
+            .map(m => ({
+                ...m,
+                distance: calculateHaversineDistance(
+                    mandat.latitude!,
+                    mandat.longitude!,
+                    m.latitude!, // On peut utiliser ! car déjà filtré
+                    m.longitude!
+                )
+            }))
+            .filter(m => m.distance <= 1) // 1km max
+            .sort((a, b) => a.distance - b.distance)
+            .slice(0, 3);
+    }
+
 
     const subjectOptions = [
         {key: 'ref-mandat: ' + mandat.reference, label: mandat.reference},
@@ -145,6 +180,27 @@ export default async function AnnoncePage({params}: PageProps) {
                                         </div>
                                     ))}
                                 />
+                                {/*<AnnoncesScroller*/}
+                                {/*    className="flex gap-10 overflow-x-auto scroll-smooth snap-x md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible"*/}
+                                {/*    children={similaires.map((annonce) => {*/}
+                                {/*        const distance = calculateHaversineDistance(*/}
+                                {/*            mandat.latitude!,*/}
+                                {/*            mandat.longitude!,*/}
+                                {/*            annonce.latitude!,*/}
+                                {/*            annonce.longitude!*/}
+                                {/*        );*/}
+
+                                {/*        return (*/}
+                                {/*            <div key={annonce.id} className="flex-shrink-0 w-[300px] snap-start md:w-auto">*/}
+                                {/*                <AnnonceCardHeader annonce={annonce} />*/}
+                                {/*                <p className="text-sm text-gray-500 mt-1">*/}
+                                {/*                    À {distance.toFixed(1)} km*/}
+                                {/*                </p>*/}
+                                {/*            </div>*/}
+                                {/*        );*/}
+                                {/*    })}*/}
+                                {/*/>*/}
+
                             </>
                         )}
                     </div>
