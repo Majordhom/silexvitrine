@@ -54,26 +54,36 @@ export default async function Annonces({
                                 Chacune d&#39;elles offre un cadre de vie unique et moderne.</p>
                         </div>
                         <div className="mt-4 sm:mt-0 flex justify-center sm:justify-end w-full sm:w-auto">
-                            <ModalSearch />
+                            <ModalSearch/>
                         </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                        {annonces.map((annonce) => (
-                            <AnnonceTableRow
-                                key={annonce.id}
-                                annonce={{
-                                    id: annonce.id,
-                                    reference: annonce.reference,
-                                    type_bien: annonce.type_bien,
-                                    prix: annonce.prix,
-                                    ville: annonce.ville,
-                                    cp: annonce.cp,
-                                    nb_pieces: annonce.nb_pieces,
-                                    surface_habitable: annonce.surface_habitable,
-                                    photos: annonce.photos,
-                                }}
-                            />
-                        ))}
+                        {annonces.length === 0 ? (
+                            <div className="col-span-full text-center font-semibold text-gray-500 py-12">
+                                <span className="text-primary font-bold text-lg">Désolé, il n&#39;y a aucun bien correspondant à votre recherche pour le moment.</span>
+                                <br/>
+                                Essayez de modifier vos critères de recherche ou revenez plus tard.
+                                <br/><br/>
+                                Vous pouvez aussi vous inscrire à notre <a href="/newsletter" className="text-primary font-bold text-lg">Newsletter</a> pour être informé des prochains biens disponibles.
+                            </div>
+                        ) : (
+                            annonces.map((annonce) => (
+                                <AnnonceTableRow
+                                    key={annonce.id}
+                                    annonce={{
+                                        id: annonce.id,
+                                        reference: annonce.reference,
+                                        type_bien: annonce.type_bien,
+                                        prix: annonce.prix,
+                                        ville: annonce.ville,
+                                        cp: annonce.cp,
+                                        nb_pieces: annonce.nb_pieces,
+                                        surface_habitable: annonce.surface_habitable,
+                                        photos: annonce.photos,
+                                    }}
+                                />
+                            ))
+                        )}
                     </div>
                     <div className="flex justify-center gap-4 mt-6">
                         <a

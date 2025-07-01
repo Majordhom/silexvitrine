@@ -98,7 +98,7 @@ return (
             />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-6">
             <SearchFormField
                 type="input"
                 label="Prix minimum"
@@ -119,7 +119,7 @@ return (
             />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-1 sm:grid-cols-2 gap-6">
             <SecteursInput
                 value={values.secteurs}
                 onChange={(secteurs) => handleChange("secteurs", secteurs)}

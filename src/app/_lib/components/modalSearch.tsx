@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import SearchForm from "@/app/_lib/components/searchForm";
-import { Modal, ModalHeader, ModalBody, ModalFooter } from "@/app/_lib/ui-kit/components/modal";
+import { Modal, ModalHeader, ModalBody} from "@/app/_lib/ui-kit/components/modal";
 import { Buttonsearch } from "@/app/_lib/ui-kit/components/buttonsearch";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
@@ -20,7 +20,6 @@ const ModalSearch: React.FC = () => {
         secteurs: searchParams.getAll("secteurs") || [],
     }), [searchParams]);
     const handleSearch = async (filters: Record<string, any>) => {
-        console.log("Payload envoyé :", filters);
         await fetch("/api/data-search", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

@@ -26,10 +26,10 @@ export default function SecteursInput({ value = [], onChange }: SecteursInputPro
 
     return (
         <div>
-            <label className="block mb-1 font-semibold">Secteurs (codes postaux)</label>
-            <div className="flex gap-2">
+            <label className="block mb-1 font-semibold">Secteurs</label>
+            <div className="grid grid-cols-2 gap-6">
                 <input
-                    className="border rounded px-2 py-1"
+                    className="bg-white rounded-xl h-10 px-1 py-1"
                     type="text"
                     placeholder="Ex : 75001"
                     value={input}
@@ -40,7 +40,7 @@ export default function SecteursInput({ value = [], onChange }: SecteursInputPro
                     maxLength={5}
                 />
                 <button
-                    className="bg-primary text-white px-3 py-1 rounded"
+                    className="bg-primary text-white px-8 py-1 rounded-xl"
                     type="button"
                     disabled={input.length !== 5 || secteurs.includes(input)}
                     onClick={addSecteur}
@@ -48,6 +48,7 @@ export default function SecteursInput({ value = [], onChange }: SecteursInputPro
                     Ajouter
                 </button>
             </div>
+
             <div className="flex flex-wrap gap-2 mt-2">
                 {secteurs.map(cp => (
                     <span
