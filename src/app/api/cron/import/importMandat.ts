@@ -79,6 +79,7 @@ export async function insertMandats(data: any[]) {
             currentItem = item;
             const mandatData = z.object({
                 reference: z.string(),
+                mandat_numero: z.coerce.string(),
                 type_offre_code: z.string().optional().default('vente'),
                 type_offre: z.string().optional().default('vente'),
                 corps: z.string(),

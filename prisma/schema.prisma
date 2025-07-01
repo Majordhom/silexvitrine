@@ -17,6 +17,7 @@ datasource db {
 model Mandat {
   id                 Int           @id @default(autoincrement())
   reference          String        @unique
+  mandat_numero      String        @unique
   type_offre_code    String
   type_offre         String
   corps              String
