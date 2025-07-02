@@ -49,7 +49,7 @@ export const Select = (props: SelectProps) => {
     });
 }
 
-export const SelectMultiple = ({values = [], isInvalid, errorMessage, onChange, options, name, label, isDisabled, className, multiple = true}: SelectMultipleProps) => {
+export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessage, onChange, options, name, label, isDisabled, className, multiple = true}: SelectMultipleProps) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false)
     const [search, setSearch] = useState('')
     const popupRef = useRef<HTMLDivElement | null>(null)
@@ -122,7 +122,7 @@ export const SelectMultiple = ({values = [], isInvalid, errorMessage, onChange, 
                 <div className={`${!isPopupOpen && 'opacity-0 pointer-events-none'} top-0 shadow-md absolute w-full bg-white rounded-2xl z-30 flex flex-col`}>
                     {/* search input */}
                     <div className={'flex flex-row items-center w-full'}>
-                        <input type="text" ref={inputRef} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Rechercher..." className="min-w-16 outline-0 w-full flex-auto px-2 py-2 rounded-l-2xl border-b-1"/>
+                        <input type="text" ref={inputRef} value={search} onChange={(e) => setSearch(e.target.value)} placeholder={placeholder} className="min-w-16 outline-0 w-full flex-auto px-2 py-2 rounded-l-2xl border-b-1"/>
                         <button type="button" onClick={() => setIsPopupOpen(false)} className="flex  py-2.5 px-2 text-white text-xs bg-secondary opacity-90 hover:opacity-100 transition-all rounded-br-md rounded-tr-xl">
                             Quitter
                         </button>
