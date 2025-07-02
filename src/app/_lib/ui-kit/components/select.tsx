@@ -1,6 +1,7 @@
 import React, {ReactNode, useEffect, useRef, useState} from "react";
 import {CheckIcon} from "@heroicons/react/24/outline";
 import {ChevronDownIcon} from "@heroicons/react/24/solid";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 type SelectProps = {
     name?: string,
@@ -89,7 +90,12 @@ export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessag
         onChange && onChange(newArray)
     }
 
-    const selectedLabels = options.filter(o => values.includes(o.key)).map(o => o.label)
+    // cette fonction est utilisée pour supprimer une valeurs selectionnée de la liste
+    const removeValue = (keyToRemove: string) => {
+        const newArray = values.filter((key) => key !== keyToRemove);
+        onChange && onChange(newArray);
+    };
+
     const filterFunction = (option: Option) => {
         if (typeof  option.label === 'string') {
             return option.label.toString().toLowerCase().includes(search.toLowerCase())
@@ -113,7 +119,30 @@ export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessag
                 {/* button */}
                 <button className={`${isInvalid ? '!border-danger bg-red-50' : ''} border-1 border-transparent bg-white flex flex-row gap-1 justify-between items-center w-full cursor-pointer hover:bg-gray-200 transition-all duration-300 rounded-2xl whitespace-nowrap truncate h-full px-2`}
                         onClick={openPopup} type="button">
-                    <div>{selectedLabels}</div>
+                    <div className="flex flex-wrap gap-1">
+                        {options
+                            .filter((o) => values.includes(o.key))
+                            .map((o) => (
+                                <span
+                                    key={o.key}
+                                    className="flex items-center gap-1 bg-primary text-white rounded-full px-2 py-0.5 text-xs"
+                                >
+                                    {o.label}
+                                    <span
+                                        role="button"
+                                        tabIndex={0}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            removeValue(o.key);
+                                        }}
+                                        className="cursor-pointer text-white hover:text-gray-100 ml-1"
+                                    >
+                                        <XMarkIcon className={'size-3'} />
+                                    </span>
+                                </span>
+                            ))}
+                    </div>
+
                     <ChevronDownIcon className={`size-3 transition-all duration-300 ${isPopupOpen ? 'rotate-180' : 'rotate-0'}`}/>
                 </button>
                 {errorMessage && <span className={`${isInvalid ? '' : 'opacity-0'} text-danger text-xs`}>{errorMessage}</span>}
