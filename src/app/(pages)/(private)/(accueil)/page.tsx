@@ -7,6 +7,7 @@ import ScrollDownButton from "@/app/_lib/ui-kit/components/ScrollDownButton";
 import {AnnonceCardHeader} from "@/app/(pages)/(private)/annonces/_component/annonceCardHeader";
 import {Annonce} from "@/app/(pages)/(private)/annonces/_component/annonceTableRow";
 import AnnonceScroller from "@/app/_lib/components/annonceScroller";
+import RechercheAccueil from "@/app/_lib/components/rechercheAccueil";
 
 export default function Accueil() {
     const [searchValue, setSearchValue] = useState("");
@@ -36,17 +37,8 @@ export default function Accueil() {
                 </p>
 
                 <div className="flex flex-row items-center gap-4 p-6 bg-transparent">
-                    <Input
-                        type="text"
-                        value={searchValue}
-                        onChange={handleChange}
-                        placeholder="Chercher"
-                        startContent={<Search className="h-5 w-5 text-gray-500"/>}
-                        className=" min-w-[200px] max-w-[400px]"
-                    />
-                    <ModalSearch/>
+                    <RechercheAccueil/>
                 </div>
-
             </div>
 
             <div className="flex justify-center my-8">
