@@ -32,7 +32,15 @@ export default async function Annonces({ searchParams }: { searchParams: any }) 
     // On construit du filtre pour la requête Prisma
     const where: any = {};
     if (params.nb_pieces) where.nb_pieces = Number(params.nb_pieces); // Filtre nb de pièces
-    if (params.type_bien) where.type_bien = params.type_bien; // Filtre type de bien
+
+    // if (params.type_bien) where.type_bien = params.type_bien; // Filtre type de bien
+    // j'ai modifié la ligne au dessus pour gérer le cas où type_bien est un tableau ou une chaîne de caractères
+    if (params.type_bien) {
+        const typesBien = Array.isArray(params.type_bien)
+            ? params.type_bien
+            : [params.type_bien];
+        where.type_bien = { in: typesBien };
+    }
     if (params.prixMin) where.prix = { ...where.prix, gte: Number(params.prixMin) }; // Prix min
     if (params.prixMax) where.prix = { ...where.prix, lte: Number(params.prixMax) }; // Prix max
 
