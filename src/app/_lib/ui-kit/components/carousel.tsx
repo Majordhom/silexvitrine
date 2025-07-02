@@ -33,12 +33,14 @@ export const Carousel = ({ photos }: Props) => {
                     <button
                         onClick={prev}
                         className="absolute left-1 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
+                        aria-label="Previous Photo"
                     >
                         <ChevronLeftIcon className="h-6 w-6" />
                     </button>
                     <button
                         onClick={next}
                         className="absolute right-1 top-1/2 transform -translate-y-1/2 bg-gray-200 p-2 rounded-full"
+                        aria-label="Next Photo"
                     >
                         <ChevronRightIcon className="h-6 w-6" />
                     </button>

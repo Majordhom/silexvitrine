@@ -12,6 +12,7 @@ export type ButtonProps = {
     isDisabled?: boolean,
     isLoading?: boolean,
     startContent?: React.ReactNode,
+    ariaLabel?: string,
 }
 
 const buttonCommonClasses = `flex min-h-10 text-sm flex-wrap justify-center gap-2 items-center border-1 rounded-xl py-1 px-4`
@@ -69,7 +70,7 @@ export const buttonUnderlineClasses = (color?: string) => (
     ` hover:border-b-1 border-${color} flex gap-1 items-center h-7 ${color ? `text-${color}` : ''}`
 )
 
-export const Button = ({startContent, isDisabled, isLoading, color, textColor, onClick, children, type, className = '', variant = 'shadow'}: ButtonProps) => {
+export const Button = ({ariaLabel, startContent, isDisabled, isLoading, color, textColor, onClick, children, type, className = '', variant = 'shadow'}: ButtonProps) => {
     let normalizedVariant: string = variant
     let sizeClasses = ''
 
@@ -101,5 +102,5 @@ export const Button = ({startContent, isDisabled, isLoading, color, textColor, o
         twClasses += ` opacity-70 !cursor-not-allowed`
     }
 
-    return <button disabled={isDisabled || isLoading} onClick={onClick} className={`${twClasses} ${sizeClasses}`}>{isLoading ? <Spinner/> : startContent}{children}</button>
+    return <button disabled={isDisabled || isLoading} onClick={onClick} className={`${twClasses} ${sizeClasses}`} aria-label={ariaLabel}>{isLoading ? <Spinner/> : startContent}{children}</button>
 }
