@@ -31,7 +31,7 @@ export default function Accueil() {
             <div
                 className="background-accueil-degrade w-full flex flex-col items-center justify-center text-center gap-8 p-20 md:p-24 lg:p-32 xl:p-40 2xl:p-48 rounded-2xl min-w-0">
                 <h1 className="text-4xl font-bold text-primary">Trouvez votre maison de rêve aujourd'hui</h1>
-                <p className="text-base max-w-xl text-blackWarm">
+                <p className="text-base max-w-xl text-blackWarm z-10">
                     Explorez notre vaste sélection de propriétés à vendre. Utilisez notre module de recherche intégré
                     pour affiner vos résultats et découvrir la maison parfaite qui vous attend.
                 </p>
