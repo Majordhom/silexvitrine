@@ -8,12 +8,14 @@ export async function GET() {
                 ville: true,
                 cp: true,
             },
-            orderBy: [{ cp: "asc" }, { ville: "asc" }],
+            orderBy: [{ ville: "asc" }, { cp: "asc" }],
         });
 
         const result: { key: string; label: string }[] = [];
-        const autresVilles = new Set<string>();
-        const marseilleSet = new Set<string>();
+        const vueSecteurs = new Set<string>();
+
+        // Stocker le nombre de CP par ville
+        const villesCount: Record<string, Set<number>> = {};
 
         secteurs.forEach((item) => {
             if (
@@ -22,39 +24,43 @@ export async function GET() {
                 item.ville.toLowerCase() === "null" ||
                 item.ville.trim() === ""
             ) {
-                return; // skip si invalide
+                return;
             }
 
             const ville = capitalize(item.ville.trim());
+            const cp = item.cp;
 
-            if (ville.toLowerCase() === "marseille") {
-                const key = `${item.cp} ${ville}`;
-                if (!marseilleSet.has(key)) {
-                    marseilleSet.add(key);
-                    result.push({
-                        key: item.cp.toString(),
-                        label: key,
-                    });
-                }
+            if (!villesCount[ville]) {
+                villesCount[ville] = new Set();
+            }
+            villesCount[ville].add(cp);
+        });
+
+        // Repasser pour créer la liste définitive
+        Object.entries(villesCount).forEach(([ville, cps]) => {
+            if (cps.size > 1) {
+                // Si plusieurs CP → on affiche chaque CP avec la ville
+                cps.forEach((cp) => {
+                    const key = cp.toString();
+                    const label = `${cp} ${ville}`;
+                    if (!vueSecteurs.has(key)) {
+                        vueSecteurs.add(key);
+                        result.push({ key, label });
+                    }
+                });
             } else {
-                if (!autresVilles.has(ville)) {
-                    autresVilles.add(ville);
-                    result.push({
-                        key: ville,
-                        label: ville,
-                    });
+                // Sinon → un seul CP sans mentionner le CP dans le label
+                const cp = [...cps][0];
+                const key = cp.toString();
+                if (!vueSecteurs.has(key)) {
+                    vueSecteurs.add(key);
+                    result.push({ key, label: ville });
                 }
             }
         });
 
-        // Trier : Marseille en haut
-        result.sort((a, b) => {
-            if (a.label.includes("Marseille") && !b.label.includes("Marseille"))
-                return -1;
-            if (!a.label.includes("Marseille") && b.label.includes("Marseille"))
-                return 1;
-            return a.label.localeCompare(b.label);
-        });
+        // Trier alphabetiquement
+        result.sort((a, b) => a.label.localeCompare(b.label));
 
         return NextResponse.json(result);
     } catch (error) {
