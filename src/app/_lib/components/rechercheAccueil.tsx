@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { Button } from "@/app/_lib/ui-kit/components/button";
 import { SelectMultiple } from "@/app/_lib/ui-kit/components/select";
 
@@ -12,21 +12,39 @@ export default function RechercheAccueil() {
     const [typesBien, setTypesBien] = useState<string[]>([]);
     const [secteurs, setSecteurs] = useState<string[]>([]);
 
-    // Valeurs mock pour l'instant (remplacées par API en étape 2)
-    const typeBienOptions = [
-        { key: "Maison", label: "Maison" },
-        { key: "Appartement", label: "Appartement" },
-        { key: "Loft", label: "Loft" },
-        { key: "Villa", label: "Villa" },
-    ];
+    // States des options à récupérer depuis API
+    const [typeBienOptions, setTypeBienOptions] = useState<{ key: string; label: string }[]>([]);
+    const [secteurOptions, setSecteurOptions] = useState<{ key: string; label: string }[]>([]);
 
-    const secteurOptions = [
-        { key: "13001", label: "13001" },
-        { key: "13007", label: "13007" },
-        { key: "13008", label: "13008" },
-        { key: "Aix-en-Provence", label: "Aix-en-Provence" },
-    ];
+    // Chargement des options de filtres depuis API
+    useEffect(() => {
+        const fetchOptions = async () => {
+            try {
+                const [typesRes, secteursRes] = await Promise.all([
+                    fetch("/api/filtres/type-bien"),
+                    fetch("/api/filtres/secteurs"),
+                ]);
 
+                if (!typesRes.ok || !secteursRes.ok) {
+                    throw new Error("Erreur lors du chargement des filtres");
+                }
+
+                const [typesData, secteursData] = await Promise.all([
+                    typesRes.json(),
+                    secteursRes.json(),
+                ]);
+
+                setTypeBienOptions(typesData);
+                setSecteurOptions(secteursData);
+            } catch (error) {
+                console.error("Erreur chargement filtres :", error);
+            }
+        };
+
+        fetchOptions();
+    }, []);
+
+    // Fonction pour construire l'URL et rediriger vers la page des annonces
     const handleSearch = () => {
         const searchParams = new URLSearchParams();
 
@@ -65,7 +83,7 @@ export default function RechercheAccueil() {
                 onClick={handleSearch}
                 variant="solid"
                 color="primary"
-                className="px-8 py-3 text-lg rounded-full"
+                className="px-8 py-3 text-lg rounded-full z-10"
             >
                 DÉCOUVREZ NOS ANNONCES
             </Button>
