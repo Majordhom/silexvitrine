@@ -29,6 +29,7 @@ export default function AnnoncesScroller({children, className}: AnnonceScrollerP
             <button
                 onClick={scrollLeft}
                 className="absolute left-1 top-1/2 -translate-y-1/2 bg-gray-200 p-2 rounded-full md:hidden z-10"
+                aria-label='Scroll Left'
             >
                 <ChevronLeft className="h-6 w-6"/>
             </button>
@@ -38,6 +39,7 @@ export default function AnnoncesScroller({children, className}: AnnonceScrollerP
             <button
                 onClick={scrollRight}
                 className="absolute right-1 top-1/2 -translate-y-1/2 bg-gray-200 p-2 rounded-full md:hidden z-10"
+                aria-label='Scroll Right'
             >
                 <ChevronRight className="h-6 w-6"/>
             </button>

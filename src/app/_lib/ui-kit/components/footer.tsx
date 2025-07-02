@@ -65,22 +65,26 @@ export default function Footer() {
                     </div>
                     <div className="flex gap-4 mt-4">
                         <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white">
+                              className="text-white"
+                              aria-label="Facebook">
                             <FbIcon width={24} height={24}/>
                         </Link>
                         <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white">
+                              className="text-white"
+                              aria-label="Instagram">
                             <InstaIcon width={24} height={24}/>
                         </Link>
-                        <Link href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-white">
+                        <Link href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-white" aria-label="X.com">
                             <XIcon width={24} height={24}/>
                         </Link>
                         <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white">
+                              className="text-white"
+                              aria-label="LinkedIn">
                             <LinkedIcon width={24} height={24}/>
                         </Link>
                         <Link href="https://youtube.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white">
+                              className="text-white"
+                              aria-label="YouTube">
                             <YoutubeIcon width={24} height={24}/>
                         </Link>
                     </div>
