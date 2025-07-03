@@ -36,7 +36,7 @@ export default function Accueil() {
                     pour affiner vos résultats et découvrir la maison parfaite qui vous attend.
                 </p>
 
-                <div className="flex flex-row items-center gap-4 p-6 bg-transparent">
+                <div className="flex flex-row items-center gap-4 p-6 bg-transparent w-full">
                     <RechercheAccueil/>
                 </div>
             </div>
