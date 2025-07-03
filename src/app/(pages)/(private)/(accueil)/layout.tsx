@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "@/app/globals.scss";
 
 export const metadata: Metadata = {
-  title: "Page d'Accueil",
+  title: "Accueil",
   description: "Application développée par Tremplin",
 };
 

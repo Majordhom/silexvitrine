@@ -1,5 +1,10 @@
+import type { Metadata } from "next";
 import ContactForm from "@/app/_lib/components/contactForm";
 
+export const metadata: Metadata = {
+    title: "Contactez-nous",
+    description: "Application développée par Tremplin",
+};
 export default async function Contact() {
 
     const subjetOptions = [
