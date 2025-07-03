@@ -115,36 +115,47 @@ export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessag
             {/* label */}
             {label && <span className={`absolute z-10 -mt-6 text-black text-sm`}>{label}</span>}
 
-            <div className={'absolute h-10 w-full'}> {/* absolute because the size is based on the hidden options */}
+            <div className={'absolute h-10 w-full'}>
                 {/* button */}
-                <button className={`${isInvalid ? '!border-danger bg-red-50' : ''} border-1 border-transparent bg-white flex flex-row gap-1 justify-between items-center w-full cursor-pointer hover:bg-gray-200 transition-all duration-300 rounded-2xl whitespace-nowrap truncate h-full px-2`}
-                        onClick={openPopup} type="button">
-                    <div className="flex flex-wrap gap-1">
-                        {options
-                            .filter((o) => values.includes(o.key))
-                            .map((o) => (
-                                <span
-                                    key={o.key}
-                                    className="flex items-center gap-1 bg-primary text-white rounded-full px-2 py-0.5 text-xs"
-                                >
-                                    {o.label}
+                <button
+                    className={`${isInvalid ? '!border-danger bg-red-50' : ''} border-1 border-transparent bg-white flex flex-row gap-1 justify-between items-center w-full cursor-pointer hover:bg-gray-200 transition-all duration-300 rounded-2xl whitespace-nowrap truncate h-full px-2`}
+                    onClick={openPopup} type="button">
+                    <div className="flex-1 flex items-center overflow-x-auto py-1
+                            [&::-webkit-scrollbar]:h-[2px]
+                            [&::-webkit-scrollbar-thumb]:bg-gray-300
+                            [&::-webkit-scrollbar-track]:bg-transparent"
+                    >
+                        <div className="flex gap-1 flex-nowrap items-center">
+                            {options
+                                .filter((o) => values.includes(o.key))
+                                .map((o) => (
                                     <span
-                                        role="button"
-                                        tabIndex={0}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            removeValue(o.key);
-                                        }}
-                                        className="cursor-pointer text-white hover:text-gray-100 ml-1"
+                                        key={o.key}
+                                        className="flex items-center gap-1 bg-primary text-white rounded-full px-2 py-0.5 text-xs flex-shrink-0"
                                     >
-                                        <XMarkIcon className={'size-3'} />
+                                        {o.label}
+                                        <span
+                                            role="button"
+                                            tabIndex={0}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                removeValue(o.key);
+                                            }}
+                                            className="cursor-pointer text-white hover:text-gray-100 ml-1"
+                                        >
+                                            <XMarkIcon className={'size-3'}/>
+                                        </span>
                                     </span>
-                                </span>
-                            ))}
+                                ))
+                            }
+                        </div>
                     </div>
-
-                    <ChevronDownIcon className={`size-3 transition-all duration-300 ${isPopupOpen ? 'rotate-180' : 'rotate-0'}`}/>
+                    <ChevronDownIcon
+                        className={`size-3 transition-all duration-300 flex-shrink-0 ${isPopupOpen ? 'rotate-180' : 'rotate-0'}`}
+                    />
                 </button>
+
+                {/* error message */}
                 {errorMessage && <span className={`${isInvalid ? '' : 'opacity-0'} text-danger text-xs`}>{errorMessage}</span>}
 
                 {/* popup */}
