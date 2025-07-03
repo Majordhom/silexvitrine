@@ -11,7 +11,7 @@ export default function ScrollDownButton() {
     return (
         <Button
             onClick={handleClick}
-            aria-label="Scroll Down"
+            ariaLabel="Scroll Down"
             className="p-2 border border-white bg-white/70 bg-transparent transition shadow-none"
             variant="no-shadow"
         >
