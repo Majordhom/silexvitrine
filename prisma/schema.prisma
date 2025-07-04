@@ -132,3 +132,13 @@ model Abonne {
   tokenDesinscription String?
   tokenSuppression    String?
 }
+
+model Utilisateur {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  nom       String
+  prenom    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
