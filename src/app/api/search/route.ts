@@ -15,7 +15,6 @@ export async function POST(req: NextRequest) {
         if (criteria?.secteurs && Array.isArray(criteria.secteurs)) {
             where.cp = { in: criteria.secteurs.map(Number) };
         }
-        // Ajouter d'autres critères selon le besoin
 
         const mandats = await prisma.mandat.findMany({
             where,
