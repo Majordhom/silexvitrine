@@ -5,6 +5,7 @@ import {Button} from "@/app/_lib/ui-kit/components/button";
 import {Modal, ModalBody, ModalFooter, ModalHeader} from "@/app/_lib/ui-kit/components/modal";
 import {Textarea} from "@/app/_lib/ui-kit/components/textarea";
 import toast from "react-hot-toast";
+import AdminHeader from "@/app/(admin)/_components/adminHeader";
 
 type Abonne = {
     id: string;
@@ -107,6 +108,7 @@ export default function AdminNewsletterPage() {
 
     return (
         <div className="min-h-screen max-w-6xl mx-auto bg-white rounded shadow p-8">
+            <AdminHeader />
             <h1 className="text-2xl text-primary font-bold mb-4">Dashboard Newsletter</h1>
             <div className="flex gap-4">
                 <Button onClick={loadAbonnes} className="mb-6" variant="chip-bordered">

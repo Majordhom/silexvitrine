@@ -6,6 +6,7 @@ import Chart from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import AdminHeader from "@/app/(admin)/_components/adminHeader";
 
 // Enregistrement du plugin datalabels (une seule fois)
 if (!(Chart as any)._datalabelsRegistered) {
@@ -186,6 +187,7 @@ export default function SearchStatsPage() {
     return (
         <div className="min-h-screen bg-gray-50 p-8">
             <div className="max-w-6xl mx-auto bg-white rounded shadow p-8">
+                <AdminHeader />
                 <h1 className="text-3xl font-bold mb-6">Statistiques des recherches</h1>
                 <div className="flex flex-wrap gap-4 items-center mb-8">
                     <label>Période :</label>
