@@ -4,8 +4,8 @@ const bcrypt = require("bcrypt") ;
 const prisma = new PrismaClient();
 
 async function main() {
-    const email = "admin@example.com";
-    const plainPassword = "MotDePasse123";
+    const email = ""; // Remplacez par l'email de l'utilisateur
+    const plainPassword = ""; // Remplacez par le mot de passe en clair de l'utilisateur
 
     // Hasher le mot de passe
     const hashedPassword = await bcrypt.hash(plainPassword, 10);
