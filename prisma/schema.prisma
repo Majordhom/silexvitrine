@@ -118,7 +118,7 @@ model DataSearch {
   type_bien String?
   prixMin   Int?
   prixMax   Int?
-  secteur   Int?
+  secteur   String[]
   createdAt DateTime @default(now())
 }
 

@@ -39,7 +39,6 @@ const type_bienOptions = [
 const initialState = {
     nb_pieces: "",
     type_bien: "",
-    //energie_chauffage: "",
     prixMin: "",
     prixMax: "",
     secteurs: [] as string[],
@@ -73,70 +72,69 @@ const SearchForm = ({ onSubmit, initialValues }: SearchFormProps) => {
     // Gère la soumission du formulaire
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (onSubmit) onSubmit(values);
+        if (onSubmit) onSubmit(values); // <-- valeurs avec "secteurs"
     };
 
-// Rendu du formulaire
-return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <SearchFormField
-                type="select"
-                label="Nombre de pièces"
-                value={values.nb_pieces}
-                onChange={(v) => handleChange("nb_pieces", v)}
-                options={nb_piecesOptions}
-                placeholder="Sélectionnez..."
-            />
-            <SearchFormField
-                type="select"
-                label="Type de bien"
-                value={values.type_bien}
-                onChange={(v) => handleChange("type_bien", v)}
-                options={type_bienOptions}
-                placeholder="Sélectionnez..."
-            />
-        </div>
+    // Rendu du formulaire
+    return (
+        <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <SearchFormField
+                    type="select"
+                    label="Nombre de pièces"
+                    value={values.nb_pieces}
+                    onChange={(v) => handleChange("nb_pieces", v)}
+                    options={nb_piecesOptions}
+                    placeholder="Sélectionnez..."
+                />
+                <SearchFormField
+                    type="select"
+                    label="Type de bien"
+                    value={values.type_bien}
+                    onChange={(v) => handleChange("type_bien", v)}
+                    options={type_bienOptions}
+                    placeholder="Sélectionnez..."
+                />
+            </div>
 
-        <div className="grid grid-cols-2 gap-6">
-            <SearchFormField
-                type="input"
-                label="Prix minimum"
-                value={values.prixMin}
-                onChange={(v) => handleChange("prixMin", v)}
-                placeholder="€"
-                inputType="number"
-                min="0"
-            />
-            <SearchFormField
-                type="input"
-                label="Prix maximum"
-                value={values.prixMax}
-                onChange={(v) => handleChange("prixMax", v)}
-                placeholder="€"
-                inputType="number"
-                min="0"
-            />
-        </div>
+            <div className="grid grid-cols-2 gap-6">
+                <SearchFormField
+                    type="input"
+                    label="Prix minimum"
+                    value={values.prixMin}
+                    onChange={(v) => handleChange("prixMin", v)}
+                    placeholder="€"
+                    inputType="number"
+                    min="0"
+                />
+                <SearchFormField
+                    type="input"
+                    label="Prix maximum"
+                    value={values.prixMax}
+                    onChange={(v) => handleChange("prixMax", v)}
+                    placeholder="€"
+                    inputType="number"
+                    min="0"
+                />
+            </div>
 
-        <div className="grid lg:grid-cols-1 sm:grid-cols-2 gap-6">
-            <SecteursInput
-                value={values.secteurs}
-                onChange={(secteurs) => handleChange("secteurs", secteurs)}
-            />
-        </div>
+            <div className="grid lg:grid-cols-1 sm:grid-cols-2 gap-6">
+                <SecteursInput
+                    value={values.secteurs}
+                    onChange={(secteurs) => handleChange("secteurs", secteurs)}
+                />
+            </div>
 
-        <div className="flex gap-2 justify-end pt-4">
-            <Button type="button" variant="shadow" onClick={handleReset}>
-            Réinitialiser la recherche
-            </Button>
-            <Button type="submit" variant="solid" color="primary">
-                Rechercher
-            </Button>
-        </div>
-    </form>
-);
-
+            <div className="flex gap-2 justify-end pt-4">
+                <Button type="button" variant="shadow" onClick={handleReset}>
+                    Réinitialiser la recherche
+                </Button>
+                <Button type="submit" variant="solid" color="primary">
+                    Rechercher
+                </Button>
+            </div>
+        </form>
+    );
 };
 
 export default SearchForm;

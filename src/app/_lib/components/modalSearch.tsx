@@ -19,11 +19,13 @@ const ModalSearch: React.FC = () => {
         prixMax: searchParams.get("prixMax") || "",
         secteurs: searchParams.getAll("secteurs") || [],
     }), [searchParams]);
+
     const handleSearch = async (filters: Record<string, any>) => {
+        // Envoi à l'API data-search avec "secteurs"
         await fetch("/api/data-search", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(filters),
+            body: JSON.stringify(filters), // <-- "secteurs" inclus
         });
         const params = new URLSearchParams();
         Object.entries(filters).forEach(([key, value]) => {
@@ -42,8 +44,8 @@ const ModalSearch: React.FC = () => {
     return (
         <>
             <Buttonsearch className={"self-center w-full sm:w-auto rounded-full z-10"}
-                    onClick={() => setIsModalOpen(true)}
-                    color="primary">
+                          onClick={() => setIsModalOpen(true)}
+                          color="primary">
                 Filtrer
             </Buttonsearch>
 
