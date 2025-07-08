@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/app/_lib/prisma";
 import { subDays, subWeeks, subMonths, subYears, startOfDay, endOfDay, format } from "date-fns";
+import { protectAdminApi } from "@/app/_lib/api/authMiddleware";
 
 const PERIOD_FORMATS: Record<string, string> = {
     day: "yyyy-MM-dd",
@@ -10,6 +11,11 @@ const PERIOD_FORMATS: Record<string, string> = {
 };
 
 export async function GET(req: NextRequest) {
+    // Vérification de l'authentification
+    const protection = await protectAdminApi(req);
+    if (protection) return protection;
+
+    // Traitement de la requête si authentifié
     const { searchParams } = new URL(req.url);
     const period = searchParams.get("period") || "month";
     const startParam = searchParams.get("start");
