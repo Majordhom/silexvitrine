@@ -114,7 +114,11 @@ export async function GET(req: NextRequest) {
         if (s.prixMin !== null && s.prixMax !== null && s.prixMin !== undefined && s.prixMax !== undefined) {
             prixSet.add(`${s.prixMin}-${s.prixMax}`);
         }
-        if (s.secteur !== null && s.secteur !== undefined) secteursSet.add(s.secteur);
+        if (Array.isArray(s.secteur)) {
+            s.secteur.forEach((sect) => secteursSet.add(Number(sect)));
+        } else if (s.secteur !== null && s.secteur !== undefined) {
+            secteursSet.add(s.secteur);
+        }
     });
 
     // Initialisation
@@ -133,7 +137,13 @@ export async function GET(req: NextRequest) {
         if (s.prixMin !== null && s.prixMax !== null && s.prixMin !== undefined && s.prixMax !== undefined) {
             prix[`${s.prixMin}-${s.prixMax}`][idx]++;
         }
-        if (s.secteur !== null && s.secteur !== undefined) secteurs[s.secteur][idx]++;
+        if (Array.isArray(s.secteur)) {
+            s.secteur.forEach((sect) => {
+                if (secteurs[sect]) secteurs[sect][idx]++;
+            });
+        } else if (s.secteur !== null && s.secteur !== undefined) {
+            if (secteurs[s.secteur]) secteurs[s.secteur][idx]++;
+        }
     });
 
     return NextResponse.json({
