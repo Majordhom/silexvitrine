@@ -110,7 +110,11 @@ export async function GET(req: NextRequest) {
     searches.forEach((s) => {
         const d = format(s.createdAt, formatKey);
         if (s.nb_pieces !== null && s.nb_pieces !== undefined) piecesSet.add(s.nb_pieces);
-        if (s.type_bien) typesSet.add(s.type_bien);
+        if (Array.isArray(s.type_bien)) {
+            s.type_bien.forEach((tb) => typesSet.add(tb));
+        } else if (s.type_bien) {
+            typesSet.add(s.type_bien);
+        }
         if (s.prixMin !== null && s.prixMax !== null && s.prixMin !== undefined && s.prixMax !== undefined) {
             prixSet.add(`${s.prixMin}-${s.prixMax}`);
         }
@@ -133,7 +137,11 @@ export async function GET(req: NextRequest) {
         const idx = dates.indexOf(d);
         if (idx === -1) return;
         if (s.nb_pieces !== null && s.nb_pieces !== undefined) pieces[s.nb_pieces][idx]++;
-        if (s.type_bien) types[s.type_bien][idx]++;
+        if (Array.isArray(s.type_bien)) {
+            s.type_bien.forEach((tb) => { if (types[tb]) types[tb][idx]++; });
+        } else if (s.type_bien) {
+            if (types[s.type_bien]) types[s.type_bien][idx]++;
+        }
         if (s.prixMin !== null && s.prixMax !== null && s.prixMin !== undefined && s.prixMax !== undefined) {
             prix[`${s.prixMin}-${s.prixMax}`][idx]++;
         }

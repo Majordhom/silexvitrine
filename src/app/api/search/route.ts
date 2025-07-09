@@ -11,7 +11,9 @@ export async function POST(req: NextRequest) {
         if (criteria?.prixMin) where.prix = { gte: criteria.prixMin };
         if (criteria?.prixMax) where.prix = { ...where.prix, lte: criteria.prixMax };
         if (criteria?.ville) where.ville = { contains: criteria.ville, mode: 'insensitive' };
-        if (criteria?.type_bien) where.type_bien = criteria.type_bien;
+        if (criteria?.type_bien && Array.isArray(criteria.type_bien) && criteria.type_bien.length > 0) {
+            where.type_bien = { hasSome: criteria.type_bien };
+        }
         if (criteria?.secteurs && Array.isArray(criteria.secteurs)) {
             where.cp = { in: criteria.secteurs.map(Number) };
         }

@@ -14,7 +14,7 @@ const ModalSearch: React.FC = () => {
 
     const initialValues = useMemo(() => ({
         nb_pieces: searchParams.get("nb_pieces") || "",
-        type_bien: searchParams.get("type_bien") || "",
+        type_bien: searchParams.getAll("type_bien").length > 0 ? searchParams.getAll("type_bien") : (searchParams.get("type_bien") ? [searchParams.get("type_bien") as string] : []),
         prixMin: searchParams.get("prixMin") || "",
         prixMax: searchParams.get("prixMax") || "",
         secteurs: searchParams.getAll("secteurs") || [],

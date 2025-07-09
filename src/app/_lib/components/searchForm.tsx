@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/app/_lib/ui-kit/components/button";
 import SearchFormField from "./SearchFormField";
 import SecteursInput from "./SecteursInput";
+import TypeBienMultiSelect from "./TypeBienMultiSelect";
 
 // Options pour le champ "Nombre de pièces"
 const nb_piecesOptions = [
@@ -38,7 +39,7 @@ const type_bienOptions = [
 // État initial du formulaire de recherche
 const initialState = {
     nb_pieces: "",
-    type_bien: "",
+    type_bien: [] as string[],
     prixMin: "",
     prixMax: "",
     secteurs: [] as string[],
@@ -57,7 +58,12 @@ const SearchForm = ({ onSubmit, initialValues }: SearchFormProps) => {
     // Met à jour le state si initialValues change
     useEffect(() => {
         if (initialValues) {
-            setValues((prev) => ({ ...prev, ...initialValues }));
+            setValues((prev) => ({
+                ...prev,
+                ...initialValues,
+                type_bien: Array.isArray(initialValues.type_bien) ? initialValues.type_bien : [],
+                secteurs: Array.isArray(initialValues.secteurs) ? initialValues.secteurs : [],
+            }));
         }
     }, [initialValues]);
 
@@ -87,13 +93,10 @@ const SearchForm = ({ onSubmit, initialValues }: SearchFormProps) => {
                     options={nb_piecesOptions}
                     placeholder="Sélectionnez..."
                 />
-                <SearchFormField
-                    type="select"
-                    label="Type de bien"
+                <TypeBienMultiSelect
                     value={values.type_bien}
                     onChange={(v) => handleChange("type_bien", v)}
                     options={type_bienOptions}
-                    placeholder="Sélectionnez..."
                 />
             </div>
 
