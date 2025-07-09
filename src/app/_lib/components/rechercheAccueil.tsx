@@ -45,13 +45,32 @@ export default function RechercheAccueil() {
     }, []);
 
     // Fonction pour construire l'URL et rediriger vers la page des annonces
-    const handleSearch = () => {
-        const searchParams = new URLSearchParams();
+    const handleSearch = async () => {
 
+        const searchParams = new URLSearchParams();
         typesBien.forEach((type) => searchParams.append("type_bien", type));
         secteurs.forEach((secteur) => searchParams.append("secteurs", secteur));
 
-        router.push(`/annonces?${searchParams.toString()}`);
+        try {
+            // Envoi des states de recherche à l'API pour enregistrement
+            await fetch('/api/data-search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type_bien: typesBien,
+                    secteurs: secteurs,
+                }),
+            });
+
+            // Redirection vers la page annonces (comportement existant)
+            router.push(`/annonces?${searchParams.toString()}`);
+        } catch (error) {
+            console.error("Erreur lors de l'enregistrement de la recherche:", error);
+            // On redirige quand même même si l'enregistrement a échoué
+            router.push(`/annonces?${searchParams.toString()}`);
+        }
     };
 
     return (
