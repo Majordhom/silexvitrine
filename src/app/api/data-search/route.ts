@@ -4,20 +4,34 @@ import { prisma } from '@/app/_lib/prisma';
 export async function POST(req: NextRequest) {
     try {
         const filters = await req.json();
-        // On récupère "secteurs" (pluriel)
         const { nb_pieces, type_bien, prixMin, prixMax, secteurs } = filters;
-        const isAllEmpty = [nb_pieces, type_bien, prixMin, prixMax, secteurs]
-            .every(val => val === undefined || val === null || val === '' || (Array.isArray(val) && val.length === 0));
-        // Insertion dans DataSearch
-        await prisma.dataSearch.create({
-            data: {
-                nb_pieces: nb_pieces ? Number(nb_pieces) : null,
-                type_bien: type_bien || null,
-                prixMin: prixMin ? Number(prixMin) : null,
-                prixMax: prixMax ? Number(prixMax) : null,
-                secteur: secteurs && Array.isArray(secteurs) ? secteurs : [],
-            }
-        });
+
+        // Vérifie si tous les champs sont vides ou non sélectionnés
+        const isAllEmpty = [
+            nb_pieces,
+            prixMin,
+            prixMax,
+            Array.isArray(type_bien) ? type_bien.length === 0 : true,
+            Array.isArray(secteurs) ? secteurs.length === 0 : true
+        ].every(val => val === undefined || val === null || val === '' || val === true);
+
+        if (isAllEmpty) {
+            return NextResponse.json({ message: "Aucune donnée à enregistrer." }, { status: 204 });
+        }
+
+        // Construit l'objet data uniquement avec les champs renseignés
+        const data: any = {};
+        if (nb_pieces) data.nb_pieces = Number(nb_pieces);
+        if (prixMin) data.prixMin = Number(prixMin);
+        if (prixMax) data.prixMax = Number(prixMax);
+        if (Array.isArray(type_bien) && type_bien.length > 0) {
+            data.type_bien = type_bien;
+        }
+        if (Array.isArray(secteurs) && secteurs.length > 0) {
+            data.secteur = secteurs;
+        }
+
+        await prisma.dataSearch.create({ data });
 
         return NextResponse.json({ message: "Recherche enregistrée." });
     } catch (err) {

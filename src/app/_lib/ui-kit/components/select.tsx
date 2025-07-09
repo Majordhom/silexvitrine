@@ -50,7 +50,24 @@ export const Select = (props: SelectProps) => {
     });
 }
 
-export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessage, onChange, options, name, label, isDisabled, className, multiple = true}: SelectMultipleProps) => {
+export const SelectMultiple = (props: SelectMultipleProps) => {
+    const {
+        values,
+        isInvalid,
+        placeholder,
+        errorMessage,
+        onChange,
+        options,
+        name,
+        label,
+        isDisabled,
+        className,
+        multiple = true
+    } = props;
+
+    // Sécurise la valeur pour éviter l'erreur .filter is not a function
+    const safeValues = Array.isArray(values) ? values : [];
+
     const [isPopupOpen, setIsPopupOpen] = useState(false)
     const [search, setSearch] = useState('')
     const popupRef = useRef<HTMLDivElement | null>(null)
@@ -70,17 +87,16 @@ export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessag
     }, [popupRef]);
 
     const onClickOption = (option: Option) => {
-
-        let newArray = [...values]
+        let newArray = [...safeValues]
         if (multiple) {
-            if (values.includes(option.key)) {
-                newArray = values.filter(o => o !== option.key)
+            if (safeValues.includes(option.key)) {
+                newArray = safeValues.filter(o => o !== option.key)
             } else {
                 newArray.push(option.key)
             }
         } else {
             setIsPopupOpen(false)
-            if (values.includes(option.key)) {
+            if (safeValues.includes(option.key)) {
                 newArray = []
             } else {
                 newArray = [option.key]
@@ -92,7 +108,7 @@ export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessag
 
     // cette fonction est utilisée pour supprimer une valeurs selectionnée de la liste
     const removeValue = (keyToRemove: string) => {
-        const newArray = values.filter((key) => key !== keyToRemove);
+        const newArray = safeValues.filter((key) => key !== keyToRemove);
         onChange && onChange(newArray);
     };
 
@@ -108,7 +124,6 @@ export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessag
         setIsPopupOpen(true)
         inputRef.current?.focus()
     }
-
 
     return (
         <div ref={popupRef} className={`text-textLight relative flex flex-col text-sm  ${isPopupOpen ? 'z-50' : ''} ${isDisabled ? 'opacity-50 pointer-events-none' : ''} ${label ? 'pt-6' : ''} ${className ?? ''}`}>
@@ -127,7 +142,7 @@ export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessag
                     >
                         <div className="flex gap-1 flex-nowrap items-center">
                             {options
-                                .filter((o) => values.includes(o.key))
+                                .filter((o) => safeValues.includes(o.key))
                                 .map((o) => (
                                     <span
                                         key={o.key}
@@ -172,7 +187,7 @@ export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessag
                     <div className={'max-h-56 overflow-y-auto p-2'}>
                         {options.filter(filterFunction).map(option => (
                             <div key={option.key} className={'flex flex-row gap-1 cursor-pointer hover:bg-gray-200 p-2 rounded-2xl h-10 items-center'} onClick={() => onClickOption(option)}>
-                                <div className={'truncate'}>{option.label}</div>{values.includes(option.key) && <CheckIcon className={'size-4'}/>}
+                                <div className={'truncate'}>{option.label}</div>{safeValues.includes(option.key) && <CheckIcon className={'size-4'}/>}
                             </div>
                         ))}
                     </div>
@@ -191,7 +206,7 @@ export const SelectMultiple = ({values = [], isInvalid, placeholder, errorMessag
             </div>
 
             {/*hidden input for html <form> */}
-            {name && <input type="hidden" value={values.join(',')} name={name}/>}
+            {name && <input type="hidden" value={safeValues.join(',')} name={name}/>}
         </div>
     );
 };
