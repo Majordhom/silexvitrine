@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/app/_lib/prisma";
 import { subDays, subWeeks, subMonths, subYears, startOfDay, endOfDay, format } from "date-fns";
-import { protectAdminApi } from "@/app/_lib/api/authMiddleware";
+import { protectAdminApi } from  "@/app/_lib/api/protectAdminApi";
 
 const PERIOD_FORMATS: Record<string, string> = {
     day: "yyyy-MM-dd",
