@@ -46,7 +46,9 @@ export const Textarea = ({
                 e.target.style.height = e.target.scrollHeight + 'px';
                 onChange && onChange(e.target.value);
             }}
-            name={name}/>
+            name={name}
+            aria-label="Message"
+        />
             </div>
             {endContent && (
                 <div className={'absolute bottom-0 right-0 w-full bg-transparent group-hover:bg-transparent z-10'}>

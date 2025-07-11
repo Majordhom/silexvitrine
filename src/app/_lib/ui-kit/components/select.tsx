@@ -31,6 +31,7 @@ type SelectMultipleProps = {
     errorMessage?: string,
     className?: string,
     multiple?: boolean,
+    ariaLabel?: string,
 }
 
 type Option = {
@@ -125,16 +126,20 @@ export const SelectMultiple = (props: SelectMultipleProps) => {
         inputRef.current?.focus()
     }
 
+    // Génère un id unique pour le label si présent
+    const labelId = label ? `${name || 'select'}-label` : undefined;
+
     return (
         <div ref={popupRef} className={`text-textLight relative flex flex-col text-sm  ${isPopupOpen ? 'z-50' : ''} ${isDisabled ? 'opacity-50 pointer-events-none' : ''} ${label ? 'pt-6' : ''} ${className ?? ''}`}>
-            {/* label */}
-            {label && <span className={`absolute z-10 -mt-6 text-black text-sm`}>{label}</span>}
+            {label && <span id={labelId} className={`absolute z-10 -mt-6 text-black text-sm`}>{label}</span>}
 
             <div className={'absolute h-10 w-full'}>
-                {/* button */}
                 <button
                     className={`${isInvalid ? '!border-danger bg-red-50' : ''} border-1 border-transparent bg-white flex flex-row gap-1 justify-between items-center w-full cursor-pointer hover:bg-gray-200 transition-all duration-300 rounded-2xl whitespace-nowrap truncate h-full px-2`}
-                    onClick={openPopup} type="button">
+                    onClick={openPopup} type="button"
+                    aria-label={!labelId ? props.ariaLabel : undefined}
+                    aria-labelledby={labelId ? labelId : undefined}
+                >
                     <div className="flex-1 flex items-center overflow-x-auto py-1
                             [&::-webkit-scrollbar]:h-[2px]
                             [&::-webkit-scrollbar-thumb]:bg-gray-300
@@ -157,6 +162,7 @@ export const SelectMultiple = (props: SelectMultipleProps) => {
                                                 removeValue(o.key);
                                             }}
                                             className="cursor-pointer text-white hover:text-gray-100 ml-1"
+                                            aria-label="Supprimer la valeur"
                                         >
                                             <XMarkIcon className={'size-3'}/>
                                         </span>
@@ -170,14 +176,20 @@ export const SelectMultiple = (props: SelectMultipleProps) => {
                     />
                 </button>
 
-                {/* error message */}
                 {errorMessage && <span className={`${isInvalid ? '' : 'opacity-0'} text-danger text-xs`}>{errorMessage}</span>}
 
-                {/* popup */}
                 <div className={`${!isPopupOpen && 'opacity-0 pointer-events-none'} top-0 shadow-md absolute w-full bg-white rounded-2xl z-30 flex flex-col`}>
-                    {/* search input */}
                     <div className={'flex flex-row items-center w-full'}>
-                        <input type="text" ref={inputRef} value={search} onChange={(e) => setSearch(e.target.value)} placeholder={placeholder} className="min-w-16 outline-0 w-full flex-auto px-2 py-2 rounded-l-2xl border-b-1"/>
+                        <input
+                            type="text"
+                            ref={inputRef}
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder={placeholder}
+                            className="min-w-16 outline-0 w-full flex-auto px-2 py-2 rounded-l-2xl border-b-1"
+                            aria-label={!labelId ? props.ariaLabel : undefined}
+                            aria-labelledby={labelId ? labelId : undefined}
+                        />
                         <button type="button" onClick={() => setIsPopupOpen(false)} className="flex  py-2.5 px-2 text-white text-xs bg-secondary opacity-90 hover:opacity-100 transition-all rounded-br-md rounded-tr-xl">
                             Quitter
                         </button>
@@ -194,7 +206,6 @@ export const SelectMultiple = (props: SelectMultipleProps) => {
                 </div>
             </div>
 
-            {/* hidden options to calculate input width */}
             <div className={'opacity-0 pointer-events-none max-h-10 overflow-hidden'}>
                 {
                     options.map(option => (
@@ -205,7 +216,6 @@ export const SelectMultiple = (props: SelectMultipleProps) => {
                 }
             </div>
 
-            {/*hidden input for html <form> */}
             {name && <input type="hidden" value={safeValues.join(',')} name={name}/>}
         </div>
     );

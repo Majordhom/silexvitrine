@@ -126,6 +126,7 @@ const ContactForm = ({className, subjectOptions, defaultSubject = null}: Contact
                             onChange={(value) => handleChange("message", value)}
                             placeholder="Tapez votre message..."
                             rows={5}
+                            aria-label="Message"
                         />
                     </div>
 

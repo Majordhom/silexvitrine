@@ -195,6 +195,7 @@ export default function SearchStatsPage() {
                         className="border rounded px-2 py-1"
                         value={period}
                         onChange={(e) => setPeriod(e.target.value as Period)}
+                        aria-label="Choisissez la période"
                     >
                         <option value="day">Jour</option>
                         <option value="week">Semaine</option>

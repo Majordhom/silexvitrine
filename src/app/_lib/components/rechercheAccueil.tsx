@@ -76,7 +76,6 @@ export default function RechercheAccueil() {
     return (
         <div className="flex flex-col items-center gap-6 w-full max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row gap-4 w-full">
-                {/* Type de bien */}
                 <SelectMultiple
                     label="Quel type de bien ?"
                     values={typesBien}
@@ -84,9 +83,9 @@ export default function RechercheAccueil() {
                     options={typeBienOptions}
                     placeholder="Type de bien"
                     className="flex-1"
+                    aria-label="Sélectionnez le type de bien"
                 />
 
-                {/* Ville / arrondissement */}
                 <SelectMultiple
                     label="Ville, arrondissement"
                     values={secteurs}
@@ -94,15 +93,16 @@ export default function RechercheAccueil() {
                     options={secteurOptions}
                     placeholder="Ville ou secteur"
                     className="flex-1"
+                    aria-label="Sélectionnez une ville ou un secteur"
                 />
             </div>
 
-            {/* Bouton de recherche */}
             <Button
                 onClick={handleSearch}
                 variant="solid"
                 color="primary"
                 className="px-8 py-3 text-lg rounded-full z-10"
+                aria-label="Découvrir les annonces"
             >
                 DÉCOUVREZ NOS ANNONCES
             </Button>
