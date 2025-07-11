@@ -1,6 +1,7 @@
 import {AuthOptions} from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import {prisma} from "../prisma/client";
+import {prisma} from "@/app/_lib/prisma";
 
 export const auth: AuthOptions = {
     providers: [
@@ -19,7 +20,6 @@ export const auth: AuthOptions = {
                     where: {email},
                 });
 
-                // if (!user) return null;
                 if (!user) {
                     console.log("Utilisateur non trouvé pour email:", credentials.email);
                     return null;
@@ -27,15 +27,14 @@ export const auth: AuthOptions = {
 
                 // Comparer le mot de passe
                 const isValid = await bcrypt.compare(credentials.password, user.password);
-                // if (!isValid) return null;
                 if (!isValid) {
-                    console.log("Mot de passe invalide pour l’email:", credentials.email);
+                    console.log("Mot de passe invalide pour l'email:", credentials.email);
                     return null;
                 }
 
-                // Retourner l’utilisateur (en adaptant les champs si besoin)
+                // Retourner l'utilisateur (en adaptant les champs si besoin)
                 return {
-                    id: user.id,
+                    id: user.id.toString(),
                     email: user.email,
                     name: `${user.prenom} ${user.nom}`,
                 };
@@ -48,15 +47,4 @@ export const auth: AuthOptions = {
     pages: {
         signIn: "/admin/login", // Redirection personnalisée en cas de tentative d'accès non connecté
     },
-}
-
-function CredentialsProvider(arg0: {
-    name: string;
-    credentials: {
-        email: { label: string; type: string; placeholder: string; };
-        password: { label: string; type: string; };
-    };
-    authorize(credentials: any): Promise<{ id: string; email: string; name: string; } | null>;
-}): import("next-auth/providers/index").Provider {
-    throw new Error("Function not implemented.");
 }
