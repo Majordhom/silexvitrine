@@ -1,6 +1,6 @@
 "use client";
 
-import { MapContainer, TileLayer, Circle } from "react-leaflet";
+import dynamic from "next/dynamic"; // cet import permet le chargement asynchrone des composants React
 import { ScrollBlocker } from "./scrollBlocker";
 import "leaflet/dist/leaflet.css";
 
@@ -11,6 +11,23 @@ type Props = {
 
 const defaultLat = 43.2965; //Marseille
 const defaultLon = 5.3698;
+
+// Chargement dynamique pour éviter les erreurs de rendu côté serveur
+// Chargement dynamique avec désactivation du SSR
+const MapContainer = dynamic(
+    () => import("react-leaflet").then((mod) => mod.MapContainer),
+    { ssr: false } // désactive le rendu côté serveur pour ce composant
+);
+
+const TileLayer = dynamic(
+    () => import("react-leaflet").then((mod) => mod.TileLayer),
+    { ssr: false }
+);
+
+const Circle = dynamic(
+    () => import("react-leaflet").then((mod) => mod.Circle),
+    { ssr: false }
+);
 
 export default function MapAnnonce({ latitude, longitude }: Props) {
     const center: [number, number] = [
