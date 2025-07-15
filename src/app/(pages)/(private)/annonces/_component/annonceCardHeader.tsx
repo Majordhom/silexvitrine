@@ -18,7 +18,7 @@ export function AnnonceCardHeader({ annonce }: { annonce: Annonce }) {
                             priority
                         />
                     ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-400 rounded-t-2xl">
+                        <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-800 rounded-t-2xl">
                             Pas de photo
                         </div>
                     )}
