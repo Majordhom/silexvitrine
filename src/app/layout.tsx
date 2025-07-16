@@ -7,23 +7,24 @@ import Head from "next/head";
 import Navbar from "@/app/_lib/ui-kit/components/navbar";
 import Footer from "@/app/_lib/ui-kit/components/footer";
 import { Toaster} from "react-hot-toast";
+import ReactQueryProvider from "@/app/_lib/providers/ReactQueryProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Geist({
+//   variable: "--font-geist-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
-const roboto = Roboto({
-    subsets: ["latin"],
-    weight: ["400", "600", "700", "900"],
-    display: "swap",
-    variable: "--font-roboto",
-});
+// const roboto = Roboto({
+//     subsets: ["latin"],
+//     weight: ["400", "600", "700", "900"],
+//     display: "swap",
+//     variable: "--font-roboto",
+// });
 
 const titillium_web = Titillium_Web({
     subsets: ["latin"],
@@ -43,7 +44,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
+    return (
       <html lang="en" className={`${titillium_web.variable}`}>
       <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -56,7 +57,9 @@ export default async function RootLayout({
 
       <body className="font-titillium-web antialiased p-4 container md:mx-auto md:p-10 bg-spotify-black">
         <Navbar/>
-        {children}
+        <ReactQueryProvider>
+            {children}
+        </ReactQueryProvider>
         <Toaster position="top-center" reverseOrder={false} />
         <Footer/>
       </body>
