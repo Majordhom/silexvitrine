@@ -13,6 +13,12 @@ export default function ScrollDownButton({sectionId}: ScrollDownButtonProps) {
         if (sectionId) {
             const section = document.getElementById(sectionId);
             section?.scrollIntoView({behavior: "smooth"});
+        }else {
+            // Si aucun ID de section n'est fourni, scroll vers le bas de la page
+            window.scrollBy({
+                top: window.innerHeight, // Scroll d'une hauteur d'écran
+                behavior: "smooth"
+            });
         }
     };
 
