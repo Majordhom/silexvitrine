@@ -1,20 +1,32 @@
 "use client";
-import {useState, useEffect} from "react";
-import ModalSearch from "@/app/_lib/components/modalSearch";
+// import {useState, useEffect} from "react";
 import ScrollDownButton from "@/app/_lib/ui-kit/components/ScrollDownButton";
 import {AnnonceCardHeader} from "@/app/(pages)/(private)/annonces/_component/annonceCardHeader";
 import {Annonce} from "@/app/(pages)/(private)/annonces/_component/annonceTableRow";
 import AnnonceScroller from "@/app/_lib/components/annonceScroller";
 import RechercheAccueil from "@/app/_lib/components/rechercheAccueil";
+import {useQuery} from "@tanstack/react-query";
 
 export default function Accueil() {
-    const [annoncesRecentes, setAnnoncesRecentes] = useState<Annonce[]>([]);
+    // const [annoncesRecentes, setAnnoncesRecentes] = useState<Annonce[]>([]);
+    //
+    // useEffect(() => {
+    //     fetch("/api/mandats/recent")
+    //         .then(res => res.json())
+    //         .then(setAnnoncesRecentes); // equivalent à .then(data => setAnnoncesRecentes(data))
+    // }, []);
 
-    useEffect(() => {
-        fetch("/api/mandats/recent")
-            .then(res => res.json())
-            .then(setAnnoncesRecentes);
-    }, []);
+    const { data: annoncesRecentes = [] } = useQuery({
+        queryKey: ['annoncesRecentes'],
+        queryFn: async () => {
+            const response = await fetch("/api/mandats/recent");
+            if (!response.ok) {
+                throw new Error("Erreur lors du chargement des annonces récentes");
+            }
+            return response.json();
+        },
+        staleTime: 24 * 60 * 60 * 1000, // 24 heures avant de considérer les données obsolètes
+    });
 
     return (
         <div className="w-full max-w-5xl flex flex-col px-auto mx-auto gap-8">
@@ -30,7 +42,7 @@ export default function Accueil() {
             </div>
 
             <div className="flex justify-center my-8">
-                <ScrollDownButton/>
+                <ScrollDownButton sectionId="biens-recents"/>
             </div>
 
             <div id="biens-recents" className="mt-16">
@@ -40,7 +52,7 @@ export default function Accueil() {
                     unique et moderne.
                 </p>
                 <AnnonceScroller className="flex gap-10 overflow-x-auto scroll-smooth snap-x md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible">
-                    {annoncesRecentes.map((annonce) => (
+                    {annoncesRecentes.map((annonce: Annonce) => (
                         <div key={annonce.id} className="flex-shrink-0 w-[300px] snap-start md:w-auto">
                             <AnnonceCardHeader annonce={annonce}/>
                         </div>
