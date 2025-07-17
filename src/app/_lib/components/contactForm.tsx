@@ -1,10 +1,10 @@
-// app/contact/page.tsx
 "use client";
 import { useState } from "react";
-import { Button, buttonChipClasses } from "@/app/_lib/ui-kit/components/button";
+import { Button } from "@/app/_lib/ui-kit/components/button";
 import { Input } from "@/app/_lib/ui-kit/components/input";
 import { Select } from "@/app/_lib/ui-kit/components/select";
 import { Textarea } from "@/app/_lib/ui-kit/components/textarea";
+import toast from "react-hot-toast";
 
 type ContactFormProps = {
     className?: string;
@@ -31,7 +31,8 @@ const ContactForm = ({className, subjectOptions, defaultSubject = null}: Contact
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if(!formData.email) {
-            alert("L'email est obligatoire.");
+            // alert("L'email est obligatoire.");
+            toast.error("L'email est obligatoire.");
             return;
         }
         setIsSubmitting(true);
@@ -50,10 +51,12 @@ const ContactForm = ({className, subjectOptions, defaultSubject = null}: Contact
                 throw new Error(data.error || "Erreur inconnue");
             }
 
-            console.log("Données enregistrées :", data);
-            alert("Merci pour votre message !");
+            // console.log("Données enregistrées :", data);
+            // alert("Merci pour votre message !");
+            toast.success("Merci pour votre message !");
         } catch (error: any) {
-            alert("Erreur : " + error.message);
+            // alert("Erreur : " + error.message);
+            toast.error("Erreur : " + error.message);
         } finally {
             setIsSubmitting(false);
         }

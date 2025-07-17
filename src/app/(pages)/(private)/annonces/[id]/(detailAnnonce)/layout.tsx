@@ -4,13 +4,13 @@ import type { Metadata } from "next";
 // Props attendues par le layout
 type LayoutProps = {
     children: React.ReactNode;
-    params: { id: string };
+    params: Promise<{ id: string }>;
 };
 
 // Génère dynamiquement les métadonnées de la page
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
     // Conversion de l'id dans l'URL en nombre (base 10)
-    const id = parseInt(params.id, 10);
+    const id = parseInt((await params).id, 10);
 
     // Mandat correspondant à l'id depuis BDD
     const mandat = await prisma.mandat.findUnique({

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import {useEffect, useState} from "react";
 import { Button } from "@/app/_lib/ui-kit/components/button";
 import { SelectMultiple } from "@/app/_lib/ui-kit/components/select";
+import { useQuery } from "@tanstack/react-query";
 
 export default function RechercheAccueil() {
     const router = useRouter();
@@ -13,36 +14,62 @@ export default function RechercheAccueil() {
     const [secteurs, setSecteurs] = useState<string[]>([]);
 
     // States des options à récupérer depuis API
-    const [typeBienOptions, setTypeBienOptions] = useState<{ key: string; label: string }[]>([]);
-    const [secteurOptions, setSecteurOptions] = useState<{ key: string; label: string }[]>([]);
+    // const [typeBienOptions, setTypeBienOptions] = useState<{ key: string; label: string }[]>([]);
+    // const [secteurOptions, setSecteurOptions] = useState<{ key: string; label: string }[]>([]);
 
-    // Chargement des options de filtres depuis API
-    useEffect(() => {
-        const fetchOptions = async () => {
-            try {
-                const [typesRes, secteursRes] = await Promise.all([
-                    fetch("/api/filtres/type-bien"),
-                    fetch("/api/filtres/secteurs"),
-                ]);
+    // // Chargement des options de filtres depuis API
+    // useEffect(() => {
+    //     const fetchOptions = async () => {
+    //         try {
+    //             const [typesRes, secteursRes] = await Promise.all([
+    //                 fetch("/api/filtres/type-bien"),
+    //                 fetch("/api/filtres/secteurs"),
+    //             ]);
+    //
+    //             if (!typesRes.ok || !secteursRes.ok) {
+    //                 throw new Error("Erreur lors du chargement des filtres");
+    //             }
+    //
+    //             const [typesData, secteursData] = await Promise.all([
+    //                 typesRes.json(),
+    //                 secteursRes.json(),
+    //             ]);
+    //
+    //             setTypeBienOptions(typesData);
+    //             setSecteurOptions(secteursData);
+    //         } catch (error) {
+    //             console.error("Erreur chargement filtres :", error);
+    //         }
+    //     };
+    //
+    //     fetchOptions();
+    // }, []);
 
-                if (!typesRes.ok || !secteursRes.ok) {
-                    throw new Error("Erreur lors du chargement des filtres");
-                }
-
-                const [typesData, secteursData] = await Promise.all([
-                    typesRes.json(),
-                    secteursRes.json(),
-                ]);
-
-                setTypeBienOptions(typesData);
-                setSecteurOptions(secteursData);
-            } catch (error) {
-                console.error("Erreur chargement filtres :", error);
+    // Utilisation de React Query pour charger et mettre en cache les données
+    const { data: typeBienOptions = [] } = useQuery({
+        queryKey: ['typeBien'],
+        queryFn: async () => {
+            const response = await fetch("/api/filtres/type-bien");
+            if (!response.ok) {
+                throw new Error("Erreur lors du chargement des types de bien");
             }
-        };
+            return response.json();
+        },
+        staleTime: 24 * 60 * 60 * 1000, // 24 heures avant de considérer les données obsolètes
+    });
 
-        fetchOptions();
-    }, []);
+    const { data: secteurOptions = [] } = useQuery({
+        queryKey: ['secteurs'],
+        queryFn: async () => {
+            const response = await fetch("/api/filtres/secteurs");
+            if (!response.ok) {
+                throw new Error("Erreur lors du chargement des secteurs");
+            }
+            return response.json();
+        },
+        staleTime: 24 * 60 * 60 * 1000, // 24 heures
+    });
+
 
     // Fonction pour construire l'URL et rediriger vers la page des annonces
     const handleSearch = async () => {

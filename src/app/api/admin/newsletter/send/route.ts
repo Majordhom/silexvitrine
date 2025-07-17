@@ -2,7 +2,7 @@ import {NextResponse, NextRequest} from "next/server";
 import {prisma} from "@/app/_lib/prisma";
 import {sendMail} from "@/app/_lib/services/mailer";
 import {generateNewsletterTemplate} from "@/app/_lib/services/templates/generateNewsletterTemplate";
-import {protectAdminApi} from "@/app/_lib/api/authMiddleware";
+import {protectAdminApi} from  "@/app/_lib/api/protectAdminApi";
 
 export async function POST(request: NextRequest) {
     // Vérification de l'authentification
