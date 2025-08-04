@@ -6,9 +6,19 @@ import { getToken } from "next-auth/jwt";
 const secret = process.env.NEXTAUTH_SECRET;
 
 export async function middleware(request: NextRequest) {
+    const { pathname } = request.nextUrl;
+    
+    // Redirection de la racine vers la route principale
+    if (pathname === "/") {
+        // Utiliser une approche basée sur l'environnement
+        const isDevelopment = process.env.NODE_ENV === 'development';
+        const defaultTheme = isDevelopment ? 'theo' : 'arthur'; // Theo en dev, Arthur en prod par défaut
+        
+        return NextResponse.redirect(new URL(`/${defaultTheme}`, request.url));
+    }
+    
     // Vérifie si on accède à une route admin
-    if (request.nextUrl.pathname.startsWith("/admin")
-        && request.nextUrl.pathname !== "/admin/login") { // on ajoute une exception pour la page de login afin de ne pas tomber dans une boucle infinie de redirection
+    if (pathname.startsWith("/admin") && pathname !== "/admin/login") { 
         const token = await getToken({ req: request, secret });
 
         // Si pas de token → redirige vers la page de login admin
@@ -23,5 +33,8 @@ export async function middleware(request: NextRequest) {
 
 // Quelles routes observer ?
 export const config = {
-    matcher: ["/admin/:path*"],
+    matcher: [
+        "/",
+        "/admin/:path*"
+    ],
 };

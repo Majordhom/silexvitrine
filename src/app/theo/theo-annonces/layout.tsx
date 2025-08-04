@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "@/app/globals.scss";
 
 export const metadata: Metadata = {
-  title: "Accueil",
+  title: "Propriétés",
   description: "Application développée par Tremplin",
 };
 
@@ -12,8 +12,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <div className="page-gradient items-center mx-auto pb-8 py-8 px-8 sm:px-8 lg:px-40">
-          {children}
+      <div className="bg-white pt-8 pb-8 font-[family-name:var(--font-geist-sans)]">
+          <div className="row-start-2">{children}</div>
           <div className="row-start-3">{/*emplacement Footer*/}</div>
       </div>
   );

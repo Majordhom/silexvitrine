@@ -1,8 +1,7 @@
 "use client";
 import {useRef} from "react";
 import {ChevronLeft, ChevronRight} from "lucide-react";
-import {AnnonceCardHeader} from "@/app/(pages)/(private)/annonces/_component/annonceCardHeader";
-import {Annonce} from "@/app/(pages)/(private)/annonces/_component/annonceTableRow";
+
 
 export type AnnonceScrollerProps = {
     children: React.ReactNode;
