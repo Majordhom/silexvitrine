@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
     
     // Redirection de la racine vers la route principale
     if (pathname === "/") {
-        // Utiliser une approche basée sur l'environnement
+
         const isDevelopment = process.env.NODE_ENV === 'development';
         const defaultTheme = isDevelopment ? 'theo' : 'arthur'; // Theo en dev, Arthur en prod par défaut
         

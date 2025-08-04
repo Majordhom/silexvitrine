@@ -3,7 +3,7 @@ import {prisma} from "@/app/_lib/prisma"
 import {notFound} from 'next/navigation'
 import {Carousel} from "@/app/_lib/ui-kit/components/carousel";
 import ContactForm from "@/app/_lib/components/contactForm";
-import {AnnonceCardHeader} from "@/app/theo/theo-annonces/theo-_component/annonceCardHeader";
+import {AnnonceCardHeader} from "@/app/theo/annonces/_component/annonceCardHeader";
 import AnnoncesScroller from "@/app/_lib/components/annonceScroller";
 import MapAnnonce from "@/app/_lib/components/mapAnnonce";
 import {calculateHaversineDistance, isValidCoordinate} from "@/app/_lib/utils/geo";
