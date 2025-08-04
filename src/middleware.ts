@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
     if (pathname.startsWith("/admin") && pathname !== "/admin/login") { 
         const token = await getToken({ req: request, secret });
 
-        // Si pas de token → redirige vers la page de login admin
+        // Si pas de token redirige vers la page de login admin
         if (!token) {
             return NextResponse.redirect(new URL("/admin/login", request.url));
         }
