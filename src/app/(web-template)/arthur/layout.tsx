@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Navbar from "../_lib/ui-kit/components/navbar";
+import Navbar from "../../_lib/ui-kit/components/navbar";
 
 export const metadata: Metadata = {
   title: "SilexVitrine - Application Principale",

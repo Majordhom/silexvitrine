@@ -1,6 +1,6 @@
 import { prisma } from '@/app/_lib/prisma';
 import type { Metadata } from "next";
-import TheoHeader from "@/app/theo/_components/TheoHeader";
+import TheoHeader from "@/app/(web-template)/theo/_components/TheoHeader";
 
 // Props attendues par le layout
 type LayoutProps = {

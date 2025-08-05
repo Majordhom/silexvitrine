@@ -1,8 +1,8 @@
 "use client";
 // import {useState, useEffect} from "react";
 import ScrollDownButton from "@/app/_lib/ui-kit/components/ScrollDownButton";
-import {AnnonceCardHeader} from "@/app/arthur/annonces/_component/annonceCardHeader";
-import {Annonce} from "@/app/arthur/annonces/_component/annonceTableRow";
+import {AnnonceCardHeader} from "@/app/(web-template)/arthur/annonces/_component/annonceCardHeader";
+import {Annonce} from "@/app/(web-template)/arthur/annonces/_component/annonceTableRow";
 import AnnonceScroller from "@/app/_lib/components/annonceScroller";
 import RechercheAccueil from "@/app/_lib/components/rechercheAccueil";
 import {useQuery} from "@tanstack/react-query";

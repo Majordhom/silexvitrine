@@ -1,7 +1,7 @@
 import { prisma } from "@/app/_lib/prisma";
 import { notFound } from 'next/navigation';
-import TheoAnnonceDetail from "@/app/theo/_components/TheoAnnonceDetail";
-import TheoAnnonceDetailFallback from "@/app/theo/_components/TheoAnnonceDetailFallback";
+import TheoAnnonceDetail from "@/app/(web-template)/theo/_components/TheoAnnonceDetail";
+import TheoAnnonceDetailFallback from "@/app/(web-template)/theo/_components/TheoAnnonceDetailFallback";
 import { Mandat, MandatPhoto } from "@/generated/prisma";
 import Script from "next/script";
 
