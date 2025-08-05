@@ -8,12 +8,12 @@
 
 
 # To do
-- Refactor l'ancien code qui est très messy
-- Faire attention au SEO, completer les layouts et les metadata.
-- Refaire le Front de Arthur qui est buggé 
-- Implémenter un script bash de Test
-- Penser à l'architecture d'implémentation des maquettes
-- Faire les autres maquettes
+[x] Refactor l'ancien code qui est très messy
+[x]  Faire attention au SEO, completer les layouts et les metadata.
+[] Refaire le Front de Arthur qui est buggé 
+[] Implémenter un script bash de Test
+[] Penser à l'architecture d'implémentation des maquettes
+[] Faire les autres maquettes
 
 # Get Started
 
