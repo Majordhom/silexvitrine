@@ -1,6 +1,34 @@
 import { prisma } from "@/app/_lib/prisma";
 import { MetadataRoute } from 'next';
 
+// Mock blog data - in real app this would come from CMS or API
+const blogPosts = [
+    {
+        slug: 'marche-immobilier-cabries-analyse-tendances',
+        publishedAt: '2025-04-23'
+    },
+    {
+        slug: 'guide-investir-immobilier-2024',
+        publishedAt: '2025-04-20'
+    },
+    {
+        slug: 'quartiers-marseille-investissement',
+        publishedAt: '2025-04-18'
+    },
+    {
+        slug: 'renovation-maison-valeur-ajoutee',
+        publishedAt: '2025-04-15'
+    },
+    {
+        slug: 'credit-immobilier-taux-2024',
+        publishedAt: '2025-04-12'
+    },
+    {
+        slug: 'achat-vente-immobilier-etapes',
+        publishedAt: '2025-04-10'
+    }
+];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://silexvitrine.com';
 
@@ -8,7 +36,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const annonces = await prisma.mandat.findMany({
     select: { 
       id: true,
-      updatedAt: true,
       dateMaj: true
     },
     where: {
@@ -32,6 +59,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/theo/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/theo/contact`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
@@ -48,10 +81,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic annonce pages
   const annoncePages = annonces.map((annonce) => ({
     url: `${baseUrl}/theo/annonces/${annonce.id}`,
-    lastModified: annonce.dateMaj || annonce.updatedAt || new Date(),
+    lastModified: annonce.dateMaj || new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }));
 
-  return [...staticPages, ...annoncePages];
+  // Blog post pages
+  const blogPages = blogPosts.map((post) => ({
+    url: `${baseUrl}/theo/blog/${post.slug}`,
+    lastModified: new Date(post.publishedAt),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  return [...staticPages, ...annoncePages, ...blogPages];
 } 
