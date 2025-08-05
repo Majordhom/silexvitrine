@@ -5,19 +5,21 @@
 - Modification du Middleware pour handle le routing en fonction de variables d'environnements
 - "Maquettes" dynamiques 
 - Maquette Théo vibe coded (Experimentale, maquette de dev)
-
+- Refactor du code, Enhancement SEO & Responsive
 
 # To do
-- Refactor l'ancien code qui est très messy
-- Faire attention au SEO, completer les layouts et les metadata.
-- Refaire le Front de Arthur qui est buggé 
-- Implémenter un script bash de Test
-- Penser à l'architecture d'implémentation des maquettes
-- Faire les autres maquettes
+- [x] Refactor l'ancien code qui est très messy  
+- [x] Faire attention au SEO, compléter les layouts et les metadata  
+- [ ] Refaire le Front de Arthur qui est buggé  
+- [ ] Implémenter un script bash de Test  
+- [ ] Penser à l'architecture d'implémentation des maquettes  
+- [ ] Faire les autres maquettes  
+
 
 # Get Started
 
 ### Quickstart (Dev)
+
 ```bash
 git clone https://github.com/Majordhom/silexvitrine.git
 cd silexvitrine
