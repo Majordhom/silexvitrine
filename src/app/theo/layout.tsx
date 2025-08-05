@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { NavigationProvider } from "./_components/TheoNavigationContext";
 
 export const metadata: Metadata = {
   title: "SilexVitrine - Thème Theo",
@@ -11,8 +12,10 @@ export default function TheoLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="theo-layout">
-      {children}
-    </div>
+    <NavigationProvider>
+      <div className="theo-layout pt-16">
+        {children}
+      </div>
+    </NavigationProvider>
   );
 } 

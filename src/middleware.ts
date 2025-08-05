@@ -12,13 +12,21 @@ export async function middleware(request: NextRequest) {
     if (pathname === "/") {
 
         const isDevelopment = process.env.NODE_ENV === 'development';
-        const defaultTheme = isDevelopment ? 'theo' : 'arthur'; // Theo en dev, Arthur en prod par défaut
-        
+        const theme = { 
+            chosen : process.env.NEXT_PUBLIC_MAIN_ROUTE,
+            default : 'arthur',
+            list : ['arthur', 'theo']
+        } 
+    
+        // Determine the theme to use - if chosen is not in list, use default
+        const defaultTheme = theme.chosen && theme.list.includes(theme.chosen) ? theme.chosen : theme.default;
+            
         return NextResponse.redirect(new URL(`/${defaultTheme}`, request.url));
     }
     
     // Vérifie si on accède à une route admin
     if (pathname.startsWith("/admin") && pathname !== "/admin/login") { 
+
         const token = await getToken({ req: request, secret });
 
         // Si pas de token redirige vers la page de login admin

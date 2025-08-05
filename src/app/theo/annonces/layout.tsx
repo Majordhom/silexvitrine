@@ -1,20 +1,22 @@
 import type { Metadata } from "next";
-import "@/app/globals.scss";
+import TheoHeader from "../_components/TheoHeader";
 
 export const metadata: Metadata = {
-  title: "Propriétés",
-  description: "Application développée par Tremplin",
+  title: "Nos propriétés - SilexVitrine",
+  description: "Découvrez notre sélection de biens immobiliers d'exception à Marseille et ses environs",
 };
 
-export default async function RootLayout({
+export default function TheoAnnoncesLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-      <div className="bg-white pt-8 pb-8 font-[family-name:var(--font-geist-sans)]">
-          <div className="row-start-2">{children}</div>
-          <div className="row-start-3">{/*emplacement Footer*/}</div>
+    <div className="min-h-screen bg-gray-50">
+      <TheoHeader />
+      <div className="pt-16">
+        {children}
       </div>
+    </div>
   );
 }

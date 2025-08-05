@@ -7,25 +7,46 @@ import TheoBlogSection from "./_components/TheoBlogSection";
 import TheoFeaturesSection from "./_components/TheoFeaturesSection";
 
 export default function TheoAccueil() {
-    // Simulation des données d'annonces récentes
+    // Simulation des données d'annonces récentes avec la nouvelle structure
     const annoncesRecentes = [
         {
             id: 1,
-            type: "Maison 230m²",
-            location: "13008 dzdzadz",
+            titre: "Maison moderne 4 pièces",
+            prix: 450000,
+            surface: 145,
+            nb_pieces: 4,
+            ville: "Marseille",
+            cp: "13008",
+            photos: [
+                { id: 1, url: "/placeholder.jpg", alt: "Maison moderne" }
+            ],
             tags: ["jardin", "piscine", "terrasse", "1 étage"]
         },
         {
             id: 2,
-            type: "Maison 230m²",
-            location: "13008 dzdzadz",
-            tags: ["jardin", "piscine", "terrasse", "1 étage"]
+            titre: "Appartement lumineux 3 pièces",
+            prix: 280000,
+            surface: 85,
+            nb_pieces: 3,
+            ville: "Marseille",
+            cp: "13006",
+            photos: [
+                { id: 2, url: "/placeholder.jpg", alt: "Appartement lumineux" }
+            ],
+            tags: ["balcon", "ascenseur", "parking", "vue mer"]
         },
         {
             id: 3,
-            type: "Maison 230m²",
-            location: "13008 dzdzadz",
-            tags: ["jardin", "piscine", "terrasse", "1 étage"]
+            titre: "Villa avec jardin 5 pièces",
+            prix: 650000,
+            surface: 180,
+            nb_pieces: 5,
+            ville: "Marseille",
+            cp: "13012",
+            photos: [
+                { id: 3, url: "/placeholder.jpg", alt: "Villa avec jardin" }
+            ],
+            tags: ["jardin", "garage", "terrasse", "2 étages"]
         }
     ];
 
@@ -38,8 +59,8 @@ export default function TheoAccueil() {
         },
         {
             id: 2,
-            title: "Marché de l'immobilier à Cabriès: Analyse et Tendances",
-            description: "Découvrez les dernières tendances du marché immobilier à Cabriès. Notre analyse complète vous donne les clés pour comprendre l'évolution des prix et les opportunités d'investissement."
+            title: "Guide complet pour investir dans l'immobilier en 2024",
+            description: "Tout ce que vous devez savoir pour faire un investissement immobilier réussi en 2024. Conseils d'experts et stratégies éprouvées."
         }
     ];
 
@@ -69,7 +90,11 @@ export default function TheoAccueil() {
         <div className="min-h-screen bg-white">
             <TheoHeader />
             <TheoHero />
-            <TheoPropertiesSection properties={annoncesRecentes} />
+            <TheoPropertiesSection 
+                properties={annoncesRecentes}
+                title="Nos propriétés récentes"
+                subtitle="Découvrez notre sélection de biens d'exception"
+            />
             <TheoBlogSection posts={blogPosts} />
             <TheoFeaturesSection features={features} />
         </div>
