@@ -1,6 +1,7 @@
 "use client";
 import { useNavigation } from './TheoNavigationContext';
 import TheoBurgerMenu from './TheoBurgerMenu';
+import Link from 'next/link';
 
 export default function TheoHeader() {
     const { activeSection, isScrolled, burgerMenuOpen, setBurgerMenuOpen } = useNavigation();
@@ -58,9 +59,11 @@ export default function TheoHeader() {
                     
                     {/* Contact Button */}
                     <div className="hidden md:block">
-                        <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
-                            Nous contacter
-                        </button>
+                        <Link href="/theo/contact">
+                            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                                Nous contacter
+                            </button>
+                        </Link>
                     </div>
 
                     {/* Burger Menu */}
