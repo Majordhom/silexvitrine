@@ -68,30 +68,6 @@ model MandatPhoto {
   @@index([mandatId])
 }
 
-model Utilisateur {
-  email     String   @unique @db.VarChar(255)
-  password  String   @db.VarChar(255)
-  nom       String   @db.VarChar(100)
-  prenom    String   @db.VarChar(100)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  role      String   @default("user")
-  telephone String?  @db.VarChar(255)
-  id        Int      @id @default(autoincrement())
-
-  @@index([email])
-}
-
-model User {
-  id             Int       @id @default(autoincrement())
-  email          String    @unique @db.VarChar(255)
-  authToken      String?   @db.VarChar(255)
-  tokenCreatedAt DateTime?
-  isSubscribed   Boolean   @default(true)
-  createdAt      DateTime  @default(now())
-
-  @@index([email])
-}
 
 model SearchQuery {
   id        String   @id @default(cuid())

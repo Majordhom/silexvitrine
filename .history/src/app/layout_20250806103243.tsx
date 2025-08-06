@@ -6,7 +6,7 @@ import "./globals.scss";
 import Head from "next/head";
 import Navbar from "@/app/_lib/ui-kit/components/navbar";
 import Footer from "@/app/_lib/ui-kit/components/footer";
-// ...existing code...
+import Providers from "@/app/_lib/providers/Providers";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -65,7 +65,9 @@ export default async function RootLayout({
       </Head>
 
       <body className="font-titillium-web antialiased p-4 container md:mx-auto md:p-10 bg-spotify-black">
-        {children}
+        <Providers>
+          {children}
+        </Providers>
         <Footer/>
       </body>
       </html>
