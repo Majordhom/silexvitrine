@@ -1,4 +1,4 @@
-const { PrismaClient } = require("../src/generated/prisma/client");
+const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcrypt");
 
 const prisma = new PrismaClient();
@@ -23,13 +23,25 @@ async function main() {
         // Hash the password
         const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-        // Create the user
-        const user = await prisma.utilisateur.create({
-            data: {
+        // Create or update the user with all fields
+        const user = await prisma.utilisateur.upsert({
+            where: { email },
+            update: {
+                password: hashedPassword,
+                role: "admin",
+                nom,
+                prenom,
+                updatedAt: new Date()
+            },
+            create: {
                 email,
                 password: hashedPassword,
                 nom,
                 prenom,
+                role: "admin",
+                telephone: null, // Optional field
+                createdAt: new Date(),
+                updatedAt: new Date()
             },
         });
 

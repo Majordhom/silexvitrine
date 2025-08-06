@@ -19,11 +19,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
                 type_bien: true, 
                 nb_pieces: true, 
                 surface_habitable: true, 
-                titre: true,
                 prix: true,
                 ville: true,
-                cp: true,
-                description: true
+                cp: true
             }
         });
 
@@ -34,15 +32,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
             };
         }
 
-        const { type_bien, nb_pieces, surface_habitable, titre, prix, ville, cp, description } = mandat;
-        const title = titre || `${type_bien ?? ''} ${nb_pieces ?? ''} pièces ${surface_habitable ?? ''} m²`.trim();
+        const { type_bien, nb_pieces, surface_habitable, prix, ville, cp /*, description*/ } = mandat;
+        const title = `${type_bien ?? ''} ${nb_pieces ?? ''} pièces ${surface_habitable ?? ''} m²`.trim();
         const location = `${ville} ${cp}`;
         const price = prix ? `${prix.toLocaleString()} €` : '';
         
         // Clean description for SEO
-        const cleanDescription = description 
+        const cleanDescription = /*description 
             ? description.replace(/(\s*\.?\s*)?\*+[^*]+\*+/gi, '').replace(/\s{2,}/g, ' ').trim()
-            : `Découvrez cette ${type_bien?.toLowerCase() || 'propriété'} de ${nb_pieces} pièces à ${location}. Surface de ${surface_habitable} m².`;
+            :*/ `Découvrez cette ${type_bien?.toLowerCase() || 'propriété'} de ${nb_pieces} pièces à ${location}. Surface de ${surface_habitable} m².`;
 
         const seoTitle = `${title} à ${location} - ${price} | SilexVitrine`;
         const seoDescription = `${cleanDescription} ${price ? `Prix : ${price}.` : ''} Contactez-nous pour plus d'informations.`;

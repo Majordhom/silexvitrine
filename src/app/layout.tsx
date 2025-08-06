@@ -6,8 +6,7 @@ import "./globals.scss";
 import Head from "next/head";
 import Navbar from "@/app/_lib/ui-kit/components/navbar";
 import Footer from "@/app/_lib/ui-kit/components/footer";
-import { Toaster} from "react-hot-toast";
-import ReactQueryProvider from "@/app/_lib/providers/ReactQueryProvider";
+import Providers from "@/app/_lib/providers/Providers";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -66,11 +65,9 @@ export default async function RootLayout({
       </Head>
 
       <body className="font-titillium-web antialiased p-4 container md:mx-auto md:p-10 bg-spotify-black">
-
-        <ReactQueryProvider>
-            {children}
-        </ReactQueryProvider>
-        <Toaster position="top-center" reverseOrder={false} />
+        <Providers>
+          {children}
+        </Providers>
         <Footer/>
       </body>
       </html>

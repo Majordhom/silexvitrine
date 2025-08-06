@@ -1,12 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -17,7 +10,6 @@ datasource db {
 model Mandat {
   id                 Int           @id @default(autoincrement())
   reference          String        @unique
-  mandat_numero      String        @unique
   type_offre_code    String
   type_offre         String
   corps              String
@@ -61,18 +53,33 @@ model Mandat {
   visite_immediat    Boolean?
   bien_category      String?
   chauffages         String?
+  mandat_numero      String        @unique
   photos             MandatPhoto[]
 }
 
 model MandatPhoto {
-  id       Int     @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   mandatId Int
-  filename String  @db.VarChar(255)
-  src      String  @default("") @db.VarChar(255)
+  filename String @db.VarChar(255)
+  src      String @default("") @db.VarChar(255)
   position Int?
-  mandat   Mandat? @relation(fields: [mandatId], references: [id], onDelete: Restrict, onUpdate: Restrict)
+  mandat   Mandat @relation(fields: [mandatId], references: [id], onUpdate: Restrict)
 
   @@index([mandatId])
+}
+
+model Utilisateur {
+  email     String   @unique @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  nom       String   @db.VarChar(100)
+  prenom    String   @db.VarChar(100)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      String   @default("user")
+  telephone String?  @db.VarChar(255)
+  id        Int      @id @default(autoincrement())
+
+  @@index([email])
 }
 
 model User {
@@ -114,31 +121,38 @@ model ContactMessage {
 
 model DataSearch {
   id        Int      @id @default(autoincrement())
-  nb_pieces Int? // ou Int? selon ton besoin
-  type_bien String[]
+  nb_pieces Int?
   prixMin   Int?
   prixMax   Int?
-  secteur   String[]
   createdAt DateTime @default(now())
+  secteur   String[]
+  type_bien String[]
 }
 
 model Abonne {
   id                  String    @id @default(uuid())
   email               String    @unique
   dateInscription     DateTime  @default(now())
-  dateDesinscription  DateTime?
   statutActif         Boolean   @default(true)
+  dateDesinscription  DateTime?
   token               String?
   tokenDesinscription String?
   tokenSuppression    String?
 }
 
-model Utilisateur {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  nom       String
-  prenom    String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model BlogPost {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  excerpt     String
+  author      String
+  publishedAt DateTime @default(now())
+  category    String
+  imageUrl    String?
+  readTime    String
+  views       Int      @default(0)
+  likes       Int      @default(0)
+  blocks      Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

@@ -27,9 +27,13 @@ export default function TheoHeader() {
                     {/* Logo */}
                     <div className="flex items-center space-x-2 group cursor-pointer">
                         <div className="w-8 h-8 bg-blue-600 rounded transition-transform duration-300 group-hover:scale-110"></div>
+                        <Link href={'/theo'}>
                         <span className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
                             Nom de l'agence
                         </span>
+
+                        </Link>
+                      
                     </div>
                     
                     {/* Desktop Navigation */}
@@ -39,7 +43,7 @@ export default function TheoHeader() {
                             className={getNavLinkClass('accueil')}
                             onClick={() => setBurgerMenuOpen(false)}
                         >
-                            accueil
+                            Accueil
                         </a>
                         <a 
                             href="/theo/annonces" 
@@ -49,7 +53,7 @@ export default function TheoHeader() {
                             Nos biens
                         </a>
                         <a 
-                            href="#" 
+                            href="/theo/blog" 
                             className={getNavLinkClass('blog')}
                             onClick={() => setBurgerMenuOpen(false)}
                         >
@@ -60,7 +64,7 @@ export default function TheoHeader() {
                     {/* Contact Button */}
                     <div className="hidden md:block">
                         <Link href="/theo/contact">
-                            <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                            <button className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
                                 Nous contacter
                             </button>
                         </Link>

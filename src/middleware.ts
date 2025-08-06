@@ -26,11 +26,28 @@ export async function middleware(request: NextRequest) {
     
     // Vérifie si on accède à une route admin
     if (pathname.startsWith("/admin") && pathname !== "/admin/login") { 
+        try {
+            const token = await getToken({ 
+                req: request, 
+                secret,
+            });
 
-        const token = await getToken({ req: request, secret });
+            // Log pour le debug
+            console.log("Token in middleware:", { 
+                hasToken: !!token,
+                role: token?.role,
+                path: pathname 
+            });
 
-        // Si pas de token redirige vers la page de login admin
-        if (!token) {
+            // Si pas de token ou si l'utilisateur n'est pas admin, rediriger vers la page de login
+            if (!token || !token.role || token.role !== "admin") {
+                console.log("Access denied: Not an admin");
+                return NextResponse.redirect(new URL("/admin/login", request.url));
+            }
+
+            console.log("Access granted: Admin user");
+        } catch (error) {
+            console.error("Middleware error:", error);
             return NextResponse.redirect(new URL("/admin/login", request.url));
         }
     }

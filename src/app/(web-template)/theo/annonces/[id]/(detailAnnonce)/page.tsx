@@ -159,17 +159,16 @@ export default async function AnnoncePage({ params }: PageProps) {
         // Transform data for the component
         const annonceData = {
             id: mandat.id,
-            titre: mandat.titre || `${mandat.type_bien} ${mandat.nb_pieces} pièces`,
+            titre: `${mandat.type_bien} ${mandat.nb_pieces} pièces`,
             prix: mandat.prix || 0,
             surface: mandat.surface || 0,
             nb_pieces: mandat.nb_pieces || 0,
             ville: mandat.ville || 'Non spécifié',
             cp: mandat.cp || '',
-            description: mandat.description || undefined,
             photos: mandat.photos.map(photo => ({
                 id: photo.id,
                 url: photo.url || photo.src,
-                alt: photo.alt || `${mandat.titre} - Photo ${photo.id}`
+                alt: `${mandat.type_bien} ${mandat.nb_pieces} pièces - Photo ${photo.id}`
             })),
             caracteristiques: {
                 type: mandat.type_bien || 'Non spécifié',
@@ -182,14 +181,14 @@ export default async function AnnoncePage({ params }: PageProps) {
 
         const similairesData = similaires.map(similaire => ({
             id: similaire.id,
-            titre: similaire.titre || `Propriété ${similaire.id}`,
+            titre: `Propriété ${similaire.id}`,
             prix: similaire.prix || 0,
             surface: similaire.surface || 0,
             ville: similaire.ville || 'Non spécifié',
             photos: similaire.photos.map(photo => ({
                 id: photo.id,
                 url: photo.url || photo.src,
-                alt: photo.alt || `${similaire.titre} - Photo ${photo.id}`
+                alt: `Propriété ${similaire.id} - Photo ${photo.id}`
             }))
         }));
 
