@@ -1,11 +1,13 @@
 "use client";
 import TheoPropertyCard from './TheoPropertyCard';
+import TheoPropertyGridSkeleton from './TheoPropertyGridSkeleton';
 import { TheoPropertiesSectionProps } from '../../dto';
 
 export default function TheoPropertiesSection({ 
     properties, 
     title = "Nos propriétés", 
-    subtitle = "Découvrez notre sélection de biens d'exception" 
+    subtitle = "Découvrez notre sélection de biens d'exception",
+    loading = false
 }: TheoPropertiesSectionProps) {
     return (
         <section className="py-16 bg-gray-50">
@@ -21,15 +23,19 @@ export default function TheoPropertiesSection({
                 </div>
 
                 {/* Properties Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {properties.map((property) => (
-                        <TheoPropertyCard 
-                            key={property.id} 
-                            property={property}
-                            showTags={true}
-                        />
-                    ))}
-                </div>
+                {loading ? (
+                    <TheoPropertyGridSkeleton count={3} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" />
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {properties.map((property) => (
+                            <TheoPropertyCard 
+                                key={property.id} 
+                                property={property}
+                                showTags={true}
+                            />
+                        ))}
+                    </div>
+                )}
 
                 {/* View All Button */}
                 <div className="text-center mt-12">

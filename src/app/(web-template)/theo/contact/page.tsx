@@ -75,68 +75,9 @@ export default function TheoContactPage() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Contact Information */}
-                    <div className="lg:col-span-1">
-                        <div className="bg-white rounded-2xl shadow-lg p-8 h-fit">
-                            <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-                                Nos coordonnées
-                            </h2>
-                            
-                            <div className="space-y-6">
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0">
-                                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                            <Phone className="w-5 h-5 text-blue-600" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-medium text-gray-900">Téléphone</h3>
-                                        <p className="text-gray-600">+33 4 91 XX XX XX</p>
-                                        <p className="text-sm text-gray-500">Lun-Ven: 9h-18h</p>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0">
-                                        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                                            <Mail className="w-5 h-5 text-purple-600" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-medium text-gray-900">Email</h3>
-                                        <p className="text-gray-600">contact@silexvitrine.com</p>
-                                        <p className="text-sm text-gray-500">Réponse sous 24h</p>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-start space-x-4">
-                                    <div className="flex-shrink-0">
-                                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                                            <MapPin className="w-5 h-5 text-green-600" />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h3 className="font-medium text-gray-900">Adresse</h3>
-                                        <p className="text-gray-600">123 Avenue de la République</p>
-                                        <p className="text-gray-600">13001 Marseille, France</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mt-8 pt-6 border-t border-gray-200">
-                                <h3 className="font-medium text-gray-900 mb-3">Horaires d'ouverture</h3>
-                                <div className="space-y-1 text-sm text-gray-600">
-                                    <p>Lundi - Vendredi: 9h00 - 18h00</p>
-                                    <p>Samedi: 9h00 - 12h00</p>
-                                    <p>Dimanche: Fermé</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Contact Form */}
-                    <div className="lg:col-span-2">
+                {/* Contact Form - Maintenant en haut */}
+                <div className="mb-12">
+                    <div className="max-w-4xl mx-auto">
                         <div className="bg-white rounded-2xl shadow-lg p-8">
                             {isSubmitted ? (
                                 <div className="text-center py-12">
@@ -284,6 +225,68 @@ export default function TheoContactPage() {
                                     </p>
                                 </form>
                             )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Contact Information - Maintenant en bas et plus large */}
+                <div className="max-w-6xl mx-auto">
+                    <div className="bg-white rounded-2xl shadow-lg p-12">
+                        <h2 className="text-3xl font-semibold text-gray-900 mb-8 text-center">
+                            Nos coordonnées
+                        </h2>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div className="text-center">
+                                <div className="flex justify-center mb-4">
+                                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
+                                        <Phone className="w-8 h-8 text-blue-600" />
+                                    </div>
+                                </div>
+                                <h3 className="text-xl font-medium text-gray-900 mb-2">Téléphone</h3>
+                                <p className="text-lg text-gray-600 mb-1">+33 4 91 XX XX XX</p>
+                                <p className="text-sm text-gray-500">Lun-Ven: 9h-18h</p>
+                            </div>
+
+                            <div className="text-center">
+                                <div className="flex justify-center mb-4">
+                                    <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center">
+                                        <Mail className="w-8 h-8 text-purple-600" />
+                                    </div>
+                                </div>
+                                <h3 className="text-xl font-medium text-gray-900 mb-2">Email</h3>
+                                <p className="text-lg text-gray-600 mb-1">contact@silexvitrine.com</p>
+                                <p className="text-sm text-gray-500">Réponse sous 24h</p>
+                            </div>
+
+                            <div className="text-center">
+                                <div className="flex justify-center mb-4">
+                                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                                        <MapPin className="w-8 h-8 text-green-600" />
+                                    </div>
+                                </div>
+                                <h3 className="text-xl font-medium text-gray-900 mb-2">Adresse</h3>
+                                <p className="text-lg text-gray-600 mb-1">123 Avenue de la République</p>
+                                <p className="text-lg text-gray-600">13001 Marseille, France</p>
+                            </div>
+                        </div>
+
+                        <div className="mt-12 pt-8 border-t border-gray-200 text-center">
+                            <h3 className="text-xl font-medium text-gray-900 mb-6">Horaires d'ouverture</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-600 max-w-2xl mx-auto">
+                                <div className="text-center">
+                                    <p className="font-medium">Lundi - Vendredi</p>
+                                    <p>9h00 - 18h00</p>
+                                </div>
+                                <div className="text-center">
+                                    <p className="font-medium">Samedi</p>
+                                    <p>9h00 - 12h00</p>
+                                </div>
+                                <div className="text-center">
+                                    <p className="font-medium">Dimanche</p>
+                                    <p>Fermé</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

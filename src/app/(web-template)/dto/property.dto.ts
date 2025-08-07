@@ -92,6 +92,7 @@ export interface TheoPropertiesSectionProps {
     properties: Property[];
     title?: string;
     subtitle?: string;
+    loading?: boolean;
 }
 
 export interface PropertyGridCardProps {

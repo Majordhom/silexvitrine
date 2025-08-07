@@ -1,5 +1,5 @@
 /**
- export global
+ * Central export for all DTOs
  */
 
 // Property DTOs

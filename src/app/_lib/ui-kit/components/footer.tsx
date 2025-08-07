@@ -9,9 +9,9 @@ import LinkedIcon from "@/app/_lib/ui-kit/svg/icon_linked";
 import YoutubeIcon from "@/app/_lib/ui-kit/svg/icon_youtube";
 
 const bottomLinks = [
-    { label: 'Politique de confidentialité', url: '#' },
-    { label: 'Conditions de Service', url: '#' },
-    { label: 'Paramètres des cookies', url: '#' },
+    { label: 'Politique de confidentialité', url: '/theo/politique-confidentialite' },
+    { label: 'Conditions de Service', url: '/theo/conditions-service' },
+    { label: 'Mentions légales', url: '/theo/mentions-legales' },
 ];
 
 export default function Footer() {
@@ -92,18 +92,17 @@ export default function Footer() {
                 {/* Partie droite */}
                 <div className="footer-right flex gap-16 max-[900px]:flex-row max-[900px]:gap-8 max-[900px]:mt-8">
                     <div className="flex flex-col gap-3">
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Accueil</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">À propos</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Services</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Blog</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Contact</Link>
+                        <Link href="/theo" className="text-white text-base no-underline opacity-85">Accueil</Link>
+                        <Link href="/theo/apropos" className="text-white text-base no-underline opacity-85">À propos</Link>
+                        <Link href="/theo/annonces" className="text-white text-base no-underline opacity-85">Nos biens</Link>
+                        <Link href="/theo/blog" className="text-white text-base no-underline opacity-85">Blog</Link>
+                        <Link href="/theo/contact" className="text-white text-base no-underline opacity-85">Contact</Link>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <Link href="/" className="text-white text-base no-underline opacity-85">FAQ</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Support</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Carrières</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Presse</Link>
-                        <Link href="/newsletter" className="text-white text-base no-underline opacity-85">Newsletter</Link>
+                        <Link href="/theo/services" className="text-white text-base no-underline opacity-85">Nos services</Link>
+                        <Link href="/theo/faq" className="text-white text-base no-underline opacity-85">FAQ</Link>
+                        <Link href="/theo/newsletter" className="text-white text-base no-underline opacity-85">Newsletter</Link>
+                        <Link href="/theo/plan-du-site" className="text-white text-base no-underline opacity-85">Plan du site</Link>
                     </div>
                 </div>
             </div>

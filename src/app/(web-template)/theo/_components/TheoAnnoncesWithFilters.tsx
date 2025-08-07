@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import TheoAdvancedSearch from './TheoAdvancedSearch';
 import TheoPropertyCard from './TheoPropertyCard';
+import TheoPropertyGridSkeleton from './TheoPropertyGridSkeleton';
 import { SearchCriteria, SearchResponse } from '@/types/filters';
 import { Loader2 } from 'lucide-react';
 import { TheoAnnoncesWithFiltersProps } from '../../dto';
@@ -205,7 +206,9 @@ export default function TheoAnnoncesWithFilters({
             </div>
 
             {/* Properties Grid */}
-            {mandats.length > 0 ? (
+            {loading ? (
+              <TheoPropertyGridSkeleton count={6} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8" />
+            ) : mandats.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 {mandats.map((mandat) => {
                   const property = {
@@ -233,7 +236,7 @@ export default function TheoAnnoncesWithFilters({
                   );
                 })}
               </div>
-            ) : !loading && (
+            ) : (
               <div className="text-center py-12">
                 <div className="text-gray-500 mb-4">
                   <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">

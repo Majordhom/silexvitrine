@@ -260,4 +260,34 @@ body {
     @apply bg-gradient-to-tr from-fuchsia-100 via-white to-fuchsia-100 min-h-screen;
   }
 
+  /* Breathing animation for skeletons */
+  @keyframes breathing {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.4;
+    }
+  }
+
+  .animate-breathing {
+    animation: breathing 2s ease-in-out infinite;
+  }
+
+  /* Enhanced pulse for better skeleton effect */
+  @keyframes enhanced-pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(0.98);
+    }
+  }
+
+  .animate-enhanced-pulse {
+    animation: enhanced-pulse 2.5s ease-in-out infinite;
+  }
+
 }
