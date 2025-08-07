@@ -1,91 +1,85 @@
-"use client";
-import { Home, Users, Calendar } from "lucide-react";
+import { prisma } from "@/app/_lib/prisma";
 import TheoHeader from "./_components/TheoHeader";
 import TheoHero from "./_components/TheoHero";
 import TheoPropertiesSection from "./_components/TheoPropertiesSection";
 import TheoBlogSection from "./_components/TheoBlogSection";
 import TheoFeaturesSection from "./_components/TheoFeaturesSection";
 
-export default function TheoAccueil() {
-    // Simulation des données d'annonces récentes avec la nouvelle structure
-    const annoncesRecentes = [
-        {
-            id: 1,
-            titre: "Maison moderne 4 pièces",
-            prix: 450000,
-            surface: 145,
-            nb_pieces: 4,
-            ville: "Marseille",
-            cp: "13008",
-            photos: [
-                { id: 1, url: "/placeholder.jpg", alt: "Maison moderne" }
-            ],
-            tags: ["jardin", "piscine", "terrasse", "1 étage"]
+async function getRecentProperties() {
+    const properties = await prisma.mandat.findMany({
+        where: {
+            publishedInWebSite: true,
+            isNotAvailable: false
         },
-        {
-            id: 2,
-            titre: "Appartement lumineux 3 pièces",
-            prix: 280000,
-            surface: 85,
-            nb_pieces: 3,
-            ville: "Marseille",
-            cp: "13006",
-            photos: [
-                { id: 2, url: "/placeholder.jpg", alt: "Appartement lumineux" }
-            ],
-            tags: ["balcon", "ascenseur", "parking", "vue mer"]
+        include: {
+            photos: true
         },
-        {
-            id: 3,
-            titre: "Villa avec jardin 5 pièces",
-            prix: 650000,
-            surface: 180,
-            nb_pieces: 5,
-            ville: "Marseille",
-            cp: "13012",
-            photos: [
-                { id: 3, url: "/placeholder.jpg", alt: "Villa avec jardin" }
-            ],
-            tags: ["jardin", "garage", "terrasse", "2 étages"]
-        }
-    ];
+        orderBy: {
+            dateMaj: 'desc'
+        },
+        take: 6
+    });
 
-    // Données des articles de blog
-    const blogPosts = [
-        {
-            id: 1,
-            title: "Marché de l'immobilier à Cabriès: Analyse et Tendances",
-            description: "Découvrez les dernières tendances du marché immobilier à Cabriès. Notre analyse complète vous donne les clés pour comprendre l'évolution des prix et les opportunités d'investissement."
-        },
-        {
-            id: 2,
-            title: "Guide complet pour investir dans l'immobilier en 2024",
-            description: "Tout ce que vous devez savoir pour faire un investissement immobilier réussi en 2024. Conseils d'experts et stratégies éprouvées."
-        }
-    ];
+    return properties.map(property => ({
+        id: property.id,
+        slug: property.mandat_numero, // Ajouter le slug manquant
+        titre: `${property.type_bien} ${property.nb_pieces} pièces`,
+        prix: property.prix,
+        surface: property.surface_habitable || 0,
+        nb_pieces: property.nb_pieces || 0,
+        ville: property.ville,
+        cp: property.cp?.toString() || '',
+        photos: property.photos.map(photo => ({
+            id: photo.id,
+            url: photo.src || '/placeholder.jpg',
+            alt: `${property.type_bien} ${property.nb_pieces} pièces - Photo ${photo.id}`
+        })),
+        tags: [property.type_offre, property.type_bien]
+    }));
+}
 
-    // Données des fonctionnalités
-    const features = [
-        {
-            id: 1,
-            icon: Home,
-            title: "Propriétés Premium",
-            description: "Sélection rigoureuse de biens d'exception"
-        },
-        {
-            id: 2,
-            icon: Users,
-            title: "Accompagnement Personnalisé",
-            description: "Expertise et conseils sur mesure"
-        },
-        {
-            id: 3,
-            icon: Calendar,
-            title: "Disponibilité 24/7",
-            description: "Service client réactif et disponible"
-        }
-    ];
+const features: Array<{
+    id: number;
+    iconName: keyof typeof import("lucide-react");
+    title: string;
+    description: string;
+}> = [
+    {
+        id: 1,
+        iconName: "Building2",
+        title: "Des biens d'exception",
+        description: "Une sélection rigoureuse des meilleures propriétés de la région."
+    },
+    {
+        id: 2,
+        iconName: "MapPin",
+        title: "Expertise locale",
+        description: "Une connaissance approfondie du marché immobilier local."
+    },
+    {
+        id: 3,
+        iconName: "PiggyBank",
+        title: "Accompagnement financier",
+        description: "Des conseils personnalisés pour votre projet immobilier."
+    }
+];
 
+const blogPosts = [
+    {
+        id: 1,
+        title: "Le marché immobilier à Cabries : analyse et tendances",
+        description: "Découvrez notre analyse détaillée du marché immobilier à Cabries et ses environs. Prix, tendances et perspectives."
+    },
+    {
+        id: 2,
+        title: "Guide : Investir dans l'immobilier en 2024",
+        description: "Nos conseils d'experts pour réussir votre investissement immobilier cette année."
+    }
+];
+
+export default async function TheoAccueil() {
+    const annoncesRecentes = await getRecentProperties();
+    
     return (
         <div className="min-h-screen bg-white">
             <TheoHeader />

@@ -5,14 +5,14 @@ import TheoAnnonceDetailFallback from "@/app/(web-template)/theo/_components/The
 import { Mandat, MandatPhoto } from "@/generated/prisma";
 import Script from "next/script";
 
-type PageProps = {
-    params?: Promise<any>;
-};
-
 type MandatWithPhotos = Mandat & {
     photos: MandatPhoto[]
     distance?: number
     scoreProximite?: number
+};
+
+type PageProps = {
+    params: Promise<{ slug: string }>;
 };
 
 // Generate static params for all published annonces
@@ -23,17 +23,30 @@ export async function generateStaticParams() {
                 publishedInWebSite: true,
                 isNotAvailable: false
             },
-            select: { id: true }
+            select: { mandat_numero: true }
         });
-        return annonces.map(mandat => ({ params: { id: mandat.id.toString() } }));
+        return annonces.map(mandat => ({ slug: mandat.mandat_numero }));
     } catch (error) {
         console.error('Error generating static params:', error);
         return [];
     }
 }
 
+interface StructuredDataAnnonce {
+    titre: string;
+    description?: string;
+    prix: number;
+    surface: number;
+    nb_pieces: number;
+    ville: string;
+    cp: string;
+    caracteristiques?: {
+        type: string;
+    };
+}
+
 // Generate structured data for SEO
-function generateStructuredData(annonce: any) {
+function generateStructuredData(annonce: StructuredDataAnnonce) {
     const structuredData = {
         "@context": "https://schema.org",
         "@type": "Product",
@@ -84,26 +97,22 @@ function generateStructuredData(annonce: any) {
 
 export default async function AnnoncePage({ params }: PageProps) {
     try {
-        const { id } = await Promise.resolve(params);
-        const mandatId = Number(id);
-        
-        if (isNaN(mandatId)) {
-            console.error('Invalid mandat ID:', id);
-            return <TheoAnnonceDetailFallback />;
-        }
-
+        const { slug } = await params;
+        // Try to find by mandat_numero or by numeric ID
         const mandat = await prisma.mandat.findUnique({
-            where: { 
-                id: mandatId,
-                publishedInWebSite: true,
-                isNotAvailable: false
+            where: {
+                mandat_numero: slug,
             },
             include: { photos: true }
         });
 
-        if (!mandat) {
-            console.error('Mandat not found for ID:', mandatId);
-            return <TheoAnnonceDetailFallback />;
+        if (!mandat || !mandat.publishedInWebSite || mandat.isNotAvailable === true) {
+            console.log('Mandat not found or not available:', { 
+                exists: !!mandat, 
+                published: mandat?.publishedInWebSite, 
+                notAvailable: mandat?.isNotAvailable 
+            });
+            return notFound();
         }
 
         // Find similar properties with better filtering
@@ -112,7 +121,7 @@ export default async function AnnoncePage({ params }: PageProps) {
         try {
             similaires = await prisma.mandat.findMany({
                 where: {
-                    id: { not: mandatId },
+                    id: { not: mandat.id },
                     publishedInWebSite: true,
                     isNotAvailable: false,
                     prix: { 
@@ -134,7 +143,7 @@ export default async function AnnoncePage({ params }: PageProps) {
             if (similaires.length < 3) {
                 const additionalSimilaires = await prisma.mandat.findMany({
                     where: {
-                        id: { not: mandatId },
+                        id: { not: mandat.id },
                         publishedInWebSite: true,
                         isNotAvailable: false,
                         ville: mandat.ville,
@@ -156,39 +165,72 @@ export default async function AnnoncePage({ params }: PageProps) {
             console.error('Error fetching similar properties:', error);
         }
 
-        // Transform data for the component
         const annonceData = {
             id: mandat.id,
-            titre: `${mandat.type_bien} ${mandat.nb_pieces} pièces`,
-            prix: mandat.prix || 0,
-            surface: mandat.surface || 0,
+            titre: `${mandat.type_bien} ${mandat.nb_pieces || 0} pièces`,
+            prix: mandat.prix,
+            surface: mandat.surface_habitable || 0,
             nb_pieces: mandat.nb_pieces || 0,
-            ville: mandat.ville || 'Non spécifié',
-            cp: mandat.cp || '',
-            photos: mandat.photos.map(photo => ({
+            ville: mandat.ville,
+            cp: mandat.cp?.toString() || '',
+            description: mandat.corps || undefined,
+            photos: mandat.photos.map((photo: { id: number; src: string }) => ({
                 id: photo.id,
-                url: photo.url || photo.src,
-                alt: `${mandat.type_bien} ${mandat.nb_pieces} pièces - Photo ${photo.id}`
+                url: photo.src || '/placeholder.jpg',
+                alt: `${mandat.type_bien} ${mandat.nb_pieces || 0} pièces - Photo ${photo.id}`
             })),
             caracteristiques: {
-                type: mandat.type_bien || 'Non spécifié',
-                etage: mandat.etage || undefined,
-                cuisine: mandat.type_cuisine || undefined,
-                chauffage: mandat.type_chauffage || undefined,
-                foncier: mandat.foncier || undefined
+                // Informations générales
+                type: mandat.type_bien,
+                type_offre: mandat.type_offre,
+                statut: mandat.statut || undefined,
+                annee_construction: mandat.annee_construction || undefined,
+                meuble: mandat.meuble ?? undefined,
+                
+                // Surfaces et pièces
+                surface_habitable: mandat.surface_habitable ?? undefined,
+                nb_pieces: mandat.nb_pieces ?? undefined,
+                chambres: mandat.chambres ?? undefined,
+                sdb: mandat.sdb ?? undefined,
+                wc: mandat.wc ?? undefined,
+                
+                // Extérieurs et équipements
+                balcon: mandat.balcon ?? undefined,
+                terrasse: mandat.terrasse ?? undefined,
+                piscine: mandat.piscine ?? undefined,
+                parking: mandat.parking ?? undefined,
+                
+                // Bâtiment
+                etage: mandat.etage ?? undefined,
+                nb_etages: mandat.nb_etages ?? undefined,
+                ascenseur: mandat.ascenseur ?? undefined,
+                exposition: mandat.exposition || undefined,
+                
+                // Confort et équipements
+                cuisine: mandat.cuisine ?? undefined,
+                chauffage: mandat.energie_chauffage || undefined,
+                format_chauffage: mandat.format_chauffage || undefined,
+                
+                // Financier
+                charges: mandat.charges || undefined,
+                foncier: mandat.foncier || undefined,
+                
+                // Services
+                visite_immediat: mandat.visite_immediat ?? undefined,
+                video_link: mandat.video_link || undefined
             }
         };
 
         const similairesData = similaires.map(similaire => ({
             id: similaire.id,
-            titre: `Propriété ${similaire.id}`,
+            titre: `${similaire.type_bien} ${similaire.nb_pieces} pièces`,
             prix: similaire.prix || 0,
-            surface: similaire.surface || 0,
+            surface: similaire.surface_habitable || 0,
             ville: similaire.ville || 'Non spécifié',
             photos: similaire.photos.map(photo => ({
                 id: photo.id,
-                url: photo.url || photo.src,
-                alt: `Propriété ${similaire.id} - Photo ${photo.id}`
+                url: photo.src || '/placeholder.jpg',
+                alt: `${similaire.type_bien} ${similaire.nb_pieces} pièces - Photo ${photo.id}`
             }))
         }));
 
@@ -196,13 +238,13 @@ export default async function AnnoncePage({ params }: PageProps) {
 
         return (
             <>
-                <Script
+                <script
                     id="structured-data"
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify(structuredData),
-                    }}
-                />
+                    suppressHydrationWarning={true}
+                >
+                    {JSON.stringify(structuredData)}
+                </script>
                 <TheoAnnonceDetail 
                     annonce={annonceData}
                     similaires={similairesData}
@@ -210,6 +252,9 @@ export default async function AnnoncePage({ params }: PageProps) {
             </>
         );
     } catch (error) {
+        if (error instanceof Error && error.message === 'NEXT_NOT_FOUND') {
+            return notFound();
+        }
         console.error('Error in AnnoncePage:', error);
         return <TheoAnnonceDetailFallback />;
     }

@@ -20,10 +20,24 @@ export default function TheoAnnonceDetailFallback() {
         ],
         caracteristiques: {
             type: "Maison",
-            etage: "RDC + 1",
-            cuisine: "Équipée",
+            etage: 1,
+            cuisine: 1,
             chauffage: "Individuel",
-            foncier: 1200
+            foncier: 1200,
+            surface_habitable: 145,
+            chambres: 3,
+            sdb: 2,
+            wc: 2,
+            balcon: 0,
+            terrasse: 1,
+            piscine: false,
+            parking: 1,
+            nb_etages: 2,
+            ascenseur: false,
+            exposition: "Sud",
+            annee_construction: "2015",
+            meuble: false,
+            visite_immediat: true
         }
     };
 

@@ -12,6 +12,7 @@ interface PropertyCardProps {
         nb_pieces: number;
         ville: string;
         cp: string;
+        slug?: string;
         photos: Array<{
             id: number;
             url: string;
@@ -34,6 +35,7 @@ export default function TheoPropertyCard({ property, showTags = true }: Property
         }).format(price);
     };
 
+    const detailUrl = property.slug ? `/theo/annonces/${property.slug}` : `/theo/annonces/${property.id}`;
     return (
         <div
             className="group bg-white rounded-xl shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
@@ -81,7 +83,7 @@ export default function TheoPropertyCard({ property, showTags = true }: Property
                         isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
                     }`}>
                         <Link
-                            href={`/theo/annonces/${property.id}`}
+                            href={detailUrl}
                             className="block w-full bg-white/90 backdrop-blur-sm text-gray-900 py-2 px-4 rounded-lg text-center font-medium hover:bg-white transition-colors duration-200"
                         >
                             <div className="flex items-center justify-center space-x-2">
@@ -138,7 +140,7 @@ export default function TheoPropertyCard({ property, showTags = true }: Property
 
                     {/* Action button */}
                     <Link
-                        href={`/theo/annonces/${property.id}`}
+                        href={detailUrl}
                         className="block w-full bg-blue-600 text-white py-2 px-4 rounded-lg text-center font-medium hover:bg-blue-700 transition-all duration-200 transform hover:scale-105"
                     >
                         En savoir plus

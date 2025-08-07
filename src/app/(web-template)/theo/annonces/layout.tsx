@@ -63,7 +63,7 @@ export default function TheoAnnoncesLayout({
   return (
     <div className="min-h-screen bg-gray-50">
       <TheoHeader />
-      <div className="pt-16">
+      <div className="pt-4">
         {children}
       </div>
     </div>

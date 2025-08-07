@@ -1,233 +1,193 @@
-"use client";
-import { useState } from 'react';
-import { Search, Filter, MapPin, Home, Users } from 'lucide-react';
+import { prisma } from '@/app/_lib/prisma';
 import TheoPropertyCard from '../_components/TheoPropertyCard';
+import TheoAnnoncesPagination from '../_components/TheoAnnoncesPagination';
+import { redirect } from 'next/navigation';
 
-interface Property {
-    id: number;
-    titre: string;
-    prix: number;
-    surface: number;
-    nb_pieces: number;
-    ville: string;
-    cp: string;
-    photos: Array<{
-        id: number;
-        url: string;
-        alt?: string;
-    }>;
-    tags?: string[];
+const PAGE_SIZE = 50;
+
+interface Props {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default function TheoAnnoncesPage() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedType, setSelectedType] = useState('all');
-    const [priceRange, setPriceRange] = useState([0, 1000000]);
-    const [showFilters, setShowFilters] = useState(false);
-
-    // Mock data - in real app this would come from API
-    const properties: Property[] = [
-        {
-            id: 1,
-            titre: "Maison moderne 4 pièces",
-            prix: 450000,
-            surface: 145,
-            nb_pieces: 4,
-            ville: "Marseille",
-            cp: "13008",
-            photos: [{ id: 1, url: "/placeholder.jpg", alt: "Maison moderne" }],
-            tags: ["jardin", "piscine", "terrasse"]
-        },
-        {
-            id: 2,
-            titre: "Appartement lumineux 3 pièces",
-            prix: 280000,
-            surface: 85,
-            nb_pieces: 3,
-            ville: "Marseille",
-            cp: "13006",
-            photos: [{ id: 2, url: "/placeholder.jpg", alt: "Appartement lumineux" }],
-            tags: ["balcon", "ascenseur", "parking"]
-        },
-        {
-            id: 3,
-            titre: "Villa avec jardin 5 pièces",
-            prix: 650000,
-            surface: 180,
-            nb_pieces: 5,
-            ville: "Marseille",
-            cp: "13012",
-            photos: [{ id: 3, url: "/placeholder.jpg", alt: "Villa avec jardin" }],
-            tags: ["jardin", "garage", "terrasse"]
-        },
-        {
-            id: 4,
-            titre: "Studio rénové centre-ville",
-            prix: 180000,
-            surface: 35,
-            nb_pieces: 1,
-            ville: "Marseille",
-            cp: "13001",
-            photos: [{ id: 4, url: "/placeholder.jpg", alt: "Studio rénové" }],
-            tags: ["rénové", "centre-ville", "ascenseur"]
-        },
-        {
-            id: 5,
-            titre: "Maison de ville 6 pièces",
-            prix: 520000,
-            surface: 160,
-            nb_pieces: 6,
-            ville: "Marseille",
-            cp: "13005",
-            photos: [{ id: 5, url: "/placeholder.jpg", alt: "Maison de ville" }],
-            tags: ["jardin", "cave", "parking"]
-        },
-        {
-            id: 6,
-            titre: "Appartement vue mer 4 pièces",
-            prix: 380000,
-            surface: 95,
-            nb_pieces: 4,
-            ville: "Marseille",
-            cp: "13007",
-            photos: [{ id: 6, url: "/placeholder.jpg", alt: "Appartement vue mer" }],
-            tags: ["vue mer", "balcon", "ascenseur"]
+export default async function TheoAnnoncesPage({ searchParams }: Props) {
+  try {
+    // First, let's check what's in the database
+    const dbStats = await Promise.all([
+      prisma.mandat.count(),
+      prisma.mandat.count({ where: { publishedInWebSite: true } }),
+      prisma.mandat.count({ where: { isNotAvailable: false } }),
+      prisma.mandat.count({ where: { publishedInWebSite: true, isNotAvailable: false } }),
+      prisma.mandat.findMany({
+        take: 1,
+        select: {
+          id: true,
+          mandat_numero: true,
+          publishedInWebSite: true,
+          isNotAvailable: true,
+          type_bien: true,
+          prix: true
         }
-    ];
+      })
+    ]);
 
-    const filteredProperties = properties.filter(property => {
-        const matchesSearch = property.titre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            property.ville.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesPrice = property.prix >= priceRange[0] && property.prix <= priceRange[1];
-        const matchesType = selectedType === 'all' || 
-                           (selectedType === 'maison' && property.titre.toLowerCase().includes('maison')) ||
-                           (selectedType === 'appartement' && property.titre.toLowerCase().includes('appartement'));
-        
-        return matchesSearch && matchesPrice && matchesType;
+    console.log('Database statistics:', {
+      totalMandats: dbStats[0],
+      publishedCount: dbStats[1],
+      availableCount: dbStats[2],
+      publishedAndAvailable: dbStats[3],
+      sampleRecord: dbStats[4][0]
     });
+    
+    const resolvedSearchParams = await searchParams;
+    const { page: pageQueryParam } = resolvedSearchParams;
+    const page = Math.max(1, parseInt(typeof pageQueryParam === 'string' ? pageQueryParam : '1', 10));
+    const skip = (page - 1) * PAGE_SIZE;    console.log('Starting query with params:', { page, skip, PAGE_SIZE });
 
+    // Récupération des mandats paginés
+    const [mandats, total] = await Promise.all([
+    prisma.mandat.findMany({
+      where: {
+        OR: [
+          // Case 1: Explicitly published and available
+          {
+            publishedInWebSite: true,
+            isNotAvailable: false,
+          },
+          // Case 2: Published and availability not set (null)
+          {
+            publishedInWebSite: true,
+            isNotAvailable: null,
+          }
+        ]
+      },
+      include: { photos: true },
+      orderBy: { dateMaj: 'desc' },
+      skip,
+      take: PAGE_SIZE,
+    }).then(results => {
+      console.log('Unfiltered mandats:', {
+        count: results.length,
+        sampleData: results.slice(0, 2).map(m => ({
+          id: m.id,
+          numero: m.mandat_numero,
+          published: m.publishedInWebSite,
+          available: !m.isNotAvailable
+        }))
+      });
+      console.log('Found mandats:', {
+        count: results.length,
+        sampleData: results.slice(0, 2).map(m => ({
+          id: m.id,
+          numero: m.mandat_numero,
+          published: m.publishedInWebSite,
+          available: !m.isNotAvailable
+        }))
+      });
+      return results;
+    }),
+    prisma.mandat.count({
+      where: {
+        OR: [
+          // Case 1: Explicitly published and available
+          {
+            publishedInWebSite: true,
+            isNotAvailable: false,
+          },
+          // Case 2: Published and availability not set (null)
+          {
+            publishedInWebSite: true,
+            isNotAvailable: null,
+          }
+        ]
+      }
+    }).then((total) => {
+      console.log('Database counts:', {
+        total,
+        PAGE_SIZE,
+        expectedPages: Math.ceil(total / PAGE_SIZE)
+      });
+      return total;
+    }),
+  ]);
+
+  const totalPages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (page > totalPages && totalPages > 0) redirect(`?page=${totalPages}`);
+
+  console.log('Raw mandats data:', {
+    count: mandats.length,
+    first2: mandats.slice(0, 2),
+    hasData: mandats.length > 0,
+    firstItemSample: mandats[0] ? {
+      id: mandats[0].id,
+      mandat_numero: mandats[0].mandat_numero,
+      publishedInWebSite: mandats[0].publishedInWebSite,
+      isNotAvailable: mandats[0].isNotAvailable
+    } : null
+  });
+
+  const properties = mandats.map((m) => {
+    const property = {
+      id: m.id,
+      slug: m.mandat_numero,
+      titre: `${m.type_bien || ''}${m.nb_pieces ? ', ' + m.nb_pieces + ' pièces' : ''}`.trim(),
+      prix: m.prix,
+      surface: m.surface_habitable ?? 0,
+      nb_pieces: m.nb_pieces ?? 0,
+      ville: m.ville,
+      cp: m.cp?.toString() || '',
+      photos: (m.photos || []).map((p) => ({
+        id: p.id,
+        url: p.src || '/placeholder.jpg',
+        alt: p.filename,
+      })),
+      tags: [m.type_bien, m.statut, m.exposition].filter(Boolean) as string[],
+    };
+    console.log('Transformed property:', property);
+    return property;
+  });
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 className="text-3xl font-bold mb-4">Annonces</h1>
+      <p className="text-gray-500 max-w-2xl mx-auto mb-8 line-clamp-2">
+        Découvrez notre sélection de biens immobiliers d'exception à Marseille et ses environs
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {properties.length > 0 ? (
+          properties.map((property) => (
+            <TheoPropertyCard 
+              key={property.id} 
+              property={property}
+              showTags={true}
+            />
+          ))
+        ) : (
+          <div className="text-center py-12 col-span-full">
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              Aucune propriété trouvée
+            </h3>
+            <p className="text-gray-600">
+              Essayez de modifier vos critères de recherche
+            </p>
+          </div>
+        )}
+      </div>
+      <TheoAnnoncesPagination page={page} totalPages={totalPages} />
+    </div>
+  );
+  } catch (error) {
+    console.error('Error in TheoAnnoncesPage:', error);
     return (
-        <div className="min-h-screen bg-gray-50">
-            {/* Header */}
-            <div className="bg-white shadow-sm border-b">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <div className="text-center">
-                        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-                            Nos propriétés
-                        </h1>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                            Découvrez notre sélection de biens immobiliers d'exception à Marseille et ses environs
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Search and Filters */}
-                <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
-                    <div className="flex flex-col lg:flex-row gap-4">
-                        {/* Search Bar */}
-                        <div className="flex-1">
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                                <input
-                                    type="text"
-                                    placeholder="Rechercher par ville, type de bien..."
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Filter Toggle */}
-                        <button
-                            onClick={() => setShowFilters(!showFilters)}
-                            className="flex items-center space-x-2 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                        >
-                            <Filter size={20} />
-                            <span>Filtres</span>
-                        </button>
-                    </div>
-
-                    {/* Advanced Filters */}
-                    {showFilters && (
-                        <div className="mt-6 pt-6 border-t border-gray-200">
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                {/* Property Type */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Type de bien
-                                    </label>
-                                    <select
-                                        value={selectedType}
-                                        onChange={(e) => setSelectedType(e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                    >
-                                        <option value="all">Tous les types</option>
-                                        <option value="maison">Maison</option>
-                                        <option value="appartement">Appartement</option>
-                                    </select>
-                                </div>
-
-                                {/* Price Range */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                                        Fourchette de prix
-                                    </label>
-                                    <div className="flex space-x-2">
-                                        <input
-                                            type="number"
-                                            placeholder="Min"
-                                            value={priceRange[0]}
-                                            onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
-                                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                        />
-                                        <span className="flex items-center text-gray-500">-</span>
-                                        <input
-                                            type="number"
-                                            placeholder="Max"
-                                            value={priceRange[1]}
-                                            onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 1000000])}
-                                            className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Results Count */}
-                                <div className="flex items-end">
-                                    <div className="text-sm text-gray-600">
-                                        {filteredProperties.length} propriété{filteredProperties.length > 1 ? 's' : ''} trouvée{filteredProperties.length > 1 ? 's' : ''}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </div>
-
-                {/* Properties Grid */}
-                {filteredProperties.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {filteredProperties.map((property) => (
-                            <TheoPropertyCard 
-                                key={property.id} 
-                                property={property}
-                                showTags={true}
-                            />
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center py-12">
-                        <Home size={64} className="mx-auto text-gray-400 mb-4" />
-                        <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                            Aucune propriété trouvée
-                        </h3>
-                        <p className="text-gray-600">
-                            Essayez de modifier vos critères de recherche
-                        </p>
-                    </div>
-                )}
-            </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="text-center py-12">
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">
+            Une erreur est survenue
+          </h3>
+          <p className="text-gray-600">
+            Veuillez réessayer plus tard
+          </p>
         </div>
+      </div>
     );
+  }
 }

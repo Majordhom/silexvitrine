@@ -54,6 +54,7 @@ model Mandat {
   bien_category      String?
   chauffages         String?
   mandat_numero      String        @unique
+  slug               String?       @unique
   photos             MandatPhoto[]
 }
 
@@ -67,7 +68,6 @@ model MandatPhoto {
 
   @@index([mandatId])
 }
-
 
 model SearchQuery {
   id        String   @id @default(cuid())

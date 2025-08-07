@@ -11,7 +11,7 @@ export async function middleware(request: NextRequest) {
     // Redirection de la racine vers la route principale
     if (pathname === "/") {
 
-        const isDevelopment = process.env.NODE_ENV === 'development';
+        // const isDevelopment = process.env.NODE_ENV === 'development';
         const theme = { 
             chosen : process.env.NEXT_PUBLIC_MAIN_ROUTE,
             default : 'arthur',

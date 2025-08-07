@@ -5,7 +5,7 @@ import Link from "next/link";
 export function AnnonceCardHeader({ annonce }: { annonce: Annonce }) {
     console.log(annonce);
     return (
-        <Link href={`/annonces/${annonce.id}`} className="h-full w-full">
+        <Link href={`/theo/annonces/${annonce.id}`} className="h-full w-full">
             <div className="h-full w-full aspect-square bg-white rounded-2xl shadow-md flex flex-col overflow-hidden">
                 <div className="relative w-full" style={{ height: "66%" }}>
                     {annonce.photos && annonce.photos.length > 0 ? (

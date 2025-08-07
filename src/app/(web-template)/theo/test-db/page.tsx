@@ -7,13 +7,13 @@ export default async function TestDBPage() {
             take: 10,
             select: {
                 id: true,
-                titre: true,
+                mandat_numero: true,
                 prix: true,
                 ville: true,
                 cp: true,
                 type_bien: true,
                 nb_pieces: true,
-                surface: true
+                surface_habitable: true
             }
         });
 
@@ -37,13 +37,13 @@ export default async function TestDBPage() {
                                         <div className="flex items-center justify-between">
                                             <div>
                                                 <h3 className="font-semibold">
-                                                    {annonce.titre || `Annonce ${annonce.id}`}
+                                                    {annonce.mandat_numero || `Annonce ${annonce.id}`}
                                                 </h3>
                                                 <p className="text-gray-600">
                                                     {annonce.ville} {annonce.cp} - {annonce.type_bien}
                                                 </p>
                                                 <p className="text-sm text-gray-500">
-                                                    {annonce.nb_pieces} pièces, {annonce.surface} m²
+                                                    {annonce.nb_pieces} pièces, {annonce.surface_habitable} m²
                                                 </p>
                                             </div>
                                             <div className="text-right">

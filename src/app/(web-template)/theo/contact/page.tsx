@@ -4,10 +4,11 @@ import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 
 export default function TheoContactPage() {
     const [formData, setFormData] = useState({
-        nom: '',
-        prenom: '',
+        firstName: '',
+        lastName: '',
         email: '',
-        sujet: '',
+        phone: '',
+        subject: '',
         message: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,25 +24,38 @@ export default function TheoContactPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        if (!formData.email) {
+            alert("L'email est obligatoire.");
+            return;
+        }
+        
         setIsSubmitting(true);
 
         try {
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // Here you would typically send the data to your API
-            console.log('Form submitted:', formData);
+            const res = await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                throw new Error(data.error || "Erreur inconnue");
+            }
             
             setIsSubmitted(true);
             setFormData({
-                nom: '',
-                prenom: '',
+                firstName: '',
+                lastName: '',
                 email: '',
-                sujet: '',
+                phone: '',
+                subject: '',
                 message: ''
             });
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error submitting form:', error);
+            alert("Erreur lors de l'envoi : " + error.message);
         } finally {
             setIsSubmitting(false);
         }
@@ -150,14 +164,14 @@ export default function TheoContactPage() {
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
-                                            <label htmlFor="nom" className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
                                                 Nom *
                                             </label>
                                             <input
                                                 type="text"
-                                                id="nom"
-                                                name="nom"
-                                                value={formData.nom}
+                                                id="lastName"
+                                                name="lastName"
+                                                value={formData.lastName}
                                                 onChange={handleInputChange}
                                                 required
                                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
@@ -166,14 +180,14 @@ export default function TheoContactPage() {
                                         </div>
 
                                         <div>
-                                            <label htmlFor="prenom" className="block text-sm font-medium text-gray-700 mb-2">
+                                            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
                                                 Prénom *
                                             </label>
                                             <input
                                                 type="text"
-                                                id="prenom"
-                                                name="prenom"
-                                                value={formData.prenom}
+                                                id="firstName"
+                                                name="firstName"
+                                                value={formData.firstName}
                                                 onChange={handleInputChange}
                                                 required
                                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
@@ -199,14 +213,29 @@ export default function TheoContactPage() {
                                     </div>
 
                                     <div>
-                                        <label htmlFor="sujet" className="block text-sm font-medium text-gray-700 mb-2">
+                                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
+                                            Téléphone
+                                        </label>
+                                        <input
+                                            type="tel"
+                                            id="phone"
+                                            name="phone"
+                                            value={formData.phone}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                                            placeholder="Votre téléphone"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                                             Sujet *
                                         </label>
                                         <input
                                             type="text"
-                                            id="sujet"
-                                            name="sujet"
-                                            value={formData.sujet}
+                                            id="subject"
+                                            name="subject"
+                                            value={formData.subject}
                                             onChange={handleInputChange}
                                             required
                                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"

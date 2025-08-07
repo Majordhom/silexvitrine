@@ -15,7 +15,7 @@ export default function TheoAPropos() {
                         
                         <nav className="hidden md:flex space-x-8">
                             <a href="/theo" className="text-gray-600 hover:text-blue-600">accueil</a>
-                            <a href="/theo/theo-annonces" className="text-gray-600 hover:text-blue-600">Nos biens</a>
+                            <a href="/theo/annonces" className="text-gray-600 hover:text-blue-600">Nos biens</a>
                             <a href="#" className="text-gray-600 hover:text-blue-600">Blog</a>
                         </nav>
                         
