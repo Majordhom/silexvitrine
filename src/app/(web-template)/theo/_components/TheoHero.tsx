@@ -1,40 +1,14 @@
 "use client";
 import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import { heroSlides } from "./_data/heroSlide";
 
-const heroSlides = [
-    {
-        id: 1,
-        title: "Votre futur en un clique",
-        subtitle: "Découvrez nos biens d'exception",
-        background: "bg-gradient-to-r from-blue-500 to-indigo-600",
-        image: "/img/dummy_400x200.png"
-    },
-    {
-        id: 2,
-        title: "Investissez dans l'immobilier",
-        subtitle: "Des opportunités uniques vous attendent",
-        background: "bg-gradient-to-r from-purple-500 to-pink-600",
-        image: "/img/dummy_400x200.png"
-    },
-    {
-        id: 3,
-        title: "Trouvez votre maison de rêve",
-        subtitle: "Un accompagnement personnalisé",
-        background: "bg-gradient-to-r from-green-500 to-teal-600",
-        image: "/img/dummy_400x200.png"
-    },
-    {
-        id: 4,
-        title: "Expertise immobilière locale",
-        subtitle: "Plus de 10 ans d'expérience",
-        background: "bg-gradient-to-r from-orange-500 to-red-600",
-        image: "/img/dummy_400x200.png"
-    }
-];
 
 export default function TheoHero() {
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [searchQuery, setSearchQuery] = useState('');
+    const router = useRouter();
 
     // Auto-advance slider every 5 seconds
     useEffect(() => {
@@ -58,6 +32,16 @@ export default function TheoHero() {
     };
 
     const currentSlideData = heroSlides[currentSlide];
+
+    const handleSearch = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            const params = new URLSearchParams({ q: searchQuery.trim() });
+            router.push(`/theo/annonces?${params.toString()}`);
+        } else {
+            router.push('/theo/annonces');
+        }
+    };
 
     return (
         <section className="relative -mt-16 pt-32 pb-8">
@@ -90,20 +74,25 @@ export default function TheoHero() {
                             </p>
                             
                             <div className="max-w-2xl mx-auto">
-                                <div className="flex bg-white rounded-full p-2 shadow-lg">
+                                <form onSubmit={handleSearch} className="flex bg-white rounded-full p-2 shadow-lg">
                                     <div className="flex-1 flex items-center px-4">
                                         <Search className="w-5 h-5 text-gray-400 mr-3" />
                                         <input 
                                             type="text" 
                                             placeholder="rechercher un bien" 
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
                                             className="flex-1 outline-none text-gray-700"
                                         />
                                     </div>
-                                    <button className="bg-blue-600 text-white px-6 py-3 rounded-full flex items-center space-x-2 hover:bg-blue-700 transition-colors">
+                                    <button 
+                                        type="submit"
+                                        className="bg-blue-600 text-white px-6 py-3 rounded-full flex items-center space-x-2 hover:bg-blue-700 transition-colors"
+                                    >
                                         <Filter className="w-4 h-4" />
-                                        <span>filtrer</span>
+                                        <span>rechercher</span>
                                     </button>
-                                </div>
+                                </form>
                             </div>
                             
                             {/* Carousel Indicators */}

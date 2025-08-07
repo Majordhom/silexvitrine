@@ -3,6 +3,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import { prisma } from "@/app/_lib/prisma";
 
+// Not needed rn don't touch
+
 type DbUser = {
     id: number;
     email: string;

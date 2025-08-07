@@ -1,6 +1,5 @@
 import { prisma } from '@/app/_lib/prisma';
-import TheoPropertyCard from '../_components/TheoPropertyCard';
-import TheoAnnoncesPagination from '../_components/TheoAnnoncesPagination';
+import TheoAnnoncesWithFilters from '../_components/TheoAnnoncesWithFilters';
 import { redirect } from 'next/navigation';
 
 const PAGE_SIZE = 50;
@@ -125,55 +124,12 @@ export default async function TheoAnnoncesPage({ searchParams }: Props) {
     } : null
   });
 
-  const properties = mandats.map((m) => {
-    const property = {
-      id: m.id,
-      slug: m.mandat_numero,
-      titre: `${m.type_bien || ''}${m.nb_pieces ? ', ' + m.nb_pieces + ' pièces' : ''}`.trim(),
-      prix: m.prix,
-      surface: m.surface_habitable ?? 0,
-      nb_pieces: m.nb_pieces ?? 0,
-      ville: m.ville,
-      cp: m.cp?.toString() || '',
-      photos: (m.photos || []).map((p) => ({
-        id: p.id,
-        url: p.src || '/placeholder.jpg',
-        alt: p.filename,
-      })),
-      tags: [m.type_bien, m.statut, m.exposition].filter(Boolean) as string[],
-    };
-    console.log('Transformed property:', property);
-    return property;
-  });
-
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold mb-4">Annonces</h1>
-      <p className="text-gray-500 max-w-2xl mx-auto mb-8 line-clamp-2">
-        Découvrez notre sélection de biens immobiliers d'exception à Marseille et ses environs
-      </p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {properties.length > 0 ? (
-          properties.map((property) => (
-            <TheoPropertyCard 
-              key={property.id} 
-              property={property}
-              showTags={true}
-            />
-          ))
-        ) : (
-          <div className="text-center py-12 col-span-full">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              Aucune propriété trouvée
-            </h3>
-            <p className="text-gray-600">
-              Essayez de modifier vos critères de recherche
-            </p>
-          </div>
-        )}
-      </div>
-      <TheoAnnoncesPagination page={page} totalPages={totalPages} />
-    </div>
+    <TheoAnnoncesWithFilters 
+      initialMandats={mandats}
+      initialTotal={total}
+      initialPage={page}
+    />
   );
   } catch (error) {
     console.error('Error in TheoAnnoncesPage:', error);
