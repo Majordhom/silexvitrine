@@ -30,7 +30,11 @@
 - [ ] Refaire le Front de Arthur qui est buggé  
 - [ ] Implémenter un script bash de Test  
 - [ ] Penser à l'architecture d'implémentation des maquettes  
-- [ ] Faire les autres maquettes  
+- [ ] Faire les autres maquettes
+
+
+[Documentation Refactor](https://github.com/Majordhom/silexvitrine/edit/rework/dynamic-layouts-001/Refactor.md)
+
 
 
 # Get Started
