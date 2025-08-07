@@ -1,4 +1,6 @@
-export const mockAnnonce = {
+import { PropertyDetailAnnonce, SimilarProperty } from '../dto';
+
+export const mockAnnonce: PropertyDetailAnnonce = {
     id: 5,
     titre: "Maison moderne 4 pièces avec jardin",
     prix: 450000,
@@ -36,7 +38,7 @@ export const mockAnnonce = {
     }
 };
 
-export const mockSimilaires = [
+export const mockSimilaires: SimilarProperty[] = [
     {
         id: 1,
         titre: "Appartement lumineux 3 pièces",

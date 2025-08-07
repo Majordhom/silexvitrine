@@ -2,7 +2,7 @@
 import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
-import { heroSlides } from "./_data/heroSlide";
+import { heroSlides } from "../../data";
 
 
 export default function TheoHero() {

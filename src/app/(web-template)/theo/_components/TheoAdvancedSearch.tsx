@@ -2,14 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Search, Filter, X, ChevronDown } from 'lucide-react';
 import { SearchCriteria, FilterOption } from '@/types/filters';
-
-
-interface TheoAdvancedSearchProps {
-  onSearch: (criteria: SearchCriteria) => void;
-  initialCriteria?: SearchCriteria;
-  className?: string;
-  showAdvanced?: boolean;
-}
+import { TheoAdvancedSearchProps } from '../../dto';
 
 export default function TheoAdvancedSearch({ 
   onSearch, 

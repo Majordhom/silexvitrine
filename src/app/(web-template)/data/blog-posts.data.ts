@@ -1,24 +1,4 @@
-interface BlogContentBlock {
-    type: 'heading' | 'subheading' | 'paragraph' | 'list';
-    text?: string;
-    items?: string[];
-}
-export interface BlogPost {
-    id: string;
-    slug: string;
-    title: string;
-    excerpt: string;
-    content: string;
-    author: string;
-    publishedAt: string;
-    category: string;
-    readTime: string;
-    imageUrl: string;
-    blocks: BlogContentBlock[];
-    views?: number;
-    likes?: number;
-}
-
+import { BlogPost } from '../dto';
 
 // Enhanced blog data with more posts and better content
 export const blogPosts: BlogPost[] = [

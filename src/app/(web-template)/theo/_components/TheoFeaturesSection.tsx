@@ -1,17 +1,7 @@
 "use client";
 import * as LucideIcons from "lucide-react";
 import { LucideIcon } from "lucide-react";
-
-interface Feature {
-    id: number;
-    iconName: keyof typeof LucideIcons;
-    title: string;
-    description: string;
-}
-
-interface FeaturesSectionProps {
-    features: Feature[];
-}
+import { FeaturesSectionProps, Feature } from '../../dto';
 
 export default function TheoFeaturesSection({ features }: FeaturesSectionProps) {
     return (

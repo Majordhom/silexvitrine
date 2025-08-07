@@ -1,14 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
-
-interface NavigationContextType {
-    activeSection: string;
-    setActiveSection: (section: string) => void;
-    isScrolled: boolean;
-    burgerMenuOpen: boolean;
-    setBurgerMenuOpen: (open: boolean) => void;
-}
+import { NavigationContextType } from '../../dto';
 
 const NavigationContext = createContext<NavigationContextType | undefined>(undefined);
 

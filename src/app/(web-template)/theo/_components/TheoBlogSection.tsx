@@ -1,16 +1,6 @@
 "use client";
 import { ArrowRight } from "lucide-react";
-
-interface BlogPost {
-    id: number;
-    title: string;
-    description: string;
-}
-
-interface BlogSectionProps {
-    posts: BlogPost[];
-    title?: string;
-}
+import { BlogSectionProps } from '../../dto';
 
 export default function TheoBlogSection({ posts, title = "Nos derniers articles de blogs" }: BlogSectionProps) {
     return (

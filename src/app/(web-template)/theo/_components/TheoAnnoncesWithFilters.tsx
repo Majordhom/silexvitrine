@@ -5,12 +5,7 @@ import TheoAdvancedSearch from './TheoAdvancedSearch';
 import TheoPropertyCard from './TheoPropertyCard';
 import { SearchCriteria, SearchResponse } from '@/types/filters';
 import { Loader2 } from 'lucide-react';
-
-interface TheoAnnoncesWithFiltersProps {
-  initialMandats: any[];
-  initialTotal: number;
-  initialPage: number;
-}
+import { TheoAnnoncesWithFiltersProps } from '../../dto';
 
 export default function TheoAnnoncesWithFilters({ 
   initialMandats, 
@@ -94,7 +89,21 @@ export default function TheoAnnoncesWithFilters({
 
       if (response.ok) {
         const data: SearchResponse = await response.json();
-        setMandats(data.mandats || []);
+        // Normalize the search response data to match our DTO format
+        const normalizedMandats = (data.mandats || []).map(mandat => ({
+          ...mandat,
+          cp: mandat.cp,
+          nb_pieces: mandat.nb_pieces,
+          surface_habitable: mandat.surface_habitable,
+          photos: mandat.photos.map(photo => ({
+            id: photo.id,
+            mandatId: mandat.id,
+            filename: photo.filename,
+            src: photo.src,
+            position: null
+          }))
+        }));
+        setMandats(normalizedMandats);
         setTotal(data.total || 0);
         setPage(1);
       } else {
@@ -129,7 +138,21 @@ export default function TheoAnnoncesWithFilters({
 
       if (response.ok) {
         const data: SearchResponse = await response.json();
-        setMandats(data.mandats || []);
+        // Normalize the search response data to match our DTO format
+        const normalizedMandats = (data.mandats || []).map(mandat => ({
+          ...mandat,
+          cp: mandat.cp,
+          nb_pieces: mandat.nb_pieces,
+          surface_habitable: mandat.surface_habitable,
+          photos: mandat.photos.map(photo => ({
+            id: photo.id,
+            mandatId: mandat.id,
+            filename: photo.filename,
+            src: photo.src,
+            position: null
+          }))
+        }));
+        setMandats(normalizedMandats);
         setTotal(data.total || 0);
         setPage(newPage);
         window.scrollTo({ top: 0, behavior: 'smooth' });

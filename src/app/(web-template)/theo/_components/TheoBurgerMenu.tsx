@@ -1,11 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { X, Menu } from 'lucide-react';
-
-interface TheoBurgerMenuProps {
-    isOpen: boolean;
-    onToggle: () => void;
-}
+import { TheoBurgerMenuProps } from '../../dto';
 
 export default function TheoBurgerMenu({ isOpen, onToggle }: TheoBurgerMenuProps) {
     const [mounted, setMounted] = useState(false);

@@ -1,7 +1,7 @@
 "use client";
 import TheoAnnonceDetail from './TheoAnnonceDetail';
-import { mockAnnonce } from './_data/mockData';
-import { mockSimilaires } from './_data/mockData';
+import { mockAnnonce } from '../../data';
+import { mockSimilaires } from '../../data';
 
 export default function TheoAnnonceDetailFallback() {
     // Mock data for testing the UI

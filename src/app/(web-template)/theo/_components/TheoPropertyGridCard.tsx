@@ -1,15 +1,6 @@
 "use client";
 import { MapPin, Bed, Bath, Square, Heart } from "lucide-react";
-
-interface PropertyGridCardProps {
-    id: number;
-    type: string;
-    location: string;
-    price: string;
-    bedrooms: number;
-    bathrooms: number;
-    surface: string;
-}
+import { PropertyGridCardProps } from '../../dto';
 
 export default function TheoPropertyGridCard({ 
     id, 

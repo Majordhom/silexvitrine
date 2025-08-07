@@ -1,27 +1,6 @@
 "use client";
 import TheoPropertyCard from './TheoPropertyCard';
-
-interface Property {
-    id: number;
-    titre: string;
-    prix: number;
-    surface: number;
-    nb_pieces: number;
-    ville: string;
-    cp: string;
-    photos: Array<{
-        id: number;
-        url: string;
-        alt?: string;
-    }>;
-    tags?: string[];
-}
-
-interface TheoPropertiesSectionProps {
-    properties: Property[];
-    title?: string;
-    subtitle?: string;
-}
+import { TheoPropertiesSectionProps } from '../../dto';
 
 export default function TheoPropertiesSection({ 
     properties, 

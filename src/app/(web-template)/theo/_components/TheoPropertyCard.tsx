@@ -2,26 +2,7 @@
 import { useState } from 'react';
 import { Heart, MapPin, Home, Eye } from 'lucide-react';
 import Link from 'next/link';
-
-interface PropertyCardProps {
-    property: {
-        id: number;
-        titre: string;
-        prix: number;
-        surface: number;
-        nb_pieces: number;
-        ville: string;
-        cp: string;
-        slug?: string;
-        photos: Array<{
-            id: number;
-            url: string;
-            alt?: string;
-        }>;
-        tags?: string[];
-    };
-    showTags?: boolean;
-}
+import { PropertyCardProps } from '../../dto';
 
 export default function TheoPropertyCard({ property, showTags = true }: PropertyCardProps) {
     const [isFavorite, setIsFavorite] = useState(false);

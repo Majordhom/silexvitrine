@@ -2,8 +2,7 @@ import { notFound } from 'next/navigation';
 import { Calendar, User, Clock, ArrowLeft, Share2, Facebook, Twitter, Linkedin, BookOpen, Eye, Heart } from 'lucide-react';
 import Link from 'next/link';
 import Script from 'next/script';
-import { blogPosts } from '../_data';
-import { BlogPost } from '../_data';
+import { BlogPost, blogPosts } from '../../../data';
 
 
 

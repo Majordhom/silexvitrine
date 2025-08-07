@@ -3,73 +3,7 @@ import { useState } from 'react';
 import { Heart, Share2, MapPin, Home, Users, Calendar, ArrowLeft, Send } from 'lucide-react';
 import Link from 'next/link';
 
-interface AnnoncePhoto {
-    id: number;
-    url: string;
-    alt?: string;
-}
-
-interface AnnonceDetailProps {
-    annonce: {
-        id: number;
-        titre: string;
-        prix: number;
-        surface: number;
-        nb_pieces: number;
-        ville: string;
-        cp: string;
-        description?: string;
-        photos: AnnoncePhoto[];
-        caracteristiques?: {
-            // Informations générales
-            type?: string;
-            type_offre?: string;
-            statut?: string;
-            annee_construction?: string;
-            meuble?: boolean;
-            
-            // Surfaces et pièces
-            surface_habitable?: number;
-            nb_pieces?: number;
-            chambres?: number;
-            sdb?: number;
-            wc?: number;
-            
-            // Extérieurs et équipements
-            balcon?: number;
-            terrasse?: number;
-            piscine?: boolean;
-            parking?: number;
-            
-            // Bâtiment
-            etage?: number;
-            nb_etages?: number;
-            ascenseur?: boolean;
-            exposition?: string;
-            
-            // Confort et équipements
-            cuisine?: number;
-            chauffage?: string;
-            format_chauffage?: string;
-            
-            // Financier
-            charges?: string;
-            foncier?: number;
-            
-            // Services
-            visite_immediat?: boolean;
-            video_link?: string;
-        };
-    };
-    similaires?: Array<{
-        id: number;
-        titre: string;
-        prix: number;
-        surface: number;
-        ville: string;
-        photos: AnnoncePhoto[];
-    }>;
-}
+import { AnnonceDetailProps } from '../../dto';
 
 // Contact Form Widget Component
 function ContactFormWidget({ propertyId, propertyTitle }: { propertyId: number; propertyTitle: string }) {

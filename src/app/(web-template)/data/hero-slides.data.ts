@@ -1,4 +1,6 @@
-export const heroSlides = [
+import { HeroSlide } from '../dto';
+
+export const heroSlides: HeroSlide[] = [
     {
         id: 1,
         title: "Votre futur en un clique",
