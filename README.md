@@ -23,6 +23,10 @@
 - [x] Corriger les bugs de routing et pagination
 - [x] Rendre les formulaires de contact fonctionnels
 - [x] Enrichir l'affichage des données d'annonces
+- [ ] Faire les liens du footer
+- [ ] réparer la pagination a chier
+- [ ] opti le calcul backend
+- [ ] historique coté client pour plus de simpli
 - [ ] Refaire le Front de Arthur qui est buggé  
 - [ ] Implémenter un script bash de Test  
 - [ ] Penser à l'architecture d'implémentation des maquettes  
