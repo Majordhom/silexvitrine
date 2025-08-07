@@ -3,22 +3,30 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getOrCreateSessionId } from '@/app/_lib/session';
 
 export async function POST(req: NextRequest) {
-    const { email } = await req.json();
-    const sessionId = await getOrCreateSessionId();
+    try {
+        const { email } = await req.json();
+        const sessionId = await getOrCreateSessionId();
 
-    if (!email) {
-        return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+        if (!email) {
+            return NextResponse.json({ error: 'Email is required' }, { status: 400 });
+        }
+
+        await prisma.searchQuery.updateMany({
+            where: {
+                sessionId,
+                email: null,
+            },
+            data: {
+                email,
+            },
+        });
+
+        return NextResponse.json({ success: true });
+    } catch (error) {
+        console.error('Error in associate-searches POST:', error);
+        return NextResponse.json(
+            { error: 'An error occurred while associating the search.' },
+            { status: 500 }
+        );
     }
-
-    await prisma.searchQuery.updateMany({
-        where: {
-            sessionId,
-            email: null,
-        },
-        data: {
-            email,
-        },
-    });
-
-    return NextResponse.json({ success: true });
 }

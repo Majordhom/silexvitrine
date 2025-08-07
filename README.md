@@ -135,12 +135,5 @@ npm run start
 # Or with PM2: pm2 start npm --name "silexvitrine" -- start
 ```
 
-3. **Post-deployment verification:**
-```bash
-# Check application health
-curl https://your-domain.com/api/health
-# Verify database connection
-curl https://your-domain.com/theo/test-db
-```
 
 
