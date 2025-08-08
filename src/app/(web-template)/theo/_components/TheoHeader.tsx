@@ -9,12 +9,13 @@ export default function TheoHeader() {
     const { activeSection, isScrolled, burgerMenuOpen, setBurgerMenuOpen } = useNavigation();
 
     const getNavLinkClass = (section: string) => {
-        const baseClass = "font-medium transition-all duration-300 hover:text-blue-600";
+        const baseClass = "font-medium transition-all duration-300 hover:text-blue-600";    
         const activeClass = "text-blue-600";
         const inactiveClass = "text-gray-600";
-        
         return `${baseClass} ${activeSection === section ? activeClass : inactiveClass}`;
     };
+
+    const isLikedActive = activeSection === 'liked';
 
     return (
         <header 
@@ -28,10 +29,10 @@ export default function TheoHeader() {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <div className="flex items-center space-x-2 group cursor-pointer">
-                        <Image height={90} width={90} src="/img/silex.png" alt="Logo"/>
+                        <Image height={90} width={90} src={process.env.NEXT_PUBLIC_CONFIG_IMAGE_URL} alt="Logo"/>
                         <Link href={'/theo'}>
                             <span className="text-3xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                                Silex
+                                {process.env.NEXT_PUBLIC_CONFIG_NAME}
                             </span>
                         </Link>
                     </div>
@@ -52,13 +53,13 @@ export default function TheoHeader() {
                         >
                             Nos biens
                         </Link>
-                        <Link 
+                        {/* <Link 
                             href="/theo/blog" 
                             className={getNavLinkClass('blog')}
                             onClick={() => setBurgerMenuOpen(false)}
                         >
                             Blog
-                        </Link>
+                        </Link> */}
                     </nav>
                     
                     {/* Contact Button */}
@@ -68,8 +69,18 @@ export default function TheoHeader() {
                                 Nous contacter
                             </button>
                         </Link>
-                        <Link href="/theo/liked" className="flex items-center justify-center">
-                            <Heart className="w-6 h-6" />
+                        <Link href="/theo/liked" className="relative flex items-center justify-center group">
+                            {/* Outline heart */}
+                            <Heart
+                                className={`w-6 h-6 transition-colors ${isLikedActive ? 'text-red-600' : 'text-gray-600 group-hover:text-red-600'}`}
+                                fill="none"
+                            />
+                            {/* Filled heart for active/hover */}
+                            <Heart
+                                className={`w-6 h-6 absolute transition-opacity ${isLikedActive ? 'opacity-100 text-red-600' : 'opacity-0 group-hover:opacity-100 text-red-600'}`}
+                                fill="currentColor"
+                                strokeWidth={0}
+                            />
                         </Link>
                     </div>
                     

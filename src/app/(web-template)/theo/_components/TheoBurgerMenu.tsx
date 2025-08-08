@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Menu } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { TheoBurgerMenuProps } from '../../dto';
@@ -66,10 +67,10 @@ export default function TheoBurgerMenu({ isOpen, onToggle }: TheoBurgerMenuProps
                 {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
 
-            {/* Animated mobile menu */}
-            <AnimatePresence>
-                {isOpen && (
-                    <>
+            {/* Animated mobile menu in a portal to avoid clipping/stacking issues */}
+            {typeof window !== 'undefined' && isOpen && createPortal(
+                (
+                    <AnimatePresence>
                         {/* Backdrop */}
                         <motion.div
                             key="overlay"
@@ -78,7 +79,7 @@ export default function TheoBurgerMenu({ isOpen, onToggle }: TheoBurgerMenuProps
                             exit="exit"
                             variants={overlayVariants}
                             transition={{ duration: 0.2 }}
-                            className="fixed inset-0 bg-black z-50 md:hidden"
+                            className="fixed inset-0 bg-black z-[100] md:hidden"
                             onClick={onToggle}
                         />
 
@@ -90,7 +91,7 @@ export default function TheoBurgerMenu({ isOpen, onToggle }: TheoBurgerMenuProps
                             exit="exit"
                             variants={panelVariants}
                             transition={{ type: 'tween', duration: 0.25 }}
-                            className="fixed top-0 right-0 h-full w-4/5 max-w-xs bg-white z-50 shadow-xl md:hidden flex flex-col border-l border-gray-200 rounded-l-2xl overflow-hidden"
+                            className="fixed top-0 right-0 h-screen w-4/5 max-w-xs bg-white z-[100] shadow-xl md:hidden flex flex-col border-l border-gray-200 rounded-l-2xl overflow-hidden"
                             role="dialog"
                             aria-modal="true"
                         >
@@ -139,6 +140,15 @@ export default function TheoBurgerMenu({ isOpen, onToggle }: TheoBurgerMenuProps
                                             Blog
                                         </Link>
                                     </motion.li>
+                                    <motion.li variants={itemVariants}>
+                                        <Link
+                                            href="/theo/liked"
+                                            onClick={onToggle}
+                                            className="block rounded-xl border border-gray-200 bg-white px-4 py-3 text-gray-800 text-base font-medium hover:bg-gray-50 hover:border-gray-300 transition-colors shadow-sm"
+                                        >
+                                            Favoris
+                                        </Link>
+                                    </motion.li>
                                 </motion.ul>
                             </nav>
                             <div className="px-6 pb-8">
@@ -151,9 +161,10 @@ export default function TheoBurgerMenu({ isOpen, onToggle }: TheoBurgerMenuProps
                                 </Link>
                             </div>
                         </motion.aside>
-                    </>
-                )}
-            </AnimatePresence>
+                    </AnimatePresence>
+                ),
+                document.body
+            )}
         </>
     );
 } 

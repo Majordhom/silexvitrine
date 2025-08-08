@@ -96,23 +96,29 @@ export default function TheoHero() {
                             </p>
                             
                             <div className="max-w-2xl mx-auto">
-                                <form onSubmit={handleSearch} className="flex bg-white rounded-full p-2 shadow-lg">
-                                    <div className="flex-1 flex items-center px-4">
+                                <form 
+                                    onSubmit={handleSearch} 
+                                    role="search"
+                                    className="flex flex-col sm:flex-row items-stretch gap-2 bg-white/95 backdrop-blur rounded-2xl p-2 shadow-lg"
+                                >
+                                    <div className="flex-1 flex items-center px-4 rounded-xl border border-gray-200 focus-within:ring-2 focus-within:ring-blue-500 bg-white">
                                         <Search className="w-5 h-5 text-gray-400 mr-3" />
                                         <input 
-                                            type="text" 
-                                            placeholder="Rechercher un bien" 
+                                            type="search"
+                                            placeholder="Rechercher un bien"
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="flex-1 outline-none text-gray-700"
+                                            className="w-full py-2 outline-none text-gray-700 placeholder:text-gray-400"
+                                            aria-label="Rechercher un bien"
+                                            autoComplete="off"
                                         />
                                     </div>
                                     <button 
                                         type="submit"
-                                        className="bg-blue-600 text-white px-6 py-3 rounded-full flex items-center space-x-2 hover:bg-blue-700 transition-colors"
+                                        className="w-full sm:w-auto inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors whitespace-nowrap"
                                     >
-                                        <Filter className="w-4 h-4" />
-                                        <span>rechercher</span>
+                                        <Search className="w-4 h-4 mr-2" />
+                                        <span>Rechercher</span>
                                     </button>
                                 </form>
                             </div>

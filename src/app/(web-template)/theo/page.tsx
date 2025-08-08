@@ -89,7 +89,7 @@ export default async function TheoAccueil() {
                 title="Nos propriétés récentes"
                 subtitle="Découvrez notre sélection de biens d'exception"
             />
-            <TheoBlogSection posts={blogPosts} />
+            {/* <TheoBlogSection posts={blogPosts} /> */}
             <TheoFeaturesSection features={features} />
         </div>
     );

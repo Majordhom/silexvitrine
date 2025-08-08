@@ -43,6 +43,8 @@ export function NavigationProvider({ children }: NavigationProviderProps) {
             setActiveSection('blog');
         } else if (pathname === '/theo/contact') {
             setActiveSection('contact');
+        } else if (pathname === '/theo/liked') {
+            setActiveSection('liked');
         }
     }, [pathname]);
 
