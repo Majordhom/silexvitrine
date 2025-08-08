@@ -5,4 +5,4 @@ export function GET(req: NextRequest) {
     return NextResponse.json({ ip });
 }
 
-//cette route est utilisée pour obtenir l'adresse IP du client
+// cette route est utilisée pour obtenir l'adresse IP du client

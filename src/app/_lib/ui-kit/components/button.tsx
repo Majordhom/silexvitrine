@@ -1,5 +1,5 @@
-import {MouseEventHandler} from "react";
-import {Spinner} from "@/app/_lib/ui-kit/components/spinner";
+import { MouseEventHandler } from "react";
+import { Spinner } from "@/app/_lib/ui-kit/components/spinner";
 
 export type ButtonProps = {
     color?: string,
@@ -70,7 +70,7 @@ export const buttonUnderlineClasses = (color?: string) => (
     ` hover:border-b-1 border-${color} flex gap-1 items-center h-7 ${color ? `text-${color}` : ''}`
 )
 
-export const Button = ({ariaLabel, startContent, isDisabled, isLoading, color, textColor, onClick, children, type, className = '', variant = 'shadow'}: ButtonProps) => {
+export const Button = ({ ariaLabel, startContent, isDisabled, isLoading, color, textColor, onClick, children, type, className = '', variant = 'shadow' }: ButtonProps) => {
     let normalizedVariant: string = variant
     let sizeClasses = ''
 
@@ -102,5 +102,5 @@ export const Button = ({ariaLabel, startContent, isDisabled, isLoading, color, t
         twClasses += ` opacity-70 !cursor-not-allowed`
     }
 
-    return <button disabled={isDisabled || isLoading} onClick={onClick} className={`${twClasses} ${sizeClasses}`} aria-label={ariaLabel}>{isLoading ? <Spinner/> : startContent}{children}</button>
+    return <button disabled={isDisabled || isLoading} onClick={onClick} className={`${twClasses} ${sizeClasses}`} aria-label={ariaLabel}>{isLoading ? <Spinner /> : startContent}{children}</button>
 }

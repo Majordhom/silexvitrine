@@ -1,6 +1,6 @@
 "use client";
-import React, {MouseEventHandler, useState} from "react";
-import {ChevronLeftIcon, ChevronRightIcon} from "@heroicons/react/24/solid";
+import React, { MouseEventHandler, useState } from "react";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 type Props = {
     photos: { id: number, src: string }[]

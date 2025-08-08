@@ -7,23 +7,23 @@ export const roboto = localFont({
         {
             path: '../public/fonts/Roboto-Black.ttf',
             weight: '900',
-            style:'normal'
-        },{
+            style: 'normal'
+        }, {
             path: '../public/fonts/Roboto-Bold.ttf',
             weight: '700',
-            style:'normal'
-        },{
+            style: 'normal'
+        }, {
             path: '../public/fonts/Roboto-Regular.ttf',
             weight: '600',
-            style:'normal'
+            style: 'normal'
         }, {
             path: '../public/fonts/Roboto-Medium.ttf',
             weight: '400',
-            style:'normal'
+            style: 'normal'
         }, {
             path: '../public/fonts/Roboto-Light.ttf',
             weight: '300',
-            style:'normal'
+            style: 'normal'
         }
     ]
 });
@@ -35,23 +35,23 @@ export const titillium = localFont({
         {
             path: '../public/fonts/TitilliumWeb-Black.ttf',
             weight: '900',
-            style:'normal'
-        },{
+            style: 'normal'
+        }, {
             path: '../public/fonts/TitilliumWeb-Bold.ttf',
             weight: '700',
-            style:'normal'
-        },{
+            style: 'normal'
+        }, {
             path: '../public/fonts/TitilliumWeb-SemiBold.ttf',
             weight: '600',
-            style:'normal'
+            style: 'normal'
         }, {
             path: '../public/fonts/TitilliumWeb-Regular.ttf',
             weight: '400',
-            style:'normal'
+            style: 'normal'
         }, {
             path: '../public/fonts/TitilliumWeb-Light.ttf',
             weight: '300',
-            style:'normal'
+            style: 'normal'
         }
     ]
 });

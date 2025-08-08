@@ -1,5 +1,4 @@
 import { prisma } from '@/app/_lib/prisma';
-import { z } from "zod";
 import { insertMandatPhoto } from './importMandatPhoto';
 
 // Récupère toutes les références de mandats existants
@@ -77,53 +76,31 @@ export async function insertMandats(data: any[]) {
 
         for (const item of data) {
             currentItem = item;
-            const mandatData = z.object({
-                reference: z.string(),
-                mandat_numero: z.coerce.string(),
-                type_offre_code: z.string().optional().default('vente'),
-                type_offre: z.string().optional().default('vente'),
-                corps: z.string(),
-                prix: z.coerce.number().min(0),
-                charges: z.coerce.string().nullable(),
-                foncier: z.coerce.number().nullable(),
-                type_mandat: z.string().optional().default('basique'),
-                type_bien: z.string().optional().default(''),
-                type_bien_code: z.string().optional().default(''),
-                surface_habitable: z.coerce.number().nullable().optional(),
-                nb_pieces: z.coerce.number().nullable().optional(),
-                chambres: z.coerce.number().nullable(),
-                nb_etages: z.coerce.number().nullable().optional(),
-                etage: z.coerce.number().nullable(),
-                sdb: z.coerce.number().nullable(),
-                wc: z.coerce.number().nullable(),
-                cuisine: z.number().nullable().optional(),
-                energie_chauffage: z.string().nullable().optional(),
-                format_chauffage: z.string().nullable().optional(),
-                parking: z.coerce.number().optional(),
-                piscine: z.coerce.boolean().optional(),
-                terrasse: z.coerce.number().optional(),
-                exposition: z.string().nullable(),
-                annee_construction: z.coerce.string().optional(),
-                ascenseur: z.boolean().nullable(),
-                balcon: z.number().nullable().optional(),
-                ville: z.coerce.string(),
-                cp: z.coerce.number().nullable().optional(),
-                departement: z.string(),
-                isNotAvailable: z.coerce.boolean().optional(),
-                statut: z.string().nullable(),
-                meuble: z.boolean().nullable(),
-                dateEnr: z.coerce.date().optional(),
-                dateMaj: z.coerce.date().optional(),
-                latitude: z.coerce.number().nullable(),
-                longitude: z.coerce.number().nullable(),
-                video_link: z.string().nullable().optional(),
-                urlBien: z.string().nullable(),
-                publishedInWebSite: z.coerce.boolean().optional(),
-                publishedInApp: z.coerce.boolean().optional(),
-                visite_immediat: z.coerce.boolean().optional(),
-                bien_category: z.string().nullable().optional(),
-                chauffages: z.string().nullable(),
-            }).parse(item);
+
+            // Basic validation
+            if (!item.reference || !item.mandat_numero || !item.type_bien || !item.ville) {
+                console.log('Skipping invalid item:', item);
+                continue;
+            }
+
+            const mandatData = {
+                reference: item.reference,
+                mandat_numero: item.mandat_numero,
+                type_offre_code: item.type_offre_code || 'vente',
+                type_offre: item.type_offre || 'vente',
+                corps: item.corps || 'Description non disponible',
+                prix: Number(item.prix) || 0,
+                type_mandat: item.type_mandat || 'Simple',
+                type_bien: item.type_bien,
+                type_bien_code: item.type_bien_code || '',
+                surface_habitable: Number(item.surface_habitable) || null,
+                nb_pieces: Number(item.nb_pieces) || null,
+                chambres: Number(item.chambres) || null,
+                ville: item.ville,
+                departement: item.departement || '13',
+                isNotAvailable: item.isNotAvailable === "true",
+                publishedInWebSite: item.publishedInWebSite !== "false"
+            };
 
             // Vérifie si le mandat existe déjà
             const dbMandat = await prisma.mandat.findUnique({

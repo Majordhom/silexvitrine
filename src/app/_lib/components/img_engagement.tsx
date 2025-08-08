@@ -8,11 +8,11 @@ type ImageEngagementProps = {
 };
 
 export default function ImageEngagement({
-                                       alt = "Image engagement",
-                                       className = "",
-                                       width = 400,
-                                       height = 200,
-                                   }: ImageEngagementProps) {
+    alt = "Image engagement",
+    className = "",
+    width = 400,
+    height = 200,
+}: ImageEngagementProps) {
     return (
         <div
             className={`relative overflow-hidden rounded-xl shadow ${className}`}

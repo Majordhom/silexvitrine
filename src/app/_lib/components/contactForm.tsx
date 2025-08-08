@@ -12,7 +12,7 @@ type ContactFormProps = {
     defaultSubject?: string | null;
 }
 
-const ContactForm = ({className, subjectOptions, defaultSubject = null}: ContactFormProps) => {
+const ContactForm = ({ className, subjectOptions, defaultSubject = null }: ContactFormProps) => {
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -30,7 +30,7 @@ const ContactForm = ({className, subjectOptions, defaultSubject = null}: Contact
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if(!formData.email) {
+        if (!formData.email) {
             // alert("L'email est obligatoire.");
             toast.error("L'email est obligatoire.");
             return;

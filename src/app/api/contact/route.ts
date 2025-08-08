@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/client";
- // importer une instance du client Prisma pour interagir avec la base de données
+// importer une instance du client Prisma pour interagir avec la base de données
 
 export async function POST(req: Request) {
     const body = await req.json();

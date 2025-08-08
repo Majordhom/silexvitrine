@@ -9,9 +9,9 @@ import LinkedIcon from "@/app/_lib/ui-kit/svg/icon_linked";
 import YoutubeIcon from "@/app/_lib/ui-kit/svg/icon_youtube";
 
 const bottomLinks = [
-    { label: 'Politique de confidentialité', url: '#' },
-    { label: 'Conditions de Service', url: '#' },
-    { label: 'Paramètres des cookies', url: '#' },
+    { label: 'Politique de confidentialité', url: '/theo/politique-confidentialite' },
+    { label: 'Conditions de Service', url: '/theo/conditions-service' },
+    { label: 'Mentions légales', url: '/theo/mentions-legales' },
 ];
 
 export default function Footer() {
@@ -53,68 +53,67 @@ export default function Footer() {
                 className="footer-main flex flex-1 px-16 pt-12 pb-8 justify-between max-[900px]:flex-col max-[900px]:px-4 max-[900px]:pt-8 max-[900px]:pb-4 max-[900px]:gap-8">
                 {/* Partie gauche */}
                 <div className="max-w-[350px]">
-                    <h2 className="text-[32px] m-0 font-bold tracking-wider">Logo</h2>
+                    <h2 className="text-[32px] m-0 font-bold tracking-wider">{process.env.NEXT_PUBLIC_CONFIG_NAME}</h2>
                     <div className="my-6 mb-2 text-base">
-                        123 Avenue des pas perdus<br/>
-                        13000 Gotham City, France
+                        {process.env.NEXT_PUBLIC_CONFIG_ADRESSE}<br />
+                        {process.env.NEXT_PUBLIC_CONFIG_VILLE}
                     </div>
                     <div className="mb-2 text-base">
-                        Tél : <a href="tel:+33123456789" className="text-white underline">01 23 45 67 89</a><br/>
-                        Email : <a href="mailto:contact@pouet.com"
-                                   className="text-white underline">contact@pouet.com</a>
+                        Tél : <a href={process.env.NEXT_PUBLIC_CONFIG_TELEPHONE} className="text-white underline">{process.env.NEXT_PUBLIC_CONFIG_TELEPHONE}</a><br />
+                        Email : <a href={process.env.NEXT_PUBLIC_CONFIG_EMAIL}
+                            className="text-white underline">{process.env.NEXT_PUBLIC_CONFIG_EMAIL}</a>
                     </div>
                     <div className="flex gap-4 mt-4">
                         <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white"
-                              aria-label="Facebook">
-                            <FbIcon width={24} height={24}/>
+                            className="text-white"
+                            aria-label="Facebook">
+                            <FbIcon width={24} height={24} />
                         </Link>
                         <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white"
-                              aria-label="Instagram">
-                            <InstaIcon width={24} height={24}/>
+                            className="text-white"
+                            aria-label="Instagram">
+                            <InstaIcon width={24} height={24} />
                         </Link>
                         <Link href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-white" aria-label="X.com">
-                            <XIcon width={24} height={24}/>
+                            <XIcon width={24} height={24} />
                         </Link>
                         <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white"
-                              aria-label="LinkedIn">
-                            <LinkedIcon width={24} height={24}/>
+                            className="text-white"
+                            aria-label="LinkedIn">
+                            <LinkedIcon width={24} height={24} />
                         </Link>
                         <Link href="https://youtube.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white"
-                              aria-label="YouTube">
-                            <YoutubeIcon width={24} height={24}/>
+                            className="text-white"
+                            aria-label="YouTube">
+                            <YoutubeIcon width={24} height={24} />
                         </Link>
                     </div>
                 </div>
                 {/* Partie droite */}
                 <div className="footer-right flex gap-16 max-[900px]:flex-row max-[900px]:gap-8 max-[900px]:mt-8">
                     <div className="flex flex-col gap-3">
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Accueil</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">À propos</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Services</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Blog</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Contact</Link>
+                        <Link href="/theo" className="text-white text-base no-underline opacity-85">Accueil</Link>
+                        <Link href="/theo/apropos" className="text-white text-base no-underline opacity-85">À propos</Link>
+                        <Link href="/theo/annonces" className="text-white text-base no-underline opacity-85">Nos biens</Link>
+                        <Link href="/theo/blog" className="text-white text-base no-underline opacity-85">Blog</Link>
+                        <Link href="/theo/contact" className="text-white text-base no-underline opacity-85">Contact</Link>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <Link href="/" className="text-white text-base no-underline opacity-85">FAQ</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Support</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Carrières</Link>
-                        <Link href="/" className="text-white text-base no-underline opacity-85">Presse</Link>
-                        <Link href="/newsletter" className="text-white text-base no-underline opacity-85">Newsletter</Link>
+                        <Link href="/theo/services" className="text-white text-base no-underline opacity-85">Nos services</Link>
+                        <Link href="/theo/faq" className="text-white text-base no-underline opacity-85">FAQ</Link>
+                        <Link href="/theo/newsletter" className="text-white text-base no-underline opacity-85">Newsletter</Link>
+                        <Link href="/theo/plan-du-site" className="text-white text-base no-underline opacity-85">Plan du site</Link>
                     </div>
                 </div>
             </div>
             {/* Séparateur */}
-            <hr className="border-none border-t border-white m-0 opacity-20"/>
+            <hr className="border-none border-t border-white m-0 opacity-20" />
             {/* Bas du footer */}
             <div
                 className="footer-bottom flex justify-between items-center px-16 py-6 text-[15px] max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-4 max-[900px]:px-4 max-[900px]:py-4">
                 {/* Copyright à gauche (desktop), en bas (mobile) */}
                 <div className="footer-copyright order-1 max-[900px]:order-2 max-[900px]:w-full max-[900px]:mt-4">
-                    © 2025 POUET. Tous droits réservés.
+                    © 2025 {process.env.NEXT_PUBLIC_CONFIG_NAME}. Tous droits réservés.
                 </div>
                 {/* Liens à droite (desktop), en haut (mobile) */}
                 <div

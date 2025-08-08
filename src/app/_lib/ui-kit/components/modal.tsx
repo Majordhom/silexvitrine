@@ -22,14 +22,14 @@ const modalMaxWidth: Record<string, string> = {
 };
 
 export const Modal = ({
-                          children,
-                          isOpen,
-                          setIsOpen,
-                          isDismissable = true,
-                          backdrop = "blur",
-                          size = "md",
-                          className = "",
-                      }: ModalProps) => {
+    children,
+    isOpen,
+    setIsOpen,
+    isDismissable = true,
+    backdrop = "blur",
+    size = "md",
+    className = "",
+}: ModalProps) => {
     useEffect(() => {
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === "Escape" && isDismissable) setIsOpen(false);

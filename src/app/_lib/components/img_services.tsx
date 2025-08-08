@@ -8,11 +8,11 @@ type ImageServicesProps = {
 };
 
 export default function ImageServices({
-                                       alt = "Image services",
-                                       className = "",
-                                       width = 400,
-                                       height = 200,
-                                   }: ImageServicesProps) {
+    alt = "Image services",
+    className = "",
+    width = 400,
+    height = 200,
+}: ImageServicesProps) {
     return (
         <div
             className={`relative overflow-hidden rounded-xl shadow ${className}`}

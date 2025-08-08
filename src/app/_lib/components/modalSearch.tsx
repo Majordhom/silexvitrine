@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import SearchForm from "@/app/_lib/components/searchForm";
-import { Modal, ModalHeader, ModalBody} from "@/app/_lib/ui-kit/components/modal";
+import { Modal, ModalHeader, ModalBody } from "@/app/_lib/ui-kit/components/modal";
 import { Buttonsearch } from "@/app/_lib/ui-kit/components/buttonsearch";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo } from "react";
@@ -44,8 +44,8 @@ const ModalSearch: React.FC = () => {
     return (
         <>
             <Buttonsearch className={"self-center w-full sm:w-auto rounded-full z-10"}
-                          onClick={() => setIsModalOpen(true)}
-                          color="primary">
+                onClick={() => setIsModalOpen(true)}
+                color="primary">
                 Filtrer
             </Buttonsearch>
 

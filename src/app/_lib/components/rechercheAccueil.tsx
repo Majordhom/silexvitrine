@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/app/_lib/ui-kit/components/button";
 import { SelectMultiple } from "@/app/_lib/ui-kit/components/select";
 import { useQuery } from "@tanstack/react-query";

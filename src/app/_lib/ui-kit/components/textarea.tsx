@@ -1,4 +1,4 @@
-import {ReactNode, RefObject} from "react";
+import { ReactNode, RefObject } from "react";
 
 type Props = {
     type?: string,
@@ -16,39 +16,39 @@ type Props = {
     textareaRef?: RefObject<HTMLTextAreaElement | null>
 }
 export const Textarea = ({
-                             className = '',
-                             placeholder = '',
-                             endContent,
-                             name,
-                             isDisabled,
-                             value,
-                             onChange,
-                             defaultValue,
-                             id,
-                             cols,
-                             rows = 6,
-                             textareaRef
-                         }: Props) => {
+    className = '',
+    placeholder = '',
+    endContent,
+    name,
+    isDisabled,
+    value,
+    onChange,
+    defaultValue,
+    id,
+    cols,
+    rows = 6,
+    textareaRef
+}: Props) => {
     return <>
         <div className={'group relative'}>
             <div className={'bg-white group-hover:bg-gray-200 text-sm transition-all duration-200 rounded-2xl p-2'}>
-        <textarea
-            ref={textareaRef}
-            cols={cols}
-            rows={rows}
-            id={id}
-            disabled={isDisabled}
-            className={`bg-transparent w-full outline-none resize-none overflow-hidden min-h-[24px] ${className}`}
-            defaultValue={defaultValue}
-            value={value}
-            onChange={(e) => {
-                e.target.style.height = 'auto';
-                e.target.style.height = e.target.scrollHeight + 'px';
-                onChange && onChange(e.target.value);
-            }}
-            name={name}
-            aria-label="Message"
-        />
+                <textarea
+                    ref={textareaRef}
+                    cols={cols}
+                    rows={rows}
+                    id={id}
+                    disabled={isDisabled}
+                    className={`bg-transparent w-full outline-none resize-none overflow-hidden min-h-[24px] ${className}`}
+                    defaultValue={defaultValue}
+                    value={value}
+                    onChange={(e) => {
+                        e.target.style.height = 'auto';
+                        e.target.style.height = e.target.scrollHeight + 'px';
+                        onChange && onChange(e.target.value);
+                    }}
+                    name={name}
+                    aria-label="Message"
+                />
             </div>
             {endContent && (
                 <div className={'absolute bottom-0 right-0 w-full bg-transparent group-hover:bg-transparent z-10'}>
