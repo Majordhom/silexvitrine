@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Compile ci-cd.c
-        run: gcc ci-cd/ci-cd.c -o ci-cd/ci-cd.out
+        run: ls && gcc ci-cd/ci-cd.c -o ci-cd/ci-cd.out
 
       - name: List output
         run: ls -lh ci-cd/
