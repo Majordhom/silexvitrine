@@ -2,12 +2,15 @@ name: Compile ci-cd.c with GCC
 
 on:
   push:
-    paths:
-      - 'ci-cd/ci-cd.c'
+    branches:
+      - rework/dynamic-layouts-001
+      - main
+      
   pull_request:
-    paths:
-      - 'ci-cd/ci-cd.c'
-
+     branches:
+        - rework/dynamic-layouts-001
+        - main
+      
 jobs:
   build:
     runs-on: ubuntu-latest
