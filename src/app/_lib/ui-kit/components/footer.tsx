@@ -53,15 +53,15 @@ export default function Footer() {
                 className="footer-main flex flex-1 px-16 pt-12 pb-8 justify-between max-[900px]:flex-col max-[900px]:px-4 max-[900px]:pt-8 max-[900px]:pb-4 max-[900px]:gap-8">
                 {/* Partie gauche */}
                 <div className="max-w-[350px]">
-                    <h2 className="text-[32px] m-0 font-bold tracking-wider">Logo</h2>
+                    <h2 className="text-[32px] m-0 font-bold tracking-wider">{process.env.NEXT_PUBLIC_CONFIG_NAME}</h2>
                     <div className="my-6 mb-2 text-base">
-                        123 Avenue des pas perdus<br/>
-                        13000 Gotham City, France
+                        {process.env.NEXT_PUBLIC_CONFIG_ADRESSE}<br/>
+                        {process.env.NEXT_PUBLIC_CONFIG_VILLE}
                     </div>
                     <div className="mb-2 text-base">
-                        Tél : <a href="tel:+33123456789" className="text-white underline">01 23 45 67 89</a><br/>
-                        Email : <a href="mailto:contact@pouet.com"
-                                   className="text-white underline">contact@pouet.com</a>
+                        Tél : <a href={process.env.NEXT_PUBLIC_CONFIG_TELEPHONE} className="text-white underline">{process.env.NEXT_PUBLIC_CONFIG_TELEPHONE}</a><br/>
+                        Email : <a href={process.env.NEXT_PUBLIC_CONFIG_EMAIL}
+                                   className="text-white underline">{process.env.NEXT_PUBLIC_CONFIG_EMAIL}</a>
                     </div>
                     <div className="flex gap-4 mt-4">
                         <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer"
