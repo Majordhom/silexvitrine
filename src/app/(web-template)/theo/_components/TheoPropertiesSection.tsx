@@ -3,9 +3,9 @@ import TheoPropertyCard from './TheoPropertyCard';
 import TheoPropertyGridSkeleton from './TheoPropertyGridSkeleton';
 import { TheoPropertiesSectionProps } from '../../dto';
 
-export default function TheoPropertiesSection({ 
-    properties, 
-    title = "Nos propriétés", 
+export default function TheoPropertiesSection({
+    properties,
+    title = "Nos propriétés",
     subtitle = "Découvrez notre sélection de biens d'exception",
     loading = false
 }: TheoPropertiesSectionProps) {
@@ -28,8 +28,8 @@ export default function TheoPropertiesSection({
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {properties.map((property) => (
-                            <TheoPropertyCard 
-                                key={property.id} 
+                            <TheoPropertyCard
+                                key={property.id}
                                 property={property}
                                 showTags={true}
                             />

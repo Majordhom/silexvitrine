@@ -55,37 +55,37 @@ export default function Footer() {
                 <div className="max-w-[350px]">
                     <h2 className="text-[32px] m-0 font-bold tracking-wider">{process.env.NEXT_PUBLIC_CONFIG_NAME}</h2>
                     <div className="my-6 mb-2 text-base">
-                        {process.env.NEXT_PUBLIC_CONFIG_ADRESSE}<br/>
+                        {process.env.NEXT_PUBLIC_CONFIG_ADRESSE}<br />
                         {process.env.NEXT_PUBLIC_CONFIG_VILLE}
                     </div>
                     <div className="mb-2 text-base">
-                        Tél : <a href={process.env.NEXT_PUBLIC_CONFIG_TELEPHONE} className="text-white underline">{process.env.NEXT_PUBLIC_CONFIG_TELEPHONE}</a><br/>
+                        Tél : <a href={process.env.NEXT_PUBLIC_CONFIG_TELEPHONE} className="text-white underline">{process.env.NEXT_PUBLIC_CONFIG_TELEPHONE}</a><br />
                         Email : <a href={process.env.NEXT_PUBLIC_CONFIG_EMAIL}
-                                   className="text-white underline">{process.env.NEXT_PUBLIC_CONFIG_EMAIL}</a>
+                            className="text-white underline">{process.env.NEXT_PUBLIC_CONFIG_EMAIL}</a>
                     </div>
                     <div className="flex gap-4 mt-4">
                         <Link href="https://facebook.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white"
-                              aria-label="Facebook">
-                            <FbIcon width={24} height={24}/>
+                            className="text-white"
+                            aria-label="Facebook">
+                            <FbIcon width={24} height={24} />
                         </Link>
                         <Link href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white"
-                              aria-label="Instagram">
-                            <InstaIcon width={24} height={24}/>
+                            className="text-white"
+                            aria-label="Instagram">
+                            <InstaIcon width={24} height={24} />
                         </Link>
                         <Link href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-white" aria-label="X.com">
-                            <XIcon width={24} height={24}/>
+                            <XIcon width={24} height={24} />
                         </Link>
                         <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white"
-                              aria-label="LinkedIn">
-                            <LinkedIcon width={24} height={24}/>
+                            className="text-white"
+                            aria-label="LinkedIn">
+                            <LinkedIcon width={24} height={24} />
                         </Link>
                         <Link href="https://youtube.com" target="_blank" rel="noopener noreferrer"
-                              className="text-white"
-                              aria-label="YouTube">
-                            <YoutubeIcon width={24} height={24}/>
+                            className="text-white"
+                            aria-label="YouTube">
+                            <YoutubeIcon width={24} height={24} />
                         </Link>
                     </div>
                 </div>
@@ -107,7 +107,7 @@ export default function Footer() {
                 </div>
             </div>
             {/* Séparateur */}
-            <hr className="border-none border-t border-white m-0 opacity-20"/>
+            <hr className="border-none border-t border-white m-0 opacity-20" />
             {/* Bas du footer */}
             <div
                 className="footer-bottom flex justify-between items-center px-16 py-6 text-[15px] max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-4 max-[900px]:px-4 max-[900px]:py-4">

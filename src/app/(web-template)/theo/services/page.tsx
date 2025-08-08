@@ -28,7 +28,7 @@ export default function TheoServicesPage() {
                             Comment pouvons-nous vous aider ?
                         </h2>
                         <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                            Découvrez notre gamme complète de services immobiliers, 
+                            Découvrez notre gamme complète de services immobiliers,
                             conçue pour répondre à tous vos besoins.
                         </p>
                     </div>
@@ -37,8 +37,8 @@ export default function TheoServicesPage() {
                         {services.map((service, index) => {
                             const IconComponent = service.icon;
                             return (
-                                <div 
-                                    key={index} 
+                                <div
+                                    key={index}
                                     className="bg-white rounded-2xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300"
                                 >
                                     <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">

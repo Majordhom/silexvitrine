@@ -76,7 +76,7 @@ export async function insertMandats(data: any[]) {
 
         for (const item of data) {
             currentItem = item;
-            
+
             // Basic validation
             if (!item.reference || !item.mandat_numero || !item.type_bien || !item.ville) {
                 console.log('Skipping invalid item:', item);

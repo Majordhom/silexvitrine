@@ -55,16 +55,16 @@ export default function SecteursInput({ value = [], onChange }: SecteursInputPro
                         key={cp}
                         className="bg-black text-white rounded-full px-3 py-1 flex items-center text-sm"
                     >
-            {cp}
+                        {cp}
                         <button
                             className="ml-2 text-white hover:text-red-400 focus:outline-none"
                             type="button"
                             onClick={() => removeSecteur(cp)}
                             aria-label="Supprimer"
                         >
-              ×
-            </button>
-          </span>
+                            ×
+                        </button>
+                    </span>
                 ))}
             </div>
         </div>

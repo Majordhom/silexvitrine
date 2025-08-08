@@ -8,11 +8,11 @@ type ImageDummyProps = {
 };
 
 export default function ImageDummy({
-                                       alt = "Image fictive",
-                                       className = "",
-                                       width = 400,
-                                       height = 200,
-                                   }: ImageDummyProps) {
+    alt = "Image fictive",
+    className = "",
+    width = 400,
+    height = 200,
+}: ImageDummyProps) {
     return (
         <Image
             src="/img/dummy_400x200.png"

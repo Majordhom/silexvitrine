@@ -107,10 +107,10 @@ export default async function AnnoncePage({ params }: PageProps) {
         });
 
         if (!mandat || !mandat.publishedInWebSite || mandat.isNotAvailable === true) {
-            console.log('Mandat not found or not available:', { 
-                exists: !!mandat, 
-                published: mandat?.publishedInWebSite, 
-                notAvailable: mandat?.isNotAvailable 
+            console.log('Mandat not found or not available:', {
+                exists: !!mandat,
+                published: mandat?.publishedInWebSite,
+                notAvailable: mandat?.isNotAvailable
             });
             return notFound();
         }
@@ -124,9 +124,9 @@ export default async function AnnoncePage({ params }: PageProps) {
                     id: { not: mandat.id },
                     publishedInWebSite: true,
                     isNotAvailable: false,
-                    prix: { 
-                        gte: mandat.prix * 0.7, 
-                        lte: mandat.prix * 1.3 
+                    prix: {
+                        gte: mandat.prix * 0.7,
+                        lte: mandat.prix * 1.3
                     },
                     nb_pieces: mandat.nb_pieces,
                     type_bien: mandat.type_bien,
@@ -147,9 +147,9 @@ export default async function AnnoncePage({ params }: PageProps) {
                         publishedInWebSite: true,
                         isNotAvailable: false,
                         ville: mandat.ville,
-                        prix: { 
-                            gte: mandat.prix * 0.5, 
-                            lte: mandat.prix * 1.5 
+                        prix: {
+                            gte: mandat.prix * 0.5,
+                            lte: mandat.prix * 1.5
                         }
                     },
                     take: 6 - similaires.length,
@@ -158,7 +158,7 @@ export default async function AnnoncePage({ params }: PageProps) {
                         dateMaj: 'desc'
                     }
                 });
-                
+
                 similaires = [...similaires, ...additionalSimilaires];
             }
         } catch (error) {
@@ -186,35 +186,35 @@ export default async function AnnoncePage({ params }: PageProps) {
                 statut: mandat.statut || undefined,
                 annee_construction: mandat.annee_construction || undefined,
                 meuble: mandat.meuble ?? undefined,
-                
+
                 // Surfaces et pièces
                 surface_habitable: mandat.surface_habitable ?? undefined,
                 nb_pieces: mandat.nb_pieces ?? undefined,
                 chambres: mandat.chambres ?? undefined,
                 sdb: mandat.sdb ?? undefined,
                 wc: mandat.wc ?? undefined,
-                
+
                 // Extérieurs et équipements
                 balcon: mandat.balcon ?? undefined,
                 terrasse: mandat.terrasse ?? undefined,
                 piscine: mandat.piscine ?? undefined,
                 parking: mandat.parking ?? undefined,
-                
+
                 // Bâtiment
                 etage: mandat.etage ?? undefined,
                 nb_etages: mandat.nb_etages ?? undefined,
                 ascenseur: mandat.ascenseur ?? undefined,
                 exposition: mandat.exposition || undefined,
-                
+
                 // Confort et équipements
                 cuisine: mandat.cuisine ?? undefined,
                 chauffage: mandat.energie_chauffage || undefined,
                 format_chauffage: mandat.format_chauffage || undefined,
-                
+
                 // Financier
                 charges: mandat.charges || undefined,
                 foncier: mandat.foncier || undefined,
-                
+
                 // Services
                 visite_immediat: mandat.visite_immediat ?? undefined,
                 video_link: mandat.video_link || undefined
@@ -246,7 +246,7 @@ export default async function AnnoncePage({ params }: PageProps) {
                 >
                     {JSON.stringify(structuredData)}
                 </script>
-                <TheoAnnonceDetail 
+                <TheoAnnonceDetail
                     annonce={annonceData}
                     similaires={similairesData}
                 />

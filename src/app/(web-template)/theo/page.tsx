@@ -44,25 +44,25 @@ const features: Array<{
     title: string;
     description: string;
 }> = [
-    {
-        id: 1,
-        iconName: "Building2",
-        title: "Des biens d'exception",
-        description: "Une sélection rigoureuse des meilleures propriétés de la région."
-    },
-    {
-        id: 2,
-        iconName: "MapPin",
-        title: "Expertise locale",
-        description: "Une connaissance approfondie du marché immobilier local."
-    },
-    {
-        id: 3,
-        iconName: "PiggyBank",
-        title: "Accompagnement financier",
-        description: "Des conseils personnalisés pour votre projet immobilier."
-    }
-];
+        {
+            id: 1,
+            iconName: "Building2",
+            title: "Des biens d'exception",
+            description: "Une sélection rigoureuse des meilleures propriétés de la région."
+        },
+        {
+            id: 2,
+            iconName: "MapPin",
+            title: "Expertise locale",
+            description: "Une connaissance approfondie du marché immobilier local."
+        },
+        {
+            id: 3,
+            iconName: "PiggyBank",
+            title: "Accompagnement financier",
+            description: "Des conseils personnalisés pour votre projet immobilier."
+        }
+    ];
 
 const blogPosts = [
     {
@@ -79,12 +79,12 @@ const blogPosts = [
 
 export default async function TheoAccueil() {
     const annoncesRecentes = await getRecentProperties();
-    
+
     return (
         <div className="min-h-screen bg-white">
             <TheoHeader />
             <TheoHero />
-            <TheoPropertiesSection 
+            <TheoPropertiesSection
                 properties={annoncesRecentes}
                 title="Nos propriétés récentes"
                 subtitle="Découvrez notre sélection de biens d'exception"

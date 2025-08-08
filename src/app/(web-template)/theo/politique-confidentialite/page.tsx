@@ -17,14 +17,14 @@ export default function TheoPolitiqueConfidentialitePage() {
             <section className="py-20">
                 <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="bg-white rounded-2xl shadow-lg p-8 space-y-8">
-                        
+
                         <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
                             <h2 className="text-lg font-semibold text-blue-900 mb-2">
                                 Engagement de SilexVitrine
                             </h2>
                             <p className="text-blue-800">
-                                Nous nous engageons à protéger et respecter votre vie privée. Cette politique 
-                                explique quand et pourquoi nous collectons vos données personnelles, comment 
+                                Nous nous engageons à protéger et respecter votre vie privée. Cette politique
+                                explique quand et pourquoi nous collectons vos données personnelles, comment
                                 nous les utilisons et les conditions dans lesquelles nous pouvons les divulguer.
                             </p>
                         </div>
@@ -164,7 +164,7 @@ export default function TheoPolitiqueConfidentialitePage() {
                             </h2>
                             <div className="prose text-gray-600">
                                 <p>Conformément au RGPD, vous disposez des droits suivants :</p>
-                                
+
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                                     <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                                         <h3 className="font-semibold text-blue-900 mb-1">Droit d'accès</h3>
@@ -187,7 +187,7 @@ export default function TheoPolitiqueConfidentialitePage() {
                                 <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200 mt-6">
                                     <h3 className="font-semibold text-yellow-900 mb-2">Comment exercer vos droits ?</h3>
                                     <p className="text-yellow-800">
-                                        Contactez notre DPO à : 
+                                        Contactez notre DPO à :
                                         <a href="mailto:dpo@silexvitrine.com" className="font-medium hover:underline ml-1">
                                             dpo@silexvitrine.com
                                         </a>
@@ -222,13 +222,13 @@ export default function TheoPolitiqueConfidentialitePage() {
                             <div className="prose text-gray-600">
                                 <h3 className="text-lg font-semibold text-gray-800 mt-4 mb-2">Cookies essentiels</h3>
                                 <p>Nécessaires au fonctionnement du site (navigation, sécurité, préférences).</p>
-                                
+
                                 <h3 className="text-lg font-semibold text-gray-800 mt-4 mb-2">Cookies analytiques</h3>
                                 <p>Mesure d'audience et amélioration du site (Google Analytics avec anonymisation IP).</p>
-                                
+
                                 <h3 className="text-lg font-semibold text-gray-800 mt-4 mb-2">Gestion des cookies</h3>
                                 <p>
-                                    Vous pouvez paramétrer vos cookies via le bandeau de consentement ou 
+                                    Vous pouvez paramétrer vos cookies via le bandeau de consentement ou
                                     les paramètres de votre navigateur.
                                 </p>
                             </div>
@@ -242,11 +242,11 @@ export default function TheoPolitiqueConfidentialitePage() {
                                 <strong>Délégué à la Protection des Données (DPO) :</strong>
                             </p>
                             <p className="text-blue-800">
-                                Email : <a href="mailto:dpo@silexvitrine.com" className="font-medium hover:underline">dpo@silexvitrine.com</a><br/>
+                                Email : <a href="mailto:dpo@silexvitrine.com" className="font-medium hover:underline">dpo@silexvitrine.com</a><br />
                                 Courrier : SilexVitrine - DPO, 123 Avenue de la République, 13001 Marseille
                             </p>
                             <p className="text-blue-800 mt-4">
-                                <strong>Autorité de contrôle :</strong> CNIL - 3 Place de Fontenoy, 75007 Paris<br/>
+                                <strong>Autorité de contrôle :</strong> CNIL - 3 Place de Fontenoy, 75007 Paris<br />
                                 <a href="https://www.cnil.fr" className="hover:underline">www.cnil.fr</a>
                             </p>
                         </div>

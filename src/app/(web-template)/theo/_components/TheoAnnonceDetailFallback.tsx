@@ -5,7 +5,7 @@ import { mockSimilaires } from '../../data';
 
 export default function TheoAnnonceDetailFallback() {
     // Mock data for testing the UI
-    
+
 
     return (
         <>
@@ -23,7 +23,7 @@ export default function TheoAnnonceDetailFallback() {
                     </div>
                 </div>
             </div>
-            <TheoAnnonceDetail 
+            <TheoAnnonceDetail
                 annonce={mockAnnonce}
                 similaires={mockSimilaires}
             />

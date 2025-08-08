@@ -2,14 +2,14 @@
 import { MapPin, Bed, Bath, Square, Heart } from "lucide-react";
 import { PropertyGridCardProps } from '../../dto';
 
-export default function TheoPropertyGridCard({ 
-    id, 
-    type, 
-    location, 
-    price, 
-    bedrooms, 
-    bathrooms, 
-    surface 
+export default function TheoPropertyGridCard({
+    id,
+    type,
+    location,
+    price,
+    bedrooms,
+    bathrooms,
+    surface
 }: PropertyGridCardProps) {
     return (
         <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
@@ -23,17 +23,17 @@ export default function TheoPropertyGridCard({
                     </button>
                 </div>
             </div>
-            
+
             <div className="p-6">
                 <div className="flex items-center text-sm text-gray-500 mb-2">
                     <MapPin className="w-4 h-4 mr-1" />
                     <span>{location}</span>
                 </div>
-                
+
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
                     {type}
                 </h3>
-                
+
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-4 text-sm text-gray-600">
                         <div className="flex items-center">
@@ -53,7 +53,7 @@ export default function TheoPropertyGridCard({
                         {price}
                     </div>
                 </div>
-                
+
                 <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
                     Voir les détails
                 </button>

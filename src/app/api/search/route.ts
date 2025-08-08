@@ -33,17 +33,17 @@ export async function POST(req: NextRequest) {
         // Filtres de prix
         if (criteria?.prixMin) where.prix = { gte: criteria.prixMin };
         if (criteria?.prixMax) where.prix = { ...where.prix, lte: criteria.prixMax };
-        
+
         // Filtre par ville
         if (criteria?.ville) {
             where.ville = { contains: criteria.ville, mode: 'insensitive' };
         }
-        
+
         // Filtre par type de bien
         if (criteria?.type_bien && Array.isArray(criteria.type_bien) && criteria.type_bien.length > 0) {
             where.type_bien = { in: criteria.type_bien };
         }
-        
+
         // Filtre par secteurs (codes postaux)
         if (criteria?.secteurs && Array.isArray(criteria.secteurs) && criteria.secteurs.length > 0) {
             where.cp = { in: criteria.secteurs.map(Number) };
@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
             prisma.mandat.count({ where })
         ]);
 
-        return NextResponse.json({ 
+        return NextResponse.json({
             mandats,
             total,
             page,

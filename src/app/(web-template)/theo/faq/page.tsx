@@ -104,7 +104,7 @@ export default function TheoFAQPage() {
                     <p className="text-xl md:text-2xl mb-8 opacity-90">
                         Trouvez rapidement les réponses à vos questions
                     </p>
-                    
+
                     {/* Search Bar */}
                     <div className="max-w-2xl mx-auto relative">
                         <div className="relative">
@@ -150,7 +150,7 @@ export default function TheoFAQPage() {
                                         {category.questions.map((item, itemIndex) => {
                                             const key = `${categoryIndex}-${itemIndex}`;
                                             const isOpen = openItems[key];
-                                            
+
                                             return (
                                                 <div key={itemIndex}>
                                                     <button

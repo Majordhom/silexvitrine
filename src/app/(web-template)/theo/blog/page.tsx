@@ -17,8 +17,8 @@ export default function TheoBlogPage() {
     // Filter posts based on search and category
     const filteredPosts = blogPosts.filter((post) => {
         const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                            post.author.toLowerCase().includes(searchTerm.toLowerCase());
+            post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            post.author.toLowerCase().includes(searchTerm.toLowerCase());
         const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
         return matchesSearch && matchesCategory;
     });
@@ -50,7 +50,7 @@ export default function TheoBlogPage() {
                     <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
                         Découvrez nos derniers articles et conseils pour réussir vos projets immobiliers
                     </p>
-                    
+
                     {/* Search Bar */}
                     <div className="max-w-md mx-auto">
                         <div className="relative">
@@ -78,11 +78,10 @@ export default function TheoBlogPage() {
                                     setSelectedCategory(category);
                                     setCurrentPage(1);
                                 }}
-                                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
-                                    selectedCategory === category
+                                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${selectedCategory === category
                                         ? 'bg-blue-600 text-white'
                                         : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200'
-                                }`}
+                                    }`}
                             >
                                 {category === 'all' ? 'Tous les articles' : category}
                             </button>
@@ -222,21 +221,20 @@ export default function TheoBlogPage() {
                             >
                                 Précédent
                             </button>
-                            
+
                             {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                                 <button
                                     key={page}
                                     onClick={() => setCurrentPage(page)}
-                                    className={`px-3 py-2 text-sm font-medium rounded-md ${
-                                        currentPage === page
+                                    className={`px-3 py-2 text-sm font-medium rounded-md ${currentPage === page
                                             ? 'bg-blue-600 text-white'
                                             : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
-                                    }`}
+                                        }`}
                                 >
                                     {page}
                                 </button>
                             ))}
-                            
+
                             <button
                                 onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                                 disabled={currentPage === totalPages}

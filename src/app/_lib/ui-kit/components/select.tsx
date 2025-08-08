@@ -1,6 +1,6 @@
-import React, {ReactNode, useEffect, useRef, useState} from "react";
-import {CheckIcon} from "@heroicons/react/24/outline";
-import {ChevronDownIcon} from "@heroicons/react/24/solid";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { CheckIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 type SelectProps = {
@@ -40,7 +40,8 @@ type Option = {
 }
 
 export const Select = (props: SelectProps) => {
-    return SelectMultiple({...props,
+    return SelectMultiple({
+        ...props,
         multiple: false,
         values: props.value ? [props.value] : [],
         onChange: props.onChange ?
@@ -114,7 +115,7 @@ export const SelectMultiple = (props: SelectMultipleProps) => {
     };
 
     const filterFunction = (option: Option) => {
-        if (typeof  option.label === 'string') {
+        if (typeof option.label === 'string') {
             return option.label.toString().toLowerCase().includes(search.toLowerCase())
         } else {
             return (option.key && option.key.toString().toLowerCase().includes(search.toLowerCase()))
@@ -164,7 +165,7 @@ export const SelectMultiple = (props: SelectMultipleProps) => {
                                             className="cursor-pointer text-white hover:text-gray-100 ml-1"
                                             aria-label="Supprimer la valeur"
                                         >
-                                            <XMarkIcon className={'size-3'}/>
+                                            <XMarkIcon className={'size-3'} />
                                         </span>
                                     </span>
                                 ))
@@ -199,7 +200,7 @@ export const SelectMultiple = (props: SelectMultipleProps) => {
                     <div className={'max-h-56 overflow-y-auto p-2'}>
                         {options.filter(filterFunction).map(option => (
                             <div key={option.key} className={'flex flex-row gap-1 cursor-pointer hover:bg-gray-200 p-2 rounded-2xl h-10 items-center'} onClick={() => onClickOption(option)}>
-                                <div className={'truncate'}>{option.label}</div>{safeValues.includes(option.key) && <CheckIcon className={'size-4'}/>}
+                                <div className={'truncate'}>{option.label}</div>{safeValues.includes(option.key) && <CheckIcon className={'size-4'} />}
                             </div>
                         ))}
                     </div>
@@ -210,13 +211,13 @@ export const SelectMultiple = (props: SelectMultipleProps) => {
                 {
                     options.map(option => (
                         <div key={option.key} className={'flex flex-row gap-1 cursor-pointer hover:bg-gray-200 max-h-10 p-5 rounded-2xl items-center truncate'}>
-                            <div className={'truncate'}>{option.label}</div><CheckIcon className={'size-4'}/>
+                            <div className={'truncate'}>{option.label}</div><CheckIcon className={'size-4'} />
                         </div>
                     ))
                 }
             </div>
 
-            {name && <input type="hidden" value={safeValues.join(',')} name={name}/>}
+            {name && <input type="hidden" value={safeValues.join(',')} name={name} />}
         </div>
     );
 };

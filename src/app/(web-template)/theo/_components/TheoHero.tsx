@@ -72,9 +72,9 @@ export default function TheoHero() {
                     </AnimatePresence>
 
                     {/* Navigation Arrows */}
-                    
-                    
-                   
+
+
+
 
                     <div className="relative h-full flex items-center z-10">
                         <div className="text-center w-full px-8">
@@ -84,16 +84,16 @@ export default function TheoHero() {
                             <p className="text-xl text-white/90 mb-8 transition-all duration-500">
                                 {currentSlideData.subtitle}
                             </p>
-                            
+
                             <div className="max-w-2xl mx-auto">
-                                <form 
-                                    onSubmit={handleSearch} 
+                                <form
+                                    onSubmit={handleSearch}
                                     role="search"
                                     className="flex flex-col sm:flex-row items-stretch gap-2 bg-white/95 backdrop-blur rounded-2xl p-2 shadow-lg"
                                 >
                                     <div className="flex-1 flex items-center px-4 rounded-xl border border-gray-200 focus-within:ring-2 focus-within:ring-blue-500 bg-white">
                                         <Search className="w-5 h-5 text-gray-400 mr-3" />
-                                        <input 
+                                        <input
                                             type="search"
                                             placeholder="Rechercher un bien"
                                             value={searchQuery}
@@ -103,7 +103,7 @@ export default function TheoHero() {
                                             autoComplete="off"
                                         />
                                     </div>
-                                    <button 
+                                    <button
                                         type="submit"
                                         className="w-full sm:w-auto inline-flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors whitespace-nowrap"
                                     >
@@ -112,18 +112,17 @@ export default function TheoHero() {
                                     </button>
                                 </form>
                             </div>
-                            
+
                             {/* Carousel Indicators */}
                             <div className="flex justify-center space-x-2 mt-8">
                                 {heroSlides.map((_, index) => (
                                     <button
                                         key={index}
                                         onClick={() => goToSlide(index)}
-                                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                                            index === currentSlide 
-                                                ? 'bg-white scale-110' 
-                                                : 'bg-white/50 hover:bg-white/75'
-                                        }`}
+                                        className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide
+                                            ? 'bg-white scale-110'
+                                            : 'bg-white/50 hover:bg-white/75'
+                                            }`}
                                     />
                                 ))}
                             </div>

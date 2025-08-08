@@ -9,7 +9,7 @@ export default function TheoBlogSection({ posts, title = "Nos derniers articles 
                 <h2 className="text-3xl font-bold text-blue-600 mb-12 text-center">
                     {title}
                 </h2>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {posts.map((post) => (
                         <article key={post.id} className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
@@ -20,7 +20,7 @@ export default function TheoBlogSection({ posts, title = "Nos derniers articles 
                                 {post.description}
                             </p>
                             <a href="#" className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
-                                Lire la suites de l'articles 
+                                Lire la suites de l'articles
                                 <ArrowRight className="w-4 h-4 ml-2" />
                             </a>
                         </article>

@@ -28,7 +28,7 @@ export default function TheoContactPage() {
             alert("L'email est obligatoire.");
             return;
         }
-        
+
         setIsSubmitting(true);
 
         try {
@@ -43,7 +43,7 @@ export default function TheoContactPage() {
             if (!res.ok) {
                 throw new Error(data.error || "Erreur inconnue");
             }
-            
+
             setIsSubmitted(true);
             setFormData({
                 firstName: '',
@@ -70,7 +70,7 @@ export default function TheoContactPage() {
                         Nous contacter
                     </h1>
                     <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Notre équipe d'experts est à votre disposition pour répondre à toutes vos questions 
+                        Notre équipe d'experts est à votre disposition pour répondre à toutes vos questions
                         et vous accompagner dans votre projet immobilier.
                     </p>
                 </div>
@@ -235,7 +235,7 @@ export default function TheoContactPage() {
                         <h2 className="text-3xl font-semibold text-gray-900 mb-8 text-center">
                             Nos coordonnées
                         </h2>
-                        
+
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div className="text-center">
                                 <div className="flex justify-center mb-4">

@@ -176,9 +176,8 @@ export default function TheoFiltersModal({
                         opt.key === "" ? undefined : parseInt(opt.key, 10)
                       )
                     }
-                    className={`${chipBase} ${
-                      selected ? chipActive : chipInactive
-                    }`}
+                    className={`${chipBase} ${selected ? chipActive : chipInactive
+                      }`}
                   >
                     {opt.label}
                   </button>
@@ -195,9 +194,8 @@ export default function TheoFiltersModal({
                 <button
                   type="button"
                   onClick={() => updateField("type_bien", [])}
-                  className={`${chipBase} ${
-                    (local.type_bien || []).length === 0 ? chipActive : chipInactive
-                  }`}
+                  className={`${chipBase} ${(local.type_bien || []).length === 0 ? chipActive : chipInactive
+                    }`}
                 >
                   Tout
                 </button>
@@ -208,9 +206,8 @@ export default function TheoFiltersModal({
                       key={t.key}
                       type="button"
                       onClick={() => toggleItemInArray("type_bien", t.key)}
-                      className={`${chipBase} ${
-                        selected ? chipActive : chipInactive
-                      }`}
+                      className={`${chipBase} ${selected ? chipActive : chipInactive
+                        }`}
                     >
                       {t.label}
                     </button>

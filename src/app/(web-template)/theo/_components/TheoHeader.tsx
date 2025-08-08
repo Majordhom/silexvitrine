@@ -9,7 +9,7 @@ export default function TheoHeader() {
     const { activeSection, isScrolled, burgerMenuOpen, setBurgerMenuOpen } = useNavigation();
 
     const getNavLinkClass = (section: string) => {
-        const baseClass = "font-medium transition-all duration-300 hover:text-blue-600";    
+        const baseClass = "font-medium transition-all duration-300 hover:text-blue-600";
         const activeClass = "text-blue-600";
         const inactiveClass = "text-gray-600";
         return `${baseClass} ${activeSection === section ? activeClass : inactiveClass}`;
@@ -18,21 +18,20 @@ export default function TheoHeader() {
     const isLikedActive = activeSection === 'liked';
 
     return (
-        <header 
-            className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-                isScrolled 
-                    ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200' 
+        <header
+            className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled
+                    ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200'
                     : 'bg-white shadow-sm border-b'
-            }`}
+                }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <div className="flex items-center space-x-2 group cursor-pointer">
-                        <Image 
-                            height={90} 
-                            width={90} 
-                            src={process.env.NEXT_PUBLIC_CONFIG_IMAGE_URL || '/img/silex.png'} 
+                        <Image
+                            height={90}
+                            width={90}
+                            src={process.env.NEXT_PUBLIC_CONFIG_IMAGE_URL || '/img/silex.png'}
                             alt="Logo"
                         />
                         <Link href={'/theo'}>
@@ -41,18 +40,18 @@ export default function TheoHeader() {
                             </span>
                         </Link>
                     </div>
-                    
+
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex space-x-8">
-                        <Link 
-                            href="/theo" 
+                        <Link
+                            href="/theo"
                             className={getNavLinkClass('accueil')}
                             onClick={() => setBurgerMenuOpen(false)}
                         >
                             Accueil
                         </Link>
-                        <Link 
-                            href="/theo/annonces" 
+                        <Link
+                            href="/theo/annonces"
                             className={getNavLinkClass('annonces')}
                             onClick={() => setBurgerMenuOpen(false)}
                         >
@@ -66,7 +65,7 @@ export default function TheoHeader() {
                             Blog
                         </Link> */}
                     </nav>
-                    
+
                     {/* Contact Button */}
                     <div className="hidden md:flex items-center space-x-4">
                         <Link href="/theo/contact">
@@ -88,12 +87,12 @@ export default function TheoHeader() {
                             />
                         </Link>
                     </div>
-                    
+
 
                     {/* Burger Menu */}
-                    <TheoBurgerMenu 
-                        isOpen={burgerMenuOpen} 
-                        onToggle={() => setBurgerMenuOpen(!burgerMenuOpen)} 
+                    <TheoBurgerMenu
+                        isOpen={burgerMenuOpen}
+                        onToggle={() => setBurgerMenuOpen(!burgerMenuOpen)}
                     />
                 </div>
             </div>

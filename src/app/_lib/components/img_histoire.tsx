@@ -8,11 +8,11 @@ type ImageHistoireProps = {
 };
 
 export default function ImageHistoire({
-                                       alt = "Image engagement",
-                                       className = "",
-                                       width = 400,
-                                       height = 200,
-                                   }: ImageHistoireProps) {
+    alt = "Image engagement",
+    className = "",
+    width = 400,
+    height = 200,
+}: ImageHistoireProps) {
     return (
         <div
             className={`relative overflow-hidden rounded-xl shadow ${className}`}

@@ -27,7 +27,7 @@ export function AnnonceCardHeader({ annonce }: { annonce: Annonce }) {
                     <div className="text-xl font-bold text-primary">{annonce.prix.toLocaleString()}€</div>
                     <div className="text-sm text-gray-700">
                         {annonce.type_bien}
-                        {annonce.nb_pieces ? ` • ${annonce.nb_pieces }   pièces` : ""}
+                        {annonce.nb_pieces ? ` • ${annonce.nb_pieces}   pièces` : ""}
                         {annonce.surface_habitable ? ` • ${annonce.surface_habitable} m²` : ""}
                     </div>
                     <div className="text-xs text-gray-500">

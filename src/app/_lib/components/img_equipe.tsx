@@ -8,11 +8,11 @@ type ImageEquipeProps = {
 };
 
 export default function ImageEquipe({
-                                       alt = "Image équipe",
-                                       className = "",
-                                       width = 400,
-                                       height = 200,
-                                   }: ImageEquipeProps) {
+    alt = "Image équipe",
+    className = "",
+    width = 400,
+    height = 200,
+}: ImageEquipeProps) {
     return (
         <div
             className={`relative overflow-hidden rounded-xl shadow ${className}`}

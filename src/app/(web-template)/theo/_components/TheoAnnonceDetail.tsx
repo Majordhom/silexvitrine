@@ -29,7 +29,7 @@ function ContactFormWidget({ propertyId, propertyTitle }: { propertyId: number; 
             alert("L'email est obligatoire.");
             return;
         }
-        
+
         setIsSubmitting(true);
 
         try {
@@ -180,13 +180,13 @@ export default function TheoAnnonceDetail({ annonce, similaires = [] }: AnnonceD
     };
 
     const nextPhoto = () => {
-        setCurrentPhotoIndex((prev) => 
+        setCurrentPhotoIndex((prev) =>
             prev === annonce.photos.length - 1 ? 0 : prev + 1
         );
     };
 
     const prevPhoto = () => {
-        setCurrentPhotoIndex((prev) => 
+        setCurrentPhotoIndex((prev) =>
             prev === 0 ? annonce.photos.length - 1 : prev - 1
         );
     };
@@ -197,22 +197,21 @@ export default function TheoAnnonceDetail({ annonce, similaires = [] }: AnnonceD
             <div className="bg-white shadow-sm border-b">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                     <div className="flex items-center justify-between">
-                        <Link 
+                        <Link
                             href="/theo/annonces"
                             className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors duration-200"
                         >
                             <ArrowLeft size={20} />
                             <span>Retour aux annonces</span>
                         </Link>
-                        
+
                         <div className="flex items-center space-x-4">
                             <button
                                 onClick={() => setIsFavorite(!isFavorite)}
-                                className={`p-2 rounded-full transition-all duration-200 ${
-                                    isFavorite 
-                                        ? 'text-red-500 bg-red-50' 
+                                className={`p-2 rounded-full transition-all duration-200 ${isFavorite
+                                        ? 'text-red-500 bg-red-50'
                                         : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
-                                }`}
+                                    }`}
                             >
                                 <Heart size={20} fill={isFavorite ? 'currentColor' : 'none'} />
                             </button>
@@ -238,7 +237,7 @@ export default function TheoAnnonceDetail({ annonce, similaires = [] }: AnnonceD
                                             alt={annonce.photos[currentPhotoIndex]?.alt || annonce.titre}
                                             className="w-full h-full object-cover"
                                         />
-                                        
+
                                         {/* Navigation arrows */}
                                         {annonce.photos.length > 1 && (
                                             <>
@@ -260,7 +259,7 @@ export default function TheoAnnonceDetail({ annonce, similaires = [] }: AnnonceD
                                                 </button>
                                             </>
                                         )}
-                                        
+
                                         {/* Photo indicators */}
                                         {annonce.photos.length > 1 && (
                                             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
@@ -268,11 +267,10 @@ export default function TheoAnnonceDetail({ annonce, similaires = [] }: AnnonceD
                                                     <button
                                                         key={index}
                                                         onClick={() => setCurrentPhotoIndex(index)}
-                                                        className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                                                            index === currentPhotoIndex 
-                                                                ? 'bg-white' 
+                                                        className={`w-2 h-2 rounded-full transition-all duration-200 ${index === currentPhotoIndex
+                                                                ? 'bg-white'
                                                                 : 'bg-white/50 hover:bg-white/75'
-                                                        }`}
+                                                            }`}
                                                     />
                                                 ))}
                                             </div>
@@ -326,255 +324,255 @@ export default function TheoAnnonceDetail({ annonce, similaires = [] }: AnnonceD
                             </div>
                         </div>
 
-                                {/* Description */}
-        {annonce.description && (
-            <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-4">Description</h2>
-                <div className="text-gray-700 leading-relaxed space-y-3">
-                    {annonce.description.split('\n').map((paragraph, index) => (
-                        paragraph.trim() && (
-                            <p key={index} className="text-gray-700">
-                                {paragraph.trim()}
-                            </p>
-                        )
-                    ))}
-                </div>
-            </div>
-        )}
+                        {/* Description */}
+                        {annonce.description && (
+                            <div className="bg-white rounded-xl shadow-sm p-6">
+                                <h2 className="text-xl font-semibold text-gray-900 mb-4">Description</h2>
+                                <div className="text-gray-700 leading-relaxed space-y-3">
+                                    {annonce.description.split('\n').map((paragraph, index) => (
+                                        paragraph.trim() && (
+                                            <p key={index} className="text-gray-700">
+                                                {paragraph.trim()}
+                                            </p>
+                                        )
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
-                                {/* Characteristics */}
-        {annonce.caracteristiques && (
-            <div className="bg-white rounded-xl shadow-sm p-6">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">Caractéristiques</h2>
-                
-                {/* Informations générales */}
-                <div className="mb-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Informations générales</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex justify-between py-2">
-                            <span className="text-gray-600">Ville</span>
-                            <span className="font-medium">{annonce.ville}</span>
-                        </div>
-                        <div className="flex justify-between py-2">
-                            <span className="text-gray-600">Code Postal</span>
-                            <span className="font-medium">{annonce.cp}</span>
-                        </div>
-                        {annonce.caracteristiques.type && (
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">Type de bien</span>
-                                <span className="font-medium">{annonce.caracteristiques.type}</span>
-                            </div>
-                        )}
-                        {annonce.caracteristiques.type_offre && (
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">Type d'offre</span>
-                                <span className="font-medium">{annonce.caracteristiques.type_offre}</span>
-                            </div>
-                        )}
-                        {annonce.caracteristiques.statut && (
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">Statut</span>
-                                <span className="font-medium">{annonce.caracteristiques.statut}</span>
-                            </div>
-                        )}
-                        {annonce.caracteristiques.annee_construction && (
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">Année de construction</span>
-                                <span className="font-medium">{annonce.caracteristiques.annee_construction}</span>
-                            </div>
-                        )}
-                        {annonce.caracteristiques.meuble !== undefined && (
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">Meublé</span>
-                                <span className="font-medium">{annonce.caracteristiques.meuble ? 'Oui' : 'Non'}</span>
-                            </div>
-                        )}
-                        {annonce.caracteristiques.visite_immediat !== undefined && (
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">Visite immédiate</span>
-                                <span className="font-medium">{annonce.caracteristiques.visite_immediat ? 'Possible' : 'Sur rendez-vous'}</span>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                        {/* Characteristics */}
+                        {annonce.caracteristiques && (
+                            <div className="bg-white rounded-xl shadow-sm p-6">
+                                <h2 className="text-xl font-semibold text-gray-900 mb-6">Caractéristiques</h2>
 
-                {/* Surfaces et pièces */}
-                <div className="mb-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Surfaces et pièces</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="flex justify-between py-2">
-                            <span className="text-gray-600">Surface habitable</span>
-                            <span className="font-medium">{annonce.surface} m²</span>
-                        </div>
-                        <div className="flex justify-between py-2">
-                            <span className="text-gray-600">Nombre de pièces</span>
-                            <span className="font-medium">{annonce.nb_pieces}</span>
-                        </div>
-                        {annonce.caracteristiques.chambres && (
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">Chambres</span>
-                                <span className="font-medium">{annonce.caracteristiques.chambres}</span>
+                                {/* Informations générales */}
+                                <div className="mb-6">
+                                    <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Informations générales</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="flex justify-between py-2">
+                                            <span className="text-gray-600">Ville</span>
+                                            <span className="font-medium">{annonce.ville}</span>
+                                        </div>
+                                        <div className="flex justify-between py-2">
+                                            <span className="text-gray-600">Code Postal</span>
+                                            <span className="font-medium">{annonce.cp}</span>
+                                        </div>
+                                        {annonce.caracteristiques.type && (
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">Type de bien</span>
+                                                <span className="font-medium">{annonce.caracteristiques.type}</span>
+                                            </div>
+                                        )}
+                                        {annonce.caracteristiques.type_offre && (
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">Type d'offre</span>
+                                                <span className="font-medium">{annonce.caracteristiques.type_offre}</span>
+                                            </div>
+                                        )}
+                                        {annonce.caracteristiques.statut && (
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">Statut</span>
+                                                <span className="font-medium">{annonce.caracteristiques.statut}</span>
+                                            </div>
+                                        )}
+                                        {annonce.caracteristiques.annee_construction && (
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">Année de construction</span>
+                                                <span className="font-medium">{annonce.caracteristiques.annee_construction}</span>
+                                            </div>
+                                        )}
+                                        {annonce.caracteristiques.meuble !== undefined && (
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">Meublé</span>
+                                                <span className="font-medium">{annonce.caracteristiques.meuble ? 'Oui' : 'Non'}</span>
+                                            </div>
+                                        )}
+                                        {annonce.caracteristiques.visite_immediat !== undefined && (
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">Visite immédiate</span>
+                                                <span className="font-medium">{annonce.caracteristiques.visite_immediat ? 'Possible' : 'Sur rendez-vous'}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Surfaces et pièces */}
+                                <div className="mb-6">
+                                    <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Surfaces et pièces</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div className="flex justify-between py-2">
+                                            <span className="text-gray-600">Surface habitable</span>
+                                            <span className="font-medium">{annonce.surface} m²</span>
+                                        </div>
+                                        <div className="flex justify-between py-2">
+                                            <span className="text-gray-600">Nombre de pièces</span>
+                                            <span className="font-medium">{annonce.nb_pieces}</span>
+                                        </div>
+                                        {annonce.caracteristiques.chambres && (
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">Chambres</span>
+                                                <span className="font-medium">{annonce.caracteristiques.chambres}</span>
+                                            </div>
+                                        )}
+                                        {annonce.caracteristiques.sdb && (
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">Salles de bain</span>
+                                                <span className="font-medium">{annonce.caracteristiques.sdb}</span>
+                                            </div>
+                                        )}
+                                        {annonce.caracteristiques.wc && (
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">WC séparés</span>
+                                                <span className="font-medium">{annonce.caracteristiques.wc}</span>
+                                            </div>
+                                        )}
+                                        {annonce.caracteristiques.cuisine && (
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">Cuisine</span>
+                                                <span className="font-medium">{annonce.caracteristiques.cuisine === 1 ? 'Oui' : annonce.caracteristiques.cuisine}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Extérieurs et équipements */}
+                                {(annonce.caracteristiques.balcon || annonce.caracteristiques.terrasse ||
+                                    annonce.caracteristiques.piscine !== undefined || annonce.caracteristiques.parking) && (
+                                        <div className="mb-6">
+                                            <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Extérieurs et équipements</h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                {annonce.caracteristiques.balcon && (
+                                                    <div className="flex justify-between py-2">
+                                                        <span className="text-gray-600">Balcon</span>
+                                                        <span className="font-medium">{annonce.caracteristiques.balcon} m²</span>
+                                                    </div>
+                                                )}
+                                                {annonce.caracteristiques.terrasse && (
+                                                    <div className="flex justify-between py-2">
+                                                        <span className="text-gray-600">Terrasse</span>
+                                                        <span className="font-medium">{annonce.caracteristiques.terrasse} m²</span>
+                                                    </div>
+                                                )}
+                                                {annonce.caracteristiques.piscine !== undefined && (
+                                                    <div className="flex justify-between py-2">
+                                                        <span className="text-gray-600">Piscine</span>
+                                                        <span className="font-medium">{annonce.caracteristiques.piscine ? 'Oui' : 'Non'}</span>
+                                                    </div>
+                                                )}
+                                                {annonce.caracteristiques.parking && (
+                                                    <div className="flex justify-between py-2">
+                                                        <span className="text-gray-600">Parking</span>
+                                                        <span className="font-medium">{annonce.caracteristiques.parking} place(s)</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                {/* Bâtiment */}
+                                {(annonce.caracteristiques.etage || annonce.caracteristiques.nb_etages ||
+                                    annonce.caracteristiques.ascenseur !== undefined || annonce.caracteristiques.exposition) && (
+                                        <div className="mb-6">
+                                            <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Bâtiment</h3>
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                {annonce.caracteristiques.etage && (
+                                                    <div className="flex justify-between py-2">
+                                                        <span className="text-gray-600">Étage</span>
+                                                        <span className="font-medium">{annonce.caracteristiques.etage}</span>
+                                                    </div>
+                                                )}
+                                                {annonce.caracteristiques.nb_etages && (
+                                                    <div className="flex justify-between py-2">
+                                                        <span className="text-gray-600">Nombre d'étages</span>
+                                                        <span className="font-medium">{annonce.caracteristiques.nb_etages}</span>
+                                                    </div>
+                                                )}
+                                                {annonce.caracteristiques.ascenseur !== undefined && (
+                                                    <div className="flex justify-between py-2">
+                                                        <span className="text-gray-600">Ascenseur</span>
+                                                        <span className="font-medium">{annonce.caracteristiques.ascenseur ? 'Oui' : 'Non'}</span>
+                                                    </div>
+                                                )}
+                                                {annonce.caracteristiques.exposition && (
+                                                    <div className="flex justify-between py-2">
+                                                        <span className="text-gray-600">Exposition</span>
+                                                        <span className="font-medium">{annonce.caracteristiques.exposition}</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                {/* Confort et chauffage */}
+                                {(annonce.caracteristiques.chauffage || annonce.caracteristiques.format_chauffage) && (
+                                    <div className="mb-6">
+                                        <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Confort et chauffage</h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            {annonce.caracteristiques.chauffage && (
+                                                <div className="flex justify-between py-2">
+                                                    <span className="text-gray-600">Chauffage</span>
+                                                    <span className="font-medium">{annonce.caracteristiques.chauffage}</span>
+                                                </div>
+                                            )}
+                                            {annonce.caracteristiques.format_chauffage && (
+                                                <div className="flex justify-between py-2">
+                                                    <span className="text-gray-600">Format chauffage</span>
+                                                    <span className="font-medium">{annonce.caracteristiques.format_chauffage}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Informations financières */}
+                                {(annonce.caracteristiques.charges || annonce.caracteristiques.foncier) && (
+                                    <div className="mb-6">
+                                        <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Informations financières</h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            {annonce.caracteristiques.charges && (
+                                                <div className="flex justify-between py-2">
+                                                    <span className="text-gray-600">Charges</span>
+                                                    <span className="font-medium">{annonce.caracteristiques.charges}</span>
+                                                </div>
+                                            )}
+                                            {annonce.caracteristiques.foncier && (
+                                                <div className="flex justify-between py-2">
+                                                    <span className="text-gray-600">Foncier</span>
+                                                    <span className="font-medium">{formatPrice(annonce.caracteristiques.foncier)}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Vidéo */}
+                                {annonce.caracteristiques.video_link && (
+                                    <div className="mb-6">
+                                        <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Médias</h3>
+                                        <div className="grid grid-cols-1 gap-4">
+                                            <div className="flex justify-between py-2">
+                                                <span className="text-gray-600">Visite virtuelle</span>
+                                                <a
+                                                    href={annonce.caracteristiques.video_link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="font-medium text-blue-600 hover:text-blue-800 transition-colors"
+                                                >
+                                                    Voir la vidéo
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
-                        {annonce.caracteristiques.sdb && (
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">Salles de bain</span>
-                                <span className="font-medium">{annonce.caracteristiques.sdb}</span>
-                            </div>
-                        )}
-                        {annonce.caracteristiques.wc && (
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">WC séparés</span>
-                                <span className="font-medium">{annonce.caracteristiques.wc}</span>
-                            </div>
-                        )}
-                        {annonce.caracteristiques.cuisine && (
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">Cuisine</span>
-                                <span className="font-medium">{annonce.caracteristiques.cuisine === 1 ? 'Oui' : annonce.caracteristiques.cuisine}</span>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* Extérieurs et équipements */}
-                {(annonce.caracteristiques.balcon || annonce.caracteristiques.terrasse || 
-                  annonce.caracteristiques.piscine !== undefined || annonce.caracteristiques.parking) && (
-                    <div className="mb-6">
-                        <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Extérieurs et équipements</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {annonce.caracteristiques.balcon && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Balcon</span>
-                                    <span className="font-medium">{annonce.caracteristiques.balcon} m²</span>
-                                </div>
-                            )}
-                            {annonce.caracteristiques.terrasse && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Terrasse</span>
-                                    <span className="font-medium">{annonce.caracteristiques.terrasse} m²</span>
-                                </div>
-                            )}
-                            {annonce.caracteristiques.piscine !== undefined && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Piscine</span>
-                                    <span className="font-medium">{annonce.caracteristiques.piscine ? 'Oui' : 'Non'}</span>
-                                </div>
-                            )}
-                            {annonce.caracteristiques.parking && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Parking</span>
-                                    <span className="font-medium">{annonce.caracteristiques.parking} place(s)</span>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                {/* Bâtiment */}
-                {(annonce.caracteristiques.etage || annonce.caracteristiques.nb_etages || 
-                  annonce.caracteristiques.ascenseur !== undefined || annonce.caracteristiques.exposition) && (
-                    <div className="mb-6">
-                        <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Bâtiment</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {annonce.caracteristiques.etage && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Étage</span>
-                                    <span className="font-medium">{annonce.caracteristiques.etage}</span>
-                                </div>
-                            )}
-                            {annonce.caracteristiques.nb_etages && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Nombre d'étages</span>
-                                    <span className="font-medium">{annonce.caracteristiques.nb_etages}</span>
-                                </div>
-                            )}
-                            {annonce.caracteristiques.ascenseur !== undefined && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Ascenseur</span>
-                                    <span className="font-medium">{annonce.caracteristiques.ascenseur ? 'Oui' : 'Non'}</span>
-                                </div>
-                            )}
-                            {annonce.caracteristiques.exposition && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Exposition</span>
-                                    <span className="font-medium">{annonce.caracteristiques.exposition}</span>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                {/* Confort et chauffage */}
-                {(annonce.caracteristiques.chauffage || annonce.caracteristiques.format_chauffage) && (
-                    <div className="mb-6">
-                        <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Confort et chauffage</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {annonce.caracteristiques.chauffage && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Chauffage</span>
-                                    <span className="font-medium">{annonce.caracteristiques.chauffage}</span>
-                                </div>
-                            )}
-                            {annonce.caracteristiques.format_chauffage && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Format chauffage</span>
-                                    <span className="font-medium">{annonce.caracteristiques.format_chauffage}</span>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                {/* Informations financières */}
-                {(annonce.caracteristiques.charges || annonce.caracteristiques.foncier) && (
-                    <div className="mb-6">
-                        <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Informations financières</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {annonce.caracteristiques.charges && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Charges</span>
-                                    <span className="font-medium">{annonce.caracteristiques.charges}</span>
-                                </div>
-                            )}
-                            {annonce.caracteristiques.foncier && (
-                                <div className="flex justify-between py-2">
-                                    <span className="text-gray-600">Foncier</span>
-                                    <span className="font-medium">{formatPrice(annonce.caracteristiques.foncier)}</span>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                )}
-
-                {/* Vidéo */}
-                {annonce.caracteristiques.video_link && (
-                    <div className="mb-6">
-                        <h3 className="text-lg font-medium text-gray-900 mb-3 border-b border-gray-200 pb-2">Médias</h3>
-                        <div className="grid grid-cols-1 gap-4">
-                            <div className="flex justify-between py-2">
-                                <span className="text-gray-600">Visite virtuelle</span>
-                                <a 
-                                    href={annonce.caracteristiques.video_link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="font-medium text-blue-600 hover:text-blue-800 transition-colors"
-                                >
-                                    Voir la vidéo
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
-        )}
                     </div>
 
                     {/* Contact Form Sidebar */}
                     <div className="lg:col-span-1">
                         <div className="bg-white rounded-xl shadow-sm p-6 sticky top-24">
                             <h3 className="text-xl font-semibold text-gray-900 mb-4">Nous contacter</h3>
-                            
+
                             <ContactFormWidget propertyId={annonce.id} propertyTitle={annonce.titre} />
                         </div>
                     </div>

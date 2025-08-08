@@ -3,30 +3,30 @@ import { MetadataRoute } from 'next';
 
 // Mock blog data - in real app this would come from CMS or API
 const blogPosts = [
-    {
-        slug: 'marche-immobilier-cabries-analyse-tendances',
-        publishedAt: '2025-04-23'
-    },
-    {
-        slug: 'guide-investir-immobilier-2024',
-        publishedAt: '2025-04-20'
-    },
-    {
-        slug: 'quartiers-marseille-investissement',
-        publishedAt: '2025-04-18'
-    },
-    {
-        slug: 'renovation-maison-valeur-ajoutee',
-        publishedAt: '2025-04-15'
-    },
-    {
-        slug: 'credit-immobilier-taux-2024',
-        publishedAt: '2025-04-12'
-    },
-    {
-        slug: 'achat-vente-immobilier-etapes',
-        publishedAt: '2025-04-10'
-    }
+  {
+    slug: 'marche-immobilier-cabries-analyse-tendances',
+    publishedAt: '2025-04-23'
+  },
+  {
+    slug: 'guide-investir-immobilier-2024',
+    publishedAt: '2025-04-20'
+  },
+  {
+    slug: 'quartiers-marseille-investissement',
+    publishedAt: '2025-04-18'
+  },
+  {
+    slug: 'renovation-maison-valeur-ajoutee',
+    publishedAt: '2025-04-15'
+  },
+  {
+    slug: 'credit-immobilier-taux-2024',
+    publishedAt: '2025-04-12'
+  },
+  {
+    slug: 'achat-vente-immobilier-etapes',
+    publishedAt: '2025-04-10'
+  }
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -34,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Get all annonces for dynamic sitemap
   const annonces = await prisma.mandat.findMany({
-    select: { 
+    select: {
       id: true,
       dateMaj: true
     },

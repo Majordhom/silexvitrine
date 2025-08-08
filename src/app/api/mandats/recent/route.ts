@@ -8,7 +8,7 @@ export async function GET() {
                 publishedInWebSite: true, // ou publishedInApp
             },
             orderBy: {
-                dateMaj : "desc",
+                dateMaj: "desc",
             },
             take: 6,
             include: {

@@ -131,20 +131,20 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                     __html: JSON.stringify(structuredData),
                 }}
             />
-            
+
             <div className="min-h-screen bg-gray-50">
                 {/* Enhanced Header */}
                 <div className="bg-white shadow-sm border-b sticky top-0 z-10">
                     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                         <div className="flex items-center justify-between">
-                            <Link 
+                            <Link
                                 href="/theo/blog"
                                 className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors duration-200"
                             >
                                 <ArrowLeft size={20} />
                                 <span>Retour au blog</span>
                             </Link>
-                            
+
                             <div className="flex items-center space-x-4">
                                 <div className="flex items-center space-x-2 text-sm text-gray-500">
                                     <Eye size={16} />
@@ -215,7 +215,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                             </div>
 
                             {/* Content */}
-                            <div 
+                            <div
                                 className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-li:text-gray-700 prose-strong:text-gray-900"
                             >
                                 {post.blocks.map((block, i) => {

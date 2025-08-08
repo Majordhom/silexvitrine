@@ -10,7 +10,7 @@ export default function TheoPropertyCard({ property, showTags = true }: Property
 
     const FAVORITES_STORAGE_KEY = 'theo:favorites:v1';
 
-     const readFavorites = (): number[] => {
+    const readFavorites = (): number[] => {
         if (typeof window === 'undefined') return [];
         try {
             const raw = localStorage.getItem(FAVORITES_STORAGE_KEY);
@@ -80,9 +80,8 @@ export default function TheoPropertyCard({ property, showTags = true }: Property
                     <img
                         src={property.photos[0]?.url || '/placeholder.jpg'}
                         alt={property.photos[0]?.alt || property.titre}
-                        className={`w-full h-full object-cover transition-transform duration-500 ${
-                            isHovered ? 'scale-110' : 'scale-100'
-                        }`}
+                        className={`w-full h-full object-cover transition-transform duration-500 ${isHovered ? 'scale-110' : 'scale-100'
+                            }`}
                     />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-400">
@@ -91,29 +90,26 @@ export default function TheoPropertyCard({ property, showTags = true }: Property
                 )}
 
                 {/* Overlay with actions */}
-                <div className={`absolute inset-0 bg-black/0 transition-all duration-300 ${
-                    isHovered ? 'bg-black/20' : ''
-                }`}>
+                <div className={`absolute inset-0 bg-black/0 transition-all duration-300 ${isHovered ? 'bg-black/20' : ''
+                    }`}>
                     <div className="absolute top-4 right-4 flex space-x-2">
                         <button
                             onClick={(e) => {
                                 e.preventDefault();
                                 toggleFavorite();
                             }}
-                            className={`p-2 rounded-full transition-all duration-200 ${
-                                isFavorite 
-                                    ? 'text-red-500 bg-white/90' 
+                            className={`p-2 rounded-full transition-all duration-200 ${isFavorite
+                                    ? 'text-red-500 bg-white/90'
                                     : 'text-white bg-black/50 hover:bg-white/90 hover:text-red-500'
-                            }`}
+                                }`}
                         >
                             <Heart size={16} fill={isFavorite ? 'currentColor' : 'none'} />
                         </button>
                     </div>
 
                     {/* View details button */}
-                    <div className={`absolute bottom-4 left-4 right-4 transition-all duration-300 ${
-                        isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
-                    }`}>
+                    <div className={`absolute bottom-4 left-4 right-4 transition-all duration-300 ${isHovered ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
+                        }`}>
                         <Link
                             href={detailUrl}
                             className="block w-full bg-white/90 backdrop-blur-sm text-gray-900 py-2 px-4 rounded-lg text-center font-medium hover:bg-white transition-colors duration-200"
