@@ -588,7 +588,7 @@ export default function TheoAnnonceDetail({ annonce, similaires = [] }: AnnonceD
                             {similaires.map((similaire) => (
                                 <Link
                                     key={similaire.id}
-                                    href={`/theo/annonces/${similaire.id}`}
+                                    href={`/theo/annonces/${similaire.slug || similaire.id}`}
                                     className="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
                                 >
                                     <div className="aspect-[4/3] bg-gray-200">

@@ -223,6 +223,7 @@ export default async function AnnoncePage({ params }: PageProps) {
 
         const similairesData = similaires.map(similaire => ({
             id: similaire.id,
+            slug: similaire.mandat_numero,
             titre: `${similaire.type_bien} ${similaire.nb_pieces} pièces`,
             prix: similaire.prix || 0,
             surface: similaire.surface_habitable || 0,

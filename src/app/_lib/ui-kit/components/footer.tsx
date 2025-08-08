@@ -113,7 +113,7 @@ export default function Footer() {
                 className="footer-bottom flex justify-between items-center px-16 py-6 text-[15px] max-[900px]:flex-col max-[900px]:items-start max-[900px]:gap-4 max-[900px]:px-4 max-[900px]:py-4">
                 {/* Copyright à gauche (desktop), en bas (mobile) */}
                 <div className="footer-copyright order-1 max-[900px]:order-2 max-[900px]:w-full max-[900px]:mt-4">
-                    © 2025 POUET. Tous droits réservés.
+                    © 2025 {process.env.NEXT_PUBLIC_CONFIG_NAME}. Tous droits réservés.
                 </div>
                 {/* Liens à droite (desktop), en haut (mobile) */}
                 <div

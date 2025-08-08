@@ -71,6 +71,7 @@ export interface PropertyDetailAnnonce extends Property {
 
 export interface SimilarProperty {
     id: number;
+    slug?: string;
     titre: string;
     prix: number;
     surface: number;

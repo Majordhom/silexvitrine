@@ -72,19 +72,9 @@ export default function TheoHero() {
                     </AnimatePresence>
 
                     {/* Navigation Arrows */}
-                    <button
-                        onClick={prevSlide}
-                        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/20 hover:bg-white/30 rounded-full text-white transition-all duration-200"
-                    >
-                        <ChevronLeft className="w-6 h-6" />
-                    </button>
                     
-                    <button
-                        onClick={nextSlide}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/20 hover:bg-white/30 rounded-full text-white transition-all duration-200"
-                    >
-                        <ChevronRight className="w-6 h-6" />
-                    </button>
+                    
+                   
 
                     <div className="relative h-full flex items-center z-10">
                         <div className="text-center w-full px-8">
