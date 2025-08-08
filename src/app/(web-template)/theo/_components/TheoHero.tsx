@@ -10,7 +10,7 @@ export default function TheoHero() {
     const [searchQuery, setSearchQuery] = useState('');
     const router = useRouter();
 
-    // Auto-advance slider every 5 seconds
+
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
@@ -46,7 +46,7 @@ export default function TheoHero() {
     return (
         <section className="relative -mt-16 pt-32 pb-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className={`relative h-[450px] mt-1 ${currentSlideData.background} rounded-xl overflow-hidden transition-all duration-500`}>
+                <div className={`relative h-[480px] mt-1 ${currentSlideData.background} rounded-4xl overflow-hidden transition-all duration-500`}>
                     <div className="absolute inset-0 bg-black bg-opacity-40"></div>
                     
                     {/* Navigation Arrows */}

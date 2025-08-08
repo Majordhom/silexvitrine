@@ -4,19 +4,7 @@ import { Roboto } from "next/font/google";
 import { Titillium_Web } from "next/font/google";
 import "./globals.scss";
 import Head from "next/head";
-import Navbar from "@/app/_lib/ui-kit/components/navbar";
 import Footer from "@/app/_lib/ui-kit/components/footer";
-// ...existing code...
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

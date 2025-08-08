@@ -2,6 +2,7 @@
 import { useNavigation } from './TheoNavigationContext';
 import TheoBurgerMenu from './TheoBurgerMenu';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function TheoHeader() {
     const { activeSection, isScrolled, burgerMenuOpen, setBurgerMenuOpen } = useNavigation();
@@ -26,10 +27,10 @@ export default function TheoHeader() {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <div className="flex items-center space-x-2 group cursor-pointer">
-                        <div className="w-8 h-8 bg-blue-600 rounded transition-transform duration-300 group-hover:scale-110"></div>
+                        <Image height={90} width={90} src="/img/silex.png" alt="Logo"/>
                         <Link href={'/theo'}>
-                        <span className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                            Nom de l'agence
+                        <span className="text-3xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                            Silex
                         </span>
 
                         </Link>

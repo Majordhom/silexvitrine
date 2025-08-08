@@ -6,7 +6,6 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json();
         const { criteria, email } = body;
-
         if (!criteria || typeof criteria !== 'object') {
             return NextResponse.json({ error: 'Invalid criteria' }, { status: 400 });
         }
