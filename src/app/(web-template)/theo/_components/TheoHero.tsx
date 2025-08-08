@@ -3,6 +3,8 @@ import { Search, Filter, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 import { heroSlides } from "../../data";
+import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
 
 
 export default function TheoHero() {
@@ -46,9 +48,29 @@ export default function TheoHero() {
     return (
         <section className="relative -mt-16 pt-32 pb-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className={`relative h-[480px] mt-1 ${currentSlideData.background} rounded-4xl overflow-hidden transition-all duration-500`}>
-                    <div className="absolute inset-0 bg-black bg-opacity-40"></div>
-                    
+                <div className="relative h-[480px] mt-1 bg-black rounded-4xl overflow-hidden">
+                    {/* Background image with fade transition */}
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={currentSlideData.id}
+                            initial={{ opacity: 0, scale: 1.02 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.98 }}
+                            transition={{ duration: 0.5, ease: 'easeOut' }}
+                            className="absolute inset-0"
+                        >
+                            <Image
+                                src={currentSlideData.image}
+                                alt={currentSlideData.title}
+                                fill
+                                sizes="100vw"
+                                priority={currentSlide === 0}
+                                className="object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/40" />
+                        </motion.div>
+                    </AnimatePresence>
+
                     {/* Navigation Arrows */}
                     <button
                         onClick={prevSlide}
@@ -64,7 +86,7 @@ export default function TheoHero() {
                         <ChevronRight className="w-6 h-6" />
                     </button>
 
-                    <div className="relative h-full flex items-center">
+                    <div className="relative h-full flex items-center z-10">
                         <div className="text-center w-full px-8">
                             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 transition-all duration-500">
                                 {currentSlideData.title}
@@ -79,7 +101,7 @@ export default function TheoHero() {
                                         <Search className="w-5 h-5 text-gray-400 mr-3" />
                                         <input 
                                             type="text" 
-                                            placeholder="rechercher un bien" 
+                                            placeholder="Rechercher un bien" 
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
                                             className="flex-1 outline-none text-gray-700"

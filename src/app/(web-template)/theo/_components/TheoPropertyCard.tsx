@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Heart, MapPin, Home, Eye } from 'lucide-react';
 import Link from 'next/link';
 import { PropertyCardProps } from '../../dto';
@@ -7,6 +7,57 @@ import { PropertyCardProps } from '../../dto';
 export default function TheoPropertyCard({ property, showTags = true }: PropertyCardProps) {
     const [isFavorite, setIsFavorite] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+
+    const FAVORITES_STORAGE_KEY = 'theo:favorites:v1';
+
+    const readFavorites = (): number[] => {
+        if (typeof window === 'undefined') return [];
+        try {
+            const raw = localStorage.getItem(FAVORITES_STORAGE_KEY);
+            if (!raw) return [];
+            const parsed = JSON.parse(raw) as unknown;
+            if (Array.isArray(parsed)) {
+                return parsed
+                    .map((value) => (typeof value === 'number' ? value : Number(value)))
+                    .filter((value) => Number.isFinite(value));
+            }
+            return [];
+        } catch {
+            return [];
+        }
+    };
+
+    const writeFavorites = (ids: number[]) => {
+        try {
+            localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(Array.from(new Set(ids))));
+        } catch {
+            // ignore quota or serialization errors
+        }
+    };
+
+    const toggleFavorite = () => {
+        const current = readFavorites();
+        const exists = current.includes(property.id);
+        const next = exists ? current.filter((id) => id !== property.id) : [...current, property.id];
+        writeFavorites(next);
+        setIsFavorite(!exists);
+    };
+
+    // Initialize favorite state from localStorage
+    useEffect(() => {
+        const favorites = readFavorites();
+        setIsFavorite(favorites.includes(property.id));
+        // Sync when favorites change in other tabs
+        const handleStorage = (e: StorageEvent) => {
+            if (e.key === FAVORITES_STORAGE_KEY) {
+                const updated = readFavorites();
+                setIsFavorite(updated.includes(property.id));
+            }
+        };
+        window.addEventListener('storage', handleStorage);
+        return () => window.removeEventListener('storage', handleStorage);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [property.id]);
 
     const formatPrice = (price: number) => {
         return new Intl.NumberFormat('fr-FR', {
@@ -47,7 +98,7 @@ export default function TheoPropertyCard({ property, showTags = true }: Property
                         <button
                             onClick={(e) => {
                                 e.preventDefault();
-                                setIsFavorite(!isFavorite);
+                                toggleFavorite();
                             }}
                             className={`p-2 rounded-full transition-all duration-200 ${
                                 isFavorite 
