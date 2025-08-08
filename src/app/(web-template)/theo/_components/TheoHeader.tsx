@@ -3,6 +3,7 @@ import { useNavigation } from './TheoNavigationContext';
 import TheoBurgerMenu from './TheoBurgerMenu';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Heart } from 'lucide-react';
 
 export default function TheoHeader() {
     const { activeSection, isScrolled, burgerMenuOpen, setBurgerMenuOpen } = useNavigation();
@@ -29,47 +30,49 @@ export default function TheoHeader() {
                     <div className="flex items-center space-x-2 group cursor-pointer">
                         <Image height={90} width={90} src="/img/silex.png" alt="Logo"/>
                         <Link href={'/theo'}>
-                        <span className="text-3xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                            Silex
-                        </span>
-
+                            <span className="text-3xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                                Silex
+                            </span>
                         </Link>
-                      
                     </div>
                     
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex space-x-8">
-                        <a 
+                        <Link 
                             href="/theo" 
                             className={getNavLinkClass('accueil')}
                             onClick={() => setBurgerMenuOpen(false)}
                         >
                             Accueil
-                        </a>
-                        <a 
+                        </Link>
+                        <Link 
                             href="/theo/annonces" 
                             className={getNavLinkClass('annonces')}
                             onClick={() => setBurgerMenuOpen(false)}
                         >
                             Nos biens
-                        </a>
-                        <a 
+                        </Link>
+                        <Link 
                             href="/theo/blog" 
                             className={getNavLinkClass('blog')}
                             onClick={() => setBurgerMenuOpen(false)}
                         >
                             Blog
-                        </a>
+                        </Link>
                     </nav>
                     
                     {/* Contact Button */}
-                    <div className="hidden md:block">
+                    <div className="hidden md:flex items-center space-x-4">
                         <Link href="/theo/contact">
                             <button className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
                                 Nous contacter
                             </button>
                         </Link>
+                        <Link href="/theo/liked" className="flex items-center justify-center">
+                            <Heart className="w-6 h-6" />
+                        </Link>
                     </div>
+                    
 
                     {/* Burger Menu */}
                     <TheoBurgerMenu 

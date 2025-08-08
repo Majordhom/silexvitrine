@@ -10,7 +10,7 @@ export default function TheoPropertyCard({ property, showTags = true }: Property
 
     const FAVORITES_STORAGE_KEY = 'theo:favorites:v1';
 
-    const readFavorites = (): number[] => {
+     const readFavorites = (): number[] => {
         if (typeof window === 'undefined') return [];
         try {
             const raw = localStorage.getItem(FAVORITES_STORAGE_KEY);
