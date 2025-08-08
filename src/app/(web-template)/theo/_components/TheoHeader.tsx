@@ -29,10 +29,15 @@ export default function TheoHeader() {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <div className="flex items-center space-x-2 group cursor-pointer">
-                        <Image height={90} width={90} src={process.env.NEXT_PUBLIC_CONFIG_IMAGE_URL} alt="Logo"/>
+                        <Image 
+                            height={90} 
+                            width={90} 
+                            src={process.env.NEXT_PUBLIC_CONFIG_IMAGE_URL || '/img/silex.png'} 
+                            alt="Logo"
+                        />
                         <Link href={'/theo'}>
                             <span className="text-3xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                                {process.env.NEXT_PUBLIC_CONFIG_NAME}
+                                {process.env.NEXT_PUBLIC_CONFIG_NAME || 'Silex'}
                             </span>
                         </Link>
                     </div>
