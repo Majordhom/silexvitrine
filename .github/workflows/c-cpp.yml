@@ -1,0 +1,22 @@
+name: Compile ci-cd.c with GCC
+
+on:
+  push:
+    paths:
+      - 'ci-cd/ci-cd.c'
+  pull_request:
+    paths:
+      - 'ci-cd/ci-cd.c'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Compile ci-cd.c
+        run: gcc ci-cd/ci-cd.c -o ci-cd/ci-cd.out
+
+      - name: List output
+        run: ls -lh ci-cd/
